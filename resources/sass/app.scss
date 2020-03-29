@@ -1,0 +1,34 @@
+// // Fonts
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// // Variables
+// @import 'variables';
+
+// // Bootstrap
+// @import '~bootstrap/scss/bootstrap';
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "bulma";
+
+
+ .tr.is-warning,
+ .table.is-warning tr {
+    background-color: #ffdd57 !important;
+}
+
+.tr.is-danger,
+.table.is-danger tr {
+    background-color: #ff3860 !important;
+}
+
+.tr.is-success,
+.table.is-success tr {
+    background-color: #23d160 !important;
+}
+
+.has-background-dark a.has-text-light:hover, .has-background-dark a.has-text-light:focus {
+    color: #363636 !important;
+}
