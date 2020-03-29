@@ -3,8 +3,8 @@
 <div class="field">
     <label class="label">Select topic</label>
     <fieldset class="select">
-        <select name="topic_id">
-            <option value="0">Choose a topic</option>
+        <select name="topic_id" required>
+            <option value="">Choose a topic</option>
             @foreach ($topics->all() as $topic)
             <option value="{{ $topic->id }}" @if (($topic->id == $question->topic_id))
                 selected
@@ -19,7 +19,7 @@
     <label class="label">Select set</label>
     <fieldset class="select">
         <select name="set_id">
-            <option value="0">Choose a set</option>
+            <option value="">Choose a set</option>
             @foreach ($sets->all() as $set)
             <option value="{{ $set->id }}" @if (($set->id == $question->set_id))
                 selected
@@ -33,7 +33,7 @@
 <div class="field">
     <label class="label">Question</label>
     <fieldset class="control">
-        <input type="text" class="input" name="title" placeholder="Enter question's name" value="{{ $question->title }}"
+        <input type="text" class="input {{ $errors->has('title') ? 'is-danger' : '' }}" name="title" placeholder="Enter question's name" value="{{ $question->title }}"
             required>
     </fieldset>
 

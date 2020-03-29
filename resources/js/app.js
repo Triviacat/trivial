@@ -1,4 +1,4 @@
-require('./bootstrap');
+ require('./bootstrap');
 
 
 // Bulma NavBar Burger Script
@@ -29,4 +29,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-require('./bulma-extensions');
+// require('./bulma-extensions');

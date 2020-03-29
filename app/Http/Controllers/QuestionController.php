@@ -106,8 +106,8 @@ class QuestionController extends Controller
             'title' => ['required', 'min:3'], //validation rules can be members of an array
             'answer' => ['required'],
             'text' => [],
-            'user_id' => ['required:numeric'],
-            'topic_id' => ['required:numeric'],
+            'user_id' => ['required'],
+            'topic_id' => ['required'],
             'set_id' => [],
         ]);
     }

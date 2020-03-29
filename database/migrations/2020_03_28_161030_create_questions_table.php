@@ -23,8 +23,8 @@ class CreateQuestionsTable extends Migration
             $table->unsignedbigInteger('set_id')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('set null');
-            $table->foreign('set_id')->references('id')->on('sets')->onDelete('set null');
+            $table->foreign('topic_id')->references('id')->on('topics');
+            $table->foreign('set_id')->references('id')->on('sets');
         });
     }
 
