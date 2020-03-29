@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,20 +28,29 @@ Route::resource('/topics', 'TopicController')->middleware('auth');
 Route::resource('/sets', 'SetController')->middleware('auth');
 Route::resource('/questions', 'QuestionController')->middleware('auth');
 
-Route::get('/users', 'UserController@index')->name('users')->middleware('auth');
-Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
-Route::patch('/users/{user}', 'UserController@update')->name('users.update')->middleware('auth');
+Route::group(['prefix' => 'users', 'middleware' => ['role:admin']], function () {
+    Route::get('/', 'UserController@index')->name('users')->middleware('auth');
+    Route::get('/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
+    Route::patch('/{user}', 'UserController@update')->name('users.update')->middleware('auth');
+});
+// Route::get('/users', 'UserController@index')->name('users')->middleware('auth');
+// Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
+// Route::patch('/users/{user}', 'UserController@update')->name('users.update')->middleware('auth');
 
-Route::get('/roles', 'RoleController@index')->name('roles')->middleware('auth');
-Route::get('/roles/create', 'RoleController@create')->name('roles.create')->middleware('auth');
-Route::post('/roles', 'RoleController@store')->name('roles.store')->middleware('auth');
-Route::get('/roles/{role}/edit', 'RoleController@edit')->name('roles.edit')->middleware('auth');
-Route::patch('/roles/{role}', 'RoleController@update')->name('roles.update')->middleware('auth');
-Route::delete('/roles/{role}', 'RoleController@destroy')->name('roles.destroy')->middleware('auth');
+Route::group(['prefix' => 'roles', 'middleware' => ['role:admin']], function () {
+Route::get('/', 'RoleController@index')->name('roles')->middleware('auth');
+Route::get('/create', 'RoleController@create')->name('roles.create')->middleware('auth');
+Route::post('/', 'RoleController@store')->name('roles.store')->middleware('auth');
+Route::get('/{role}/edit', 'RoleController@edit')->name('roles.edit')->middleware('auth');
+Route::patch('/{role}', 'RoleController@update')->name('roles.update')->middleware('auth');
+Route::delete('/{role}', 'RoleController@destroy')->name('roles.destroy')->middleware('auth');
+});
 
-Route::get('/permissions', 'PermissionController@index')->name('permissions')->middleware('auth');
-Route::get('/permissions/create', 'PermissionController@create')->name('permissions.create')->middleware('auth');
-Route::post('/permissions', 'PermissionController@store')->name('permissions.store')->middleware('auth');
-Route::get('/permissions/{permission}/edit', 'PermissionController@edit')->name('permissions.edit')->middleware('auth');
-Route::patch('/permissions/{permission}', 'PermissionController@update')->name('permissions.update')->middleware('auth');
-Route::delete('/permissions/{permission}', 'PermissionController@destroy')->name('permissions.destroy')->middleware('auth');
+Route::group(['prefix' => 'permissions', 'middleware' => ['role:admin']], function () {
+Route::get('/', 'PermissionController@index')->name('permissions')->middleware('auth');
+Route::get('/create', 'PermissionController@create')->name('permissions.create')->middleware('auth');
+Route::post('/', 'PermissionController@store')->name('permissions.store')->middleware('auth');
+Route::get('/{permission}/edit', 'PermissionController@edit')->name('permissions.edit')->middleware('auth');
+Route::patch('/{permission}', 'PermissionController@update')->name('permissions.update')->middleware('auth');
+Route::delete('/{permission}', 'PermissionController@destroy')->name('permissions.destroy')->middleware('auth');
+});
