@@ -16,7 +16,7 @@ class QuestionController extends Controller
     {
         $questionQuery = Question::query();
         $questionQuery->where('title', 'like', '%' . request('q') . '%');
-        $questions = $questionQuery->paginate(15);
+        $questions = $questionQuery->orderByDesc('created_at')->paginate(15);
         // return ($questions);
         return view('questions.index', compact('questions'));
     }
@@ -43,7 +43,7 @@ class QuestionController extends Controller
 
           Question::create($attributes);
 
-          return redirect('/questions');
+          return redirect('/questions/create');
     }
 
     /**
