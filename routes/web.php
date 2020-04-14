@@ -22,8 +22,8 @@ Route::get('/', function () {
     return redirect('games');
 });
 
-Auth::routes();
-// Auth::routes(['register' => false]);
+// Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
