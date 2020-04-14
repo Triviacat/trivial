@@ -12,23 +12,40 @@
         <p class="card-header-title">Search</p>
     </header>
     <div class="card-content">
-        <form method="GET" id="searchForm">
-            <div class="field is-grouped">
-                <div class="control">
-                    <input type="text" class="input" name="q" id="q" value="{{ request('q') }}">
-                </div>
-                <div class="control">
-                    <button type="submit" class="button is-info">
-                        @if (isset($title))
-                        Search {{ $title }}
-                        @else
-                        Search all
-                        @endif
-                    </button>
-                </div>
-                <a href="{{ route('questions.index') }}" class="button">Clear</a>
+        <div class="columns">
+            <div class="column is-half">
+                <form method="GET" id="searchForm">
+                    <div class="field">
+                        <label class="label">Pregunta</label>
+                        <div class="control">
+                            <input type="text" class="input" name="q" id="q" value="{{ request('q') }}">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Resposta</label>
+                        <div class="control">
+                            <input type="text" class="input" name="a" id="a" value="{{ request('a') }}">
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-info">
+                                @if (isset($title))
+                                Search {{ $title }}
+                                @else
+                                Search all
+                                @endif
+                            </button>
+                        </div>
+                        <div class="control">
+                            <a href="{{ route('questions.index') }}" class="button">Clear</a>
+                        </div>
+
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
+
     </div>
     {{-- <footer class="card-footer">
         <a href="{{ route('questions.orphan') }}" class="card-footer-item">List orphan</a>

@@ -15,7 +15,8 @@ class QuestionController extends Controller
     public function index()
     {
         $questionQuery = Question::query();
-        $questionQuery->where('title', 'like', '%' . request('q') . '%');
+        $questionQuery->where('title', 'like', '%' . request('q') . '%')
+            ->where('answer', 'like', '%' . request('a') . '%');
         $questions = $questionQuery->orderByDesc('created_at')->paginate(15);
         // return ($questions);
         return view('questions.index', compact('questions'));
