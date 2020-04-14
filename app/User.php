@@ -49,4 +49,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Game::class);
     }
+
+    public function cheeses()
+    {
+        return $this->hasMany(Cheese::class);
+    }
+
+    public function turns()
+    {
+        return $this->hasMany(Turn::class);
+    }
 }

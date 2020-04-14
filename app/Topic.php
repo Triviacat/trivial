@@ -12,4 +12,14 @@ class Topic extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function boxes()
+    {
+        return $this->hasMany(Box::class);
+    }
+
+    public function cheeses()
+    {
+        return $this->hasMany(Cheese::class);
+    }
 }

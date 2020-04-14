@@ -25,4 +25,9 @@ class Question extends Model
     {
         return $this->belongsTo(Set::class);
     }
+
+    public function turns()
+    {
+        return $this->hasMany(Turn::class);
+    }
 }

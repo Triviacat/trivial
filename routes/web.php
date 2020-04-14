@@ -1,6 +1,10 @@
 <?php
 
+use App\Game;
+use App\Turn;
+use App\User;
 use Illuminate\Routing\RouteGroup;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +19,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('games');
 });
 
-Auth::routes(['register' => false]);
+Auth::routes();
+// Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
