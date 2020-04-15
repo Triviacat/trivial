@@ -18,3 +18,21 @@
   color: #363636 !important;
 }
 
+#outerBoard #board {
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  font: 0/0 serif;
+  text-shadow: none;
+  color: transparent;
+  background-image: url("/assets/images/trivial3.png");
+  background-size: 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+#outerboard #board #innerBoard {
+  display: block;
+  width: 100%;
+}
+

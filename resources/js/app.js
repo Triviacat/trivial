@@ -18,6 +18,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import Echo from 'laravel-echo';
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
+import Vue from 'vue';
+import VueKonva from 'vue-konva'
+
+
 
 // import Moment from 'moment';
 window.moment = require('moment');
@@ -40,6 +44,7 @@ window.Echo.channel('game').listen('PlayerJoinsGame', e => {
  window.Vue = require('vue');
 
  Vue.use(Buefy)
+ Vue.use(VueKonva)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -55,6 +60,7 @@ Vue.component('dice', require('./components/Dice.vue').default);
 Vue.component('question', require('./components/Question.vue').default);
 Vue.component('box', require('./components/Box.vue').default);
 Vue.component('cheeses', require('./components/Cheeses.vue').default);
+// Vue.component('board', require('./components/Board.vue').default);
 // Vue.component('gamelist', require('./components/GameList.vue').default);
 
 

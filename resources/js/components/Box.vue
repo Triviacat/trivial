@@ -50,9 +50,9 @@
 
 <script>
     export default {
-        mounted() {
-            // //  console.log('Component mounted.')
-        },
+        // mounted() {
+        //     // //  console.log('Component mounted.')
+        // },
         props: {
             turn: {
                 type: Object
@@ -199,9 +199,10 @@
                 boxOptions : ''
             }
         },
-        created() {
-            // console.log(this.box.box),
-            axios.post('/api/options', {
+        mounted() {
+            // console.log(this.turnObject.dice);
+            if (this.turnObject.dice != null) {
+                axios.post('/api/options', {
                         box: this.box.box,
                         dice: this.turnObject.dice
                     }).then(response => {
@@ -211,6 +212,8 @@
                     }).catch(e =>{
                         console.log(e);
                     });
+            };
+
             window.Echo.channel('user.' + this.user.id)
                 .listen('EnableBoxButton', e => {
                     //  console.log(e);

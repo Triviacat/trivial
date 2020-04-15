@@ -474,30 +474,89 @@ class TurnController extends Controller
      **/
     public function options(Request $request)
     {
-        $options = array();
-        $letters = array('a','b','c','d','e','f');
-        $d = (int)$request['dice'];
-        $box = $request['box'];
-        // return $box;
-        if ($box == '0') { // box is 0
-            for ($l='a'; $l < 'g'; $l++) {
-                $options[] = $l . ":" . ($d + $box);
+        // return $request['dice'];
+        if ($request['dice'] != 'null') {
+
+            $options = array();
+            $letters = array('a','b','c','d','e','f');
+            $d = (int)$request['dice'];
+            $box = $request['box'];
+            // return $box;
+            if ($box == '0') { // box is 0
+                for ($l='a'; $l < 'g'; $l++) {
+                    $options[] = $l . ":" . ($d + $box);
+                }
             }
-        }
-        else {
-            $box = explode(":", $box);
+            else {
+                $box = explode(":", $box);
 
-            $l = strtolower($box[0]);
-            // return $l;
-            $n = (int)$box[1];
+                $l = strtolower($box[0]);
+                // return $l;
+                $n = (int)$box[1];
 
-            if ($n < 7) {  // box is within the radius 1-6
-                if (($n + $d) < 13) { // anticlockwise sum going outward
-                    $options[] = $l . ":" . ($n + $d);
-                    if (($n + $d) > 6) { // clockwise sum going outward
-                        //number first
-                        $dif = 6 -$n -$d;
-                        $nn = 13 + $dif;
+                if ($n < 7) {  // box is within the radius 1-6
+                    if (($n + $d) < 13) { // anticlockwise sum going outward
+                        $options[] = $l . ":" . ($n + $d);
+                        if (($n + $d) > 6) { // clockwise sum going outward
+                            //number first
+                            $dif = 6 -$n -$d;
+                            $nn = 13 + $dif;
+                            // letters (shame php doesn't decrement letters)
+                            switch ($l) {
+                                case 'a': $nl = 'f'; break;
+                                case 'b': $nl = 'a'; break;
+                                case 'c': $nl = 'b'; break;
+                                case 'd': $nl = 'c'; break;
+                                case 'e': $nl = 'd'; break;
+                                case 'f': $nl = 'e'; break;
+                            }
+                            $options[] = $nl . ":" . ($nn);
+                        }
+                    }
+                    // inward
+                    $nn = $n - $d;
+                    if ($nn == 0) {
+                        $options[] = '0';
+                    }
+                    else {
+                        if ($n < $d) {
+                            $nn = abs($d - $n);
+                            foreach (array_diff($letters, array($l)) as $value) {
+                                $options[] = $value . ":" . $nn;
+                            }
+                        }
+                        else {
+                            $options[] = $l . ":" . ($n - $d);
+                        }
+
+                    }
+                }
+                else { //box is in the outer circle 7-12
+                    //anticlockwise
+                    if (($d + $n) < 13) {
+                        $options[] = $l . ":" . ($n + $d);
+                    }
+                    else { // anticloclkwise inwards
+                        if ($l == 'f') {
+                            $nl = 'a';
+                        }
+                        else {
+                            $nl = ++$l;
+                        }
+                        $options[] = $nl . ":" . (6 + 13 -$n -$d);
+                        if (($d + $n) > 13) {
+                            $options[] = $nl . ":" . ($d +$n -7);
+                        }
+
+                    }
+                    $l = strtolower($box[0]);
+                    // clockwise inwards
+                    // return $l;
+                    $options[] = $l . ":" . ($n - $d);
+                    // clockwise outwards
+                    if (($n - $d) < 6) {
+                        $dif = 6 - $n + $d;
+                        $nn = 13 - abs($dif);
                         // letters (shame php doesn't decrement letters)
                         switch ($l) {
                             case 'a': $nl = 'f'; break;
@@ -510,64 +569,13 @@ class TurnController extends Controller
                         $options[] = $nl . ":" . ($nn);
                     }
                 }
-                // inward
-                $nn = $n - $d;
-                if ($nn == 0) {
-                    $options[] = '0';
-                }
-                else {
-                    if ($n < $d) {
-                        $nn = abs($d - $n);
-                        foreach (array_diff($letters, array($l)) as $value) {
-                            $options[] = $value . ":" . $nn;
-                        }
-                    }
-                    else {
-                        $options[] = $l . ":" . ($n - $d);
-                    }
-
-                }
             }
-            else { //box is in the outer circle 7-12
-                //anticlockwise
-                if (($d + $n) < 13) {
-                    $options[] = $l . ":" . ($n + $d);
-                }
-                else { // anticloclkwise inwards
-                    if ($l == 'f') {
-                        $nl = 'a';
-                    }
-                    else {
-                        $nl = ++$l;
-                    }
-                    $options[] = $nl . ":" . (6 + 13 -$n -$d);
-                    if (($d + $n) > 13) {
-                        $options[] = $nl . ":" . ($d +$n -7);
-                    }
 
-                }
-                $l = strtolower($box[0]);
-                // clockwise inwards
-                // return $l;
-                $options[] = $l . ":" . ($n - $d);
-                // clockwise outwards
-                if (($n - $d) < 6) {
-                    $dif = 6 - $n + $d;
-                    $nn = 13 - abs($dif);
-                    // letters (shame php doesn't decrement letters)
-                    switch ($l) {
-                        case 'a': $nl = 'f'; break;
-                        case 'b': $nl = 'a'; break;
-                        case 'c': $nl = 'b'; break;
-                        case 'd': $nl = 'c'; break;
-                        case 'e': $nl = 'd'; break;
-                        case 'f': $nl = 'e'; break;
-                    }
-                    $options[] = $nl . ":" . ($nn);
-                }
-            }
+            return $options;
+        }
+        else {
+            return null;
         }
 
-        return $options;
     }
 }
