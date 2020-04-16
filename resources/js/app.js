@@ -19,7 +19,10 @@ import Echo from 'laravel-echo';
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import Vue from 'vue';
-import VueKonva from 'vue-konva'
+import VueKonva from 'vue-konva';
+import VueResize from 'vue-resize';
+
+
 
 
 
@@ -45,6 +48,7 @@ window.Echo.channel('game').listen('PlayerJoinsGame', e => {
 
  Vue.use(Buefy)
  Vue.use(VueKonva)
+ Vue.use(VueResize)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
