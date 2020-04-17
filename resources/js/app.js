@@ -64,7 +64,7 @@ Vue.component('dice', require('./components/Dice.vue').default);
 Vue.component('question', require('./components/Question.vue').default);
 Vue.component('box', require('./components/Box.vue').default);
 Vue.component('cheeses', require('./components/Cheeses.vue').default);
-// Vue.component('board', require('./components/Board.vue').default);
+Vue.component('board', require('./components/Board.vue').default);
 // Vue.component('gamelist', require('./components/GameList.vue').default);
 
 
