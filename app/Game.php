@@ -78,4 +78,9 @@ class Game extends Model
 
         return $users;
     }
+
+    public function slots()
+    {
+        return $this->belongsToMany(Slot::class);
+    }
 }

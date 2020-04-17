@@ -13,10 +13,10 @@
         <div class="content">
             @include('includes.topics')
         </div>
-        {{-- <board :game="{{ $game }}" :players="{{ json_encode($game->users()) }}"></board> --}}
-        <figure class="image">
+        <board :turn="{{ $game->turn }}" :game="{{ $game }}" :players="{{ json_encode($game->users()) }}"></board>
+        {{-- <figure class="image">
             <img src="/assets/images/trivial3.png">
-        </figure>
+        </figure> --}}
     </div>
     <div class="column">
         @include('includes.cheeses')

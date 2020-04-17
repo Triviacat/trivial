@@ -52,6 +52,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::get('turns/{turn}/box/undo', 'TurnController@boxUndo');
     Route::post('turns/{turn}/box', 'TurnController@box');
     Route::post('turns/{turn}/question', 'TurnController@question');
+    Route::get('turns/{turn}/slots', 'TurnController@slots');
 
     Route::get('questions/{id}', function ($id) {
         $question = Question::find($id);

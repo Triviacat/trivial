@@ -10,6 +10,7 @@ use App\Events\GameStatusHasChanged;
 use App\Events\NotifyGameOver;
 use App\Events\NotifyGameUpdate;
 use App\Events\NotifyMessage;
+use App\Events\NotifyNewBoard;
 use App\Events\NotifyNewTurn;
 use App\Events\NotifyUndoBox;
 use App\Events\NotifyWhosTurn;
@@ -18,6 +19,7 @@ use App\Events\ShowDiceResult;
 use App\Events\ShowQuestion;
 use App\Game;
 use App\Question;
+use App\Slot;
 use App\Turn;
 use App\User;
 use Illuminate\Http\Request;
@@ -133,6 +135,8 @@ class TurnController extends Controller
             $game->turn_id = $turn->id;
             $game->update();
 
+            # stores and dispatch board's slot
+            TurnController::slots($turn);
             # enable dice button to turn's user
             EnableDiceButton::dispatch($turn);
             # dispatch new turn to vue
@@ -143,6 +147,9 @@ class TurnController extends Controller
         } elseif ($box[0]->type == 'topic' || $box[0]->type == 'cheese') { // ask a question to the turn's player
             $turn->step = "question";
             $turn->update();
+
+            # stores and dispatch board's slot
+            TurnController::slots($turn);
 
             # dispatch result
             ShowBoxResult::dispatch($turn);
@@ -173,6 +180,8 @@ class TurnController extends Controller
                     );
                     $turn->answers = $answers;
                     $turn->update();
+                    # stores and dispatch board's slot
+                    TurnController::slots($turn);
                 }
                 else {
                     // player arrived here because an box undo action and $answers is actually set
@@ -187,6 +196,8 @@ class TurnController extends Controller
                 $message = 'Juga per guanyar la partida!!';
                 // return $message;
                 NotifyMessage::dispatch($game, $message);
+                # stores and dispatch board's slot
+                TurnController::slots($turn);
                 # show question to reader
                 TurnController::sendFinalQuestion($turn, $topic_id);
                 return $turn;
@@ -198,6 +209,8 @@ class TurnController extends Controller
 
                 # dispatch result
                 ShowBoxResult::dispatch($turn);
+                # stores and dispatch board's slot
+                TurnController::slots($turn);
                 # notify new game data
                 $game = Game::find($turn->game_id);
                 NotifyGameUpdate::dispatch($game);
@@ -216,19 +229,19 @@ class TurnController extends Controller
      * @param  \App\Turn  $turn
      * @return \Illuminate\Http\Response
      */
-    public function boxUndo(Turn $turn)
-    {
-        $turn->step = 'box';
-        $turn->question_id = null;
-        $turn->update();
+    // public function boxUndo(Turn $turn)
+    // {
+    //     $turn->step = 'box';
+    //     $turn->question_id = null;
+    //     $turn->update();
 
 
-        # dispatch undo action
-        NotifyUndoBox::dispatch($turn);
+    //     # dispatch undo action
+    //     NotifyUndoBox::dispatch($turn);
 
 
-        return $turn;
-    }
+    //     return $turn;
+    // }
 
     /**
      * stores question answer
@@ -474,6 +487,7 @@ class TurnController extends Controller
      **/
     public function options(Request $request)
     {
+        // TODO: validate request
         // return $request['dice'];
         if ($request['dice'] != 'null') {
 
@@ -577,5 +591,57 @@ class TurnController extends Controller
             return null;
         }
 
+    }
+
+    /**
+     * stores the board slots for a given turn
+     * and returns all of them to print them
+     * on the board
+     *
+     *
+     * @param App\Turn $turn
+     **/
+    public function slots(Turn $turn)
+    {
+        // used slots for the given $turn->box: $turn->game->slots
+        // return ($turn->game->slots);
+        $used_slots = array();
+        foreach ($turn->game->slots as $slot) {
+            $used_slots[] = $slot->id;
+        }
+        // all possible slots for a given $turn->box: $turn->box->slots
+        $all_slots = array();
+        foreach ($turn->box->slots as $slot) {
+            $all_slots[] = $slot->id;
+        }
+
+        // free slots for the given box
+        $free_slots = array_diff($all_slots, $used_slots);
+
+        // delete the previous slot for the given turn's user
+        DB::table('game_slot')->where('user_id', '=', $turn->user_id)
+            ->where('game_id', '=', $turn->game_id)
+            ->delete();
+
+        // save the assigned slot into the ddbb for the given turn's user
+        $slot = array_shift($free_slots);
+        $slot = Slot::find($slot);
+        DB::table('game_slot')->insert([
+            'game_id' => $turn->game_id,
+            'slot_id' => $slot->id,
+            'user_id' => $turn->user_id,
+        ]);
+
+
+        $slots = DB::table('game_slot')
+            ->join('slots', 'game_slot.slot_id', '=', 'slots.id')
+            ->join('users', 'game_slot.user_id', '=', 'users.id')
+            ->where('game_id', '=', $turn->game->id)
+            ->select('slots.x', 'slots.y', 'users.color')
+            ->get();
+
+        # disopatch board positions
+        NotifyNewBoard::dispatch($turn, $slots);
+        return $slots;
     }
 }

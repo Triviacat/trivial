@@ -18,6 +18,11 @@ class Box extends Model
         return $this->hasMany(Turn::class);
     }
 
+    public function slots()
+    {
+        return $this->hasMany(Slot::class);
+    }
+
     // public function box_id($box_name)
     // {
     //     return Box::where('box', '=', $box_name)->value('id');

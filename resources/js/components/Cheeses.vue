@@ -7,7 +7,7 @@
     <div class="card-content tags">
         <div class="columns">
             <div v-for="player in playersArray" class="column">
-                <label class="label">{{ player.user.name }}</label>
+                <label class="label" :style="'background-color:' + player.user.color + ';border-radius:4px;padding:5px;'">{{ player.user.name}}</label>
                 <div v-if="player.box.box" class="has-text-centered"><span class="has-text-weight-bold">{{ player.box.box }}</span></div>
                 <div id="v-for-object" class="tags">
                     <div v-for="cheese in player.cheeses">
