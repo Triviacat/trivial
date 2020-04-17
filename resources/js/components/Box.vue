@@ -200,7 +200,7 @@
             }
         },
         mounted() {
-            // console.log(this.turnObject.dice);
+            console.log(this.box);
             if (this.turnObject.dice != null) {
                 axios.post('/api/options', {
                         box: this.box.box,
@@ -234,7 +234,7 @@
                     }).then(response => {
                         // console.log(response);
                         this.boxOptions = response.data;
-                        // console.log(this.boxOptions);
+                        console.log(this.boxOptions);
                     }).catch(e =>{
                         console.log(e);
                     });

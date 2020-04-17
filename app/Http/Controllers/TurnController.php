@@ -119,7 +119,11 @@ class TurnController extends Controller
             # save data to this turn
             $turn->step = "dice";
             $turn->update();
-            # and start a new one
+            # save board position
+            TurnController::slot($turn);
+            # dispatch board's slots
+            TurnController::slots($turn);
+            # and start a new turn
             $turn_uid = $turn->user_id;
             $game_id = $turn->game_id;
 
@@ -148,7 +152,9 @@ class TurnController extends Controller
             $turn->step = "question";
             $turn->update();
 
-            # stores and dispatch board's slot
+            # save board position
+            TurnController::slot($turn);
+            # dispatch board's slots
             TurnController::slots($turn);
 
             # dispatch result
@@ -180,7 +186,9 @@ class TurnController extends Controller
                     );
                     $turn->answers = $answers;
                     $turn->update();
-                    # stores and dispatch board's slot
+                    # save board position
+                    TurnController::slot($turn);
+                    # dispatch board's slots
                     TurnController::slots($turn);
                 }
                 else {
@@ -196,7 +204,9 @@ class TurnController extends Controller
                 $message = 'Juga per guanyar la partida!!';
                 // return $message;
                 NotifyMessage::dispatch($game, $message);
-                # stores and dispatch board's slot
+                # save board position
+                TurnController::slot($turn);
+                # dispatch board's slots
                 TurnController::slots($turn);
                 # show question to reader
                 TurnController::sendFinalQuestion($turn, $topic_id);
@@ -594,8 +604,7 @@ class TurnController extends Controller
     }
 
     /**
-     * stores the board slots for a given turn
-     * and returns all of them to print them
+     * Return all slots of a game to print them
      * on the board
      *
      *
@@ -603,35 +612,6 @@ class TurnController extends Controller
      **/
     public function slots(Turn $turn)
     {
-        // used slots for the given $turn->box: $turn->game->slots
-        // return ($turn->game->slots);
-        $used_slots = array();
-        foreach ($turn->game->slots as $slot) {
-            $used_slots[] = $slot->id;
-        }
-        // all possible slots for a given $turn->box: $turn->box->slots
-        $all_slots = array();
-        foreach ($turn->box->slots as $slot) {
-            $all_slots[] = $slot->id;
-        }
-
-        // free slots for the given box
-        $free_slots = array_diff($all_slots, $used_slots);
-
-        // delete the previous slot for the given turn's user
-        DB::table('game_slot')->where('user_id', '=', $turn->user_id)
-            ->where('game_id', '=', $turn->game_id)
-            ->delete();
-
-        // save the assigned slot into the ddbb for the given turn's user
-        $slot = array_shift($free_slots);
-        $slot = Slot::find($slot);
-        DB::table('game_slot')->insert([
-            'game_id' => $turn->game_id,
-            'slot_id' => $slot->id,
-            'user_id' => $turn->user_id,
-        ]);
-
 
         $slots = DB::table('game_slot')
             ->join('slots', 'game_slot.slot_id', '=', 'slots.id')
@@ -640,8 +620,81 @@ class TurnController extends Controller
             ->select('slots.x', 'slots.y', 'users.color')
             ->get();
 
-        # disopatch board positions
+        # dispatch board positions
         NotifyNewBoard::dispatch($turn, $slots);
-        return $slots;
+
+        return $slots;  //TODO: should not return anything??
+    }
+
+
+    /**
+     * stores the board slot for a given turn
+     *
+     * @param App\Turn $turn
+     **/
+    public function slot(Turn $turn)
+    {
+
+
+
+        // delete old slot for that user
+
+        // delete the previous slot for the given turn's user
+        DB::table('game_slot')->where('user_id', '=', $turn->user_id)
+            ->where('game_id', '=', $turn->game_id)
+            ->delete();
+
+        // find a new free slot for new mouvement
+
+
+
+        // used slots for the given $turn->box: $turn->box->slots
+        // return ($turn->game->slots);
+        // $used_slots = array();
+        // foreach ($turn->box->slots as $slot) {
+        //     $used_slots[] = $slot->id;
+        // }
+
+        // return $turn;
+        $slots = DB::table('game_slot')
+            ->join('slots', 'game_slot.slot_id', '=', 'slots.id')
+            ->where('game_id', '=' , $turn->game_id)
+            ->where('slots.box_id', '=', $turn->box_id)
+            ->select('slots.id')
+            ->get();
+            $used_slots = array();
+            foreach ($slots as $slot) {
+                $used_slots[] = $slot->id;
+            }
+            // var_dump($used_slots);
+        // return $used_slots;
+
+        // return $used_slots;
+        // all possible slots for a given $turn->box: $turn->box->slots
+        $all_slots = array();
+        foreach ($turn->box->slots as $slot) {
+            $all_slots[] = $slot->id;
+        }
+        // return $all_slots;
+        // free slots for the given box
+        $free_slots = array_diff($all_slots, $used_slots);
+
+        // return $free_slots;
+
+        // delete the previous slot for the given turn's user
+        // DB::table('game_slot')->where('user_id', '=', $turn->user_id)
+        //     ->where('game_id', '=', $turn->game_id)
+        //     ->delete();
+
+        // save the assigned slot into the ddbb for the given turn's user
+        $slot = array_shift($free_slots);
+        // return $slot;
+        $slot = Slot::find($slot);
+        DB::table('game_slot')->insert([
+            'game_id' => $turn->game_id,
+            'slot_id' => $slot->id,
+            'user_id' => $turn->user_id,
+        ]);
+
     }
 }
