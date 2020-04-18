@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\EnableDiceButton;
 use App\Events\GameStatusHasChanged;
-use App\Events\NotifyWhosTurn;
 use App\Events\PlayerJoinsGame;
 use App\Events\PlayerLeavesGame;
 use App\Game;
 use App\Topic;
 use App\Turn;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -39,6 +36,15 @@ class GameController extends Controller
         $game->user_id = auth()->user()->id;
         $game->players = array(auth()->user()->id);
         $game->save();
+
+        $turn = new Turn;
+        $turn->game_id = $game->id;
+        $turn->user_id = $game->user_id;
+        $turn->box_id = 1;
+        // return $turn;
+        TurnController::slot($turn);
+        // TurnController::slots($turn);
+
         return redirect('/games');
     }
 
@@ -101,6 +107,9 @@ class GameController extends Controller
         # and its associated turns
         Turn::where('game_id', $id)->delete();
         // cheeses are being deleted by cascade
+        DB::table('game_slot')
+            ->where('game_id', '=', $id)
+            ->delete();
         return redirect('/games');
     }
 

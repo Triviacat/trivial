@@ -6,25 +6,21 @@ use App\Box;
 use App\Cheese;
 use App\Events\EnableBoxButton;
 use App\Events\EnableDiceButton;
-use App\Events\GameStatusHasChanged;
 use App\Events\NotifyGameOver;
 use App\Events\NotifyGameUpdate;
 use App\Events\NotifyMessage;
 use App\Events\NotifyNewBoard;
 use App\Events\NotifyNewTurn;
-use App\Events\NotifyUndoBox;
 use App\Events\NotifyWhosTurn;
 use App\Events\ShowBoxResult;
 use App\Events\ShowDiceResult;
 use App\Events\ShowQuestion;
 use App\Game;
-use App\Question;
 use App\Slot;
 use App\Turn;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\Cast\Int_;
 
 class TurnController extends Controller
 {
@@ -35,7 +31,7 @@ class TurnController extends Controller
      * @param  String  $type
      * @return \Illuminate\Http\Response
      */
-    static function new(Game $game, $type = 'dice')
+    public static function new(Game $game, $type = 'dice')
     {
 
         # take the first user as turn's user
@@ -610,20 +606,20 @@ class TurnController extends Controller
      *
      * @param App\Turn $turn
      **/
-    public function slots(Turn $turn)
+    public static function slots(Turn $turn)
     {
 
         $slots = DB::table('game_slot')
             ->join('slots', 'game_slot.slot_id', '=', 'slots.id')
             ->join('users', 'game_slot.user_id', '=', 'users.id')
-            ->where('game_id', '=', $turn->game->id)
+            ->where('game_id', '=', $turn->game_id)
             ->select('slots.x', 'slots.y', 'users.color')
             ->get();
 
         # dispatch board positions
         NotifyNewBoard::dispatch($turn, $slots);
 
-        return $slots;  //TODO: should not return anything??
+        // return $slots;  //TODO: should not return anything??
     }
 
 
@@ -632,12 +628,9 @@ class TurnController extends Controller
      *
      * @param App\Turn $turn
      **/
-    public function slot(Turn $turn)
+    public static function slot(Turn $turn)
     {
 
-
-
-        // delete old slot for that user
 
         // delete the previous slot for the given turn's user
         DB::table('game_slot')->where('user_id', '=', $turn->user_id)
@@ -646,14 +639,6 @@ class TurnController extends Controller
 
         // find a new free slot for new mouvement
 
-
-
-        // used slots for the given $turn->box: $turn->box->slots
-        // return ($turn->game->slots);
-        // $used_slots = array();
-        // foreach ($turn->box->slots as $slot) {
-        //     $used_slots[] = $slot->id;
-        // }
 
         // return $turn;
         $slots = DB::table('game_slot')
@@ -666,25 +651,15 @@ class TurnController extends Controller
             foreach ($slots as $slot) {
                 $used_slots[] = $slot->id;
             }
-            // var_dump($used_slots);
-        // return $used_slots;
 
-        // return $used_slots;
         // all possible slots for a given $turn->box: $turn->box->slots
         $all_slots = array();
         foreach ($turn->box->slots as $slot) {
             $all_slots[] = $slot->id;
         }
-        // return $all_slots;
+
         // free slots for the given box
         $free_slots = array_diff($all_slots, $used_slots);
-
-        // return $free_slots;
-
-        // delete the previous slot for the given turn's user
-        // DB::table('game_slot')->where('user_id', '=', $turn->user_id)
-        //     ->where('game_id', '=', $turn->game_id)
-        //     ->delete();
 
         // save the assigned slot into the ddbb for the given turn's user
         $slot = array_shift($free_slots);
@@ -695,6 +670,23 @@ class TurnController extends Controller
             'slot_id' => $slot->id,
             'user_id' => $turn->user_id,
         ]);
-
     }
+
+    /**
+     * stores the initial slot for a given user and game
+     *
+     * @param Int $user_id
+     * @param Int $game_id
+     **/
+    public static function initialSlot($user_id, $game_id)
+    {
+        $turn = new Turn;
+        $turn->game_id = $game_id;
+        $turn->user_id = $user_id;
+        $turn->box_id = 1;
+
+        TurnController::slot($turn);
+        TurnController::slots($turn);
+    }
+
 }

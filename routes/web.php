@@ -60,9 +60,13 @@ Route::group(['prefix' => 'permissions', 'middleware' => ['role:admin']], functi
     Route::delete('/{permission}', 'PermissionController@destroy')->name('permissions.destroy')->middleware('auth');
 });
 
-Route::resource('/games', 'GameController')->middleware('auth');
+// Route::resource('/games', 'GameController')->middleware('auth');
 Route::group(['prefix' => 'games', 'middleware' => ['auth']], function () {
 
+    Route::get('/', 'GameController@index')->name('games.index');
+    Route::get('/create', 'GameController@create')->name('games.create');
+    Route::get('/{game}', 'GameController@show')->name('games.show');
+    Route::delete('/{game}', 'GameController@destroy')->name('games.destroy');
     Route::get('/{game}/start', 'GameController@start')->name('games.start');
     Route::get('/{game}/stop', 'GameController@stop')->name('games.stop');
     Route::get('/{game}/open', 'GameController@open')->name('games.open');
