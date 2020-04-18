@@ -88,9 +88,9 @@
         },
         mounted() {
             // console.log(this.turn.id);
-            window.onresize = function () {
-                location.reload();
-            };
+            // window.onresize = function () {
+            //     location.reload();
+            // };
             axios.get('/api/turns/' + this.turn.id + '/slots').then(e => {
                 // console.log(e);
                 // e.data.forEach(slot => {
