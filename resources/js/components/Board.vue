@@ -92,6 +92,19 @@
             //     location.reload();
             // };
             axios.get('/api/turns/' + this.turn.id + '/slots').then(e => {
+                e.slots.forEach(slot => {
+                        slot.x = slot.x * this.scale;
+                        slot.y = slot.y * this.scale;
+                        // slot.fill.toString();
+                        slot.radius = 12 * this.scale;
+                        slot.stroke = 'black';
+                        slot.strokeWidth = 1;
+                        // console.log(slot.color);
+                        // this.list.push(slot);
+                    });
+                    // console.log(e.slots);
+                    // const pos = { x: response.data.x, y: response.data.y, radius: 20, fill: 'blue' };
+                    this.list = e.slots;
                 // console.log(e);
                 // e.data.forEach(slot => {
                 //     slot.x = slot.x * this.scale;
