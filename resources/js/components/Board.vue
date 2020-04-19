@@ -34,7 +34,7 @@
     export default {
 
         updated: function () {
-            console.log('updated');
+            // console.log('updated');
         },
         props: {
             game: {
@@ -91,8 +91,10 @@
             // window.onresize = function () {
             //     location.reload();
             // };
-            axios.get('/api/turns/' + this.turn.id + '/slots').then(e => {
-                e.slots.forEach(slot => {
+            axios.get('/api/turns/' + this.turn.id + '/slots')
+                .then(e => {
+                    // console.log(e);
+                    e.data.forEach(slot => {
                         slot.x = slot.x * this.scale;
                         slot.y = slot.y * this.scale;
                         // slot.fill.toString();
@@ -104,7 +106,7 @@
                     });
                     // console.log(e.slots);
                     // const pos = { x: response.data.x, y: response.data.y, radius: 20, fill: 'blue' };
-                    this.list = e.slots;
+                    this.list = e.data;
                 // console.log(e);
                 // e.data.forEach(slot => {
                 //     slot.x = slot.x * this.scale;

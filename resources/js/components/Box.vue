@@ -200,7 +200,7 @@
             }
         },
         mounted() {
-            console.log(this.box);
+            // console.log(this.box);
             if (this.turnObject.dice != null) {
                 axios.post('/api/options', {
                         box: this.box.box,
@@ -234,7 +234,7 @@
                     }).then(response => {
                         // console.log(response);
                         this.boxOptions = response.data;
-                        console.log(this.boxOptions);
+                        // console.log(this.boxOptions);
                     }).catch(e =>{
                         console.log(e);
                     });
@@ -262,8 +262,11 @@
             window.Echo.channel('game.' + this.turnObject.game_id)
                 .listen('ShowBoxResult', e => {
                     axios.get('/api/users/' + e.turn.user_id + '/name').then(response => {
+                        // console.log(e);
+                        // console.log(response);
+                        // this.boxName = e.turn.box.box;
                         this.turnUserName = response.data;
-                        this.text = "En/na " + this.turnUserName + " ha mogut peça a " + this.boxName;
+                        this.text = "En/na " + this.turnUserName + " ha mogut peça a " + e.turn.box.box;
                         this.success(this.text)
                     });
                 });

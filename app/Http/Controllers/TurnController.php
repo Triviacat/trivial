@@ -96,7 +96,7 @@ class TurnController extends Controller
      */
     public function box(Turn $turn, Request $request)
     {
-
+        // return($turn);
         $attributes = $request->validate([
             'box' => ['required'],
             'topic' => ['sometimes'],
@@ -619,7 +619,7 @@ class TurnController extends Controller
         # dispatch board positions
         NotifyNewBoard::dispatch($turn, $slots);
 
-        // return $slots;  //TODO: should not return anything??
+        return $slots;
     }
 
 

@@ -13,7 +13,9 @@
         <div class="content">
             @include('includes.topics')
         </div>
+        @if (isset($game->turn))
         <board :turn="{{ $game->turn }}" :game="{{ $game }}" :players="{{ json_encode($game->users()) }}"></board>
+        @endif
         {{-- <figure class="image">
             <img src="/assets/images/trivial3.png">
         </figure> --}}

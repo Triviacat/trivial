@@ -24,6 +24,7 @@ class ShowBoxResult implements ShouldBroadcast
     public function __construct($turn)
     {
         $this->turn = $turn;
+        // $this->turn->boxName = $turn->box->box;
     }
 
     /**
