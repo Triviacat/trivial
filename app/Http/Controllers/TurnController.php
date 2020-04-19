@@ -686,7 +686,7 @@ class TurnController extends Controller
         $turn->box_id = 1;
 
         TurnController::slot($turn);
-        TurnController::slots($turn);
+        // TurnController::slots($turn);
     }
 
 }

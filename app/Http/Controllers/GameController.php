@@ -37,12 +37,12 @@ class GameController extends Controller
         $game->players = array(auth()->user()->id);
         $game->save();
 
-        $turn = new Turn;
-        $turn->game_id = $game->id;
-        $turn->user_id = $game->user_id;
-        $turn->box_id = 1;
-        // return $turn;
-        TurnController::slot($turn);
+        # add board slot
+        // $turn = new Turn;
+        // $turn->game_id = $game->id;
+        // $turn->user_id = $game->user_id;
+        // $turn->box_id = 1;
+        TurnController::initialSlot($game->user_id, $game->id);
         // TurnController::slots($turn);
 
         return redirect('/games');
@@ -190,6 +190,9 @@ class GameController extends Controller
         $players[] = auth()->user()->id;
         $game->players = $players;
         $game->update();
+
+        # add board slot
+        TurnController::initialSlot(auth()->user()->id, $game->id);
 
         PlayerJoinsGame::dispatch($game);
 
