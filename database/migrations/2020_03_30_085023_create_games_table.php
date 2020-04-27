@@ -15,7 +15,7 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('estate')->default(1); //0 => closed, 1 => opened, 2 => started, 3 => stoped, 4 => ended
+            $table->tinyInteger('estate')->default(1); //0 => closed, 1 => opened, 2 => started, 3 => stopped, 4 => ended
             $table->foreignId('user_id');
             $table->foreignId('turn_id');
             $table->text('players')->nullable(); // array()

@@ -2,17 +2,9 @@
     <span>{{ whosturn }}.&nbsp;{{ message }}</span>
 </template>
 
-
 <script>
     export default {
-        mounted() {
-            // //  console.log('Component mounted.')
-            // //  console.log(this.turn)
-        },
         props: {
-            // game: {
-            //     type: Object
-            // },
             turn: {
                 type: Object
             },
@@ -20,10 +12,6 @@
                 type: Object
             }
         },
-        methods: {
-
-        },
-
         data() {
             return {
                 whosturn: this.turnuser.name,
@@ -43,10 +31,8 @@
                 });
             window.Echo.channel('game.' + this.turn.game_id)
                 .listen('NotifyGameOver', e => {
-                    console.log('Game over');
-                    this.message = "Enhorabona, has guanyat!!"
+                    this.message = this.trans.get('trivial.youWin')
                 });
         }
     };
-
 </script>

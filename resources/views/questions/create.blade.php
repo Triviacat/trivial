@@ -3,7 +3,7 @@
 
 @extends('layouts.app')
 
-@section('title', 'Create a new question')
+@section('title', __('trivial.createQuestion'))
 
 @section('content')
 <form action="/questions" method="post">
@@ -11,7 +11,7 @@
     'question' => new App\Question,
     'topics' => $topics,
     'sets' => $sets,
-    'buttonText' => 'Create question'
+    'buttonText' => __('trivial.createQuestion')
     ]) </form>
 
 @include('errors')

@@ -28,17 +28,17 @@
 
                     <div class="navbar-end">
                         @if (Auth::guest())
-                        <a class="navbar-item " href="{{ route('login') }}">Login</a>
+                        <a class="navbar-item " href="{{ route('login') }}">@lang('trivial.login')</a>
                         {{-- <a class="navbar-item " href="{{ route('register') }}">Register</a> --}}
                         @else
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link" href="#">{{ Auth::user()->name }}</a>
 
                             <div class="navbar-dropdown">
-                                <a class="dropdown-item" href="{{ route('admin') }}">Admin</a>
+                                <a class="dropdown-item" href="{{ route('admin') }}">@lang('trivial.admin')</a>
                                 <a class="navbar-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                    Logout
+                                    @lang('trivial.logout')
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -75,6 +75,11 @@
     </div>
 
     <!-- Scripts -->
+    <script>
+        window.default_locale = "{{ config('app.locale') }}";
+        window.fallback_locale = "{{ config('app.fallback_locale') }}";
+        window.messages = @json($messages);
+    </script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

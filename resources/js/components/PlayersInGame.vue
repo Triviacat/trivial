@@ -2,10 +2,10 @@
     <div>{{ playersingame }}
     <span v-if="game.estate != 4">
         <span v-if="game.players.find(checkUid) != user.id">
-            <a :href="'/games/' + game.id + '/join'" class="button is-info is-small" v-on:click="updatePlayers">Join</a>
+            <a :href="'/games/' + game.id + '/join'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.join') }}</a>
         </span>
         <span v-if="((game.players.find(checkUid) == user.id) && (user.id != game.user_id))">
-            <a :href="'/games/' + game.id + '/leave'" class="button is-info is-small" v-on:click="updatePlayers">Leave</a>
+            <a :href="'/games/' + game.id + '/leave'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.leave') }}</a>
         </span>
     </span>
     </div>
@@ -14,9 +14,6 @@
 
 <script>
     export default {
-        mounted() {
-            //  console.log(this.game.players)
-        },
         props: {
             game: {
                 type: Object
@@ -42,7 +39,6 @@
                 })
             },
         },
-
         data() {
             return {
                 playersingame: this.game.players.length
@@ -51,20 +47,15 @@
         created() {
             window.Echo.channel('game.'+ this.game.id)
             .listen('PlayerLeavesGame', e => {
-                var text = "En/Na " + this.user.name + " ha sortit de la partida " + this.game.id;
+                var text = this.user.name + ' ' + this.trans.get('trivial.hasLeft') + ' ' + this.game.id;
                 this.updatePlayers();
                 this.success(text);
             })
             .listen('PlayerJoinsGame', e => {
-                var text = "En/Na " + this.user.name + " s'ha afegit a la partida " + this.game.id;
+                var text = this.user.name + ' ' + this.trans.get('trivial.hasJoined') + ' ' + this.game.id;
                 this.updatePlayers();
                 this.success(text);
             });
-
         }
-
-
     };
-
-
 </script>

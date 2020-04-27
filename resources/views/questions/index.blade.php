@@ -5,24 +5,24 @@
 
 @section('content')
 
-<a class="button content" href="/questions/create">Create</a>
+<a class="button content" href="/questions/create">@lang('trivial.create')</a>
 
 <div class="card content">
     <header class="card-header">
-        <p class="card-header-title">Search</p>
+        <p class="card-header-title">@lang('trivial.search')</p>
     </header>
     <div class="card-content">
         <div class="columns">
             <div class="column is-half">
                 <form method="GET" id="searchForm">
                     <div class="field">
-                        <label class="label">Pregunta</label>
+                        <label class="label">@lang('trivial.question')</label>
                         <div class="control">
                             <input type="text" class="input" name="q" id="q" value="{{ request('q') }}">
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label">Resposta</label>
+                        <label class="label">@lang('trivial.answer')</label>
                         <div class="control">
                             <input type="text" class="input" name="a" id="a" value="{{ request('a') }}">
                         </div>
@@ -31,14 +31,14 @@
                         <div class="control">
                             <button type="submit" class="button is-info">
                                 @if (isset($title))
-                                Search {{ $title }}
+                                    @lang('trivial.search') {{ $title }}
                                 @else
-                                Search all
+                                    @lang('trivial.searchAll')
                                 @endif
                             </button>
                         </div>
                         <div class="control">
-                            <a href="{{ route('questions.index') }}" class="button">Clear</a>
+                            <a href="{{ route('questions.index') }}" class="button">@lang('trivial.clear')</a>
                         </div>
 
                     </div>
@@ -47,22 +47,17 @@
         </div>
 
     </div>
-    {{-- <footer class="card-footer">
-        <a href="{{ route('questions.orphan') }}" class="card-footer-item">List orphan</a>
-        <a href="{{ route('questions.emptyPrice') }}" class="card-footer-item">List empty price</a>
-    </footer> --}}
-
 </div>
 
   <table class="table is-fullwidth is-hoverable is-striped is-narrow">
     <thead>
       <tr>
-        <th>Topic</th>
-        <th>Question</th>
-        <th>Answer</th>
-        <th>Set</th>
+        <th>@lang('trivial.topic')</th>
+        <th>@lang('trivial.question')</th>
+        <th>@lang('trivial.answer')</th>
+        <th>@lang('trivial.set')</th>
 
-        <th>Actions</th>
+        <th>@lang('trivial.actions')</th>
       </tr>
     </thead>
     <tbody>
@@ -74,11 +69,11 @@
         <td>{{ $question->answer }}</td>
         <td>{{ $question->set->title ?? '' }}</td>
             <td>
-                <a href="/questions/{{ $question->id }}/edit" class="button is-success is-small">Edit</a>
+                <a href="/questions/{{ $question->id }}/edit" class="button is-success is-small">@lang('trivial.edit')</a>
                 <form method="post" action="/questions/{{ $question->id }}" style="display: inline-block;" onsubmit="return confirm('Do you really want to delete?');">
                     @method('DELETE')
                     @csrf
-                    <button type="submit" class="button is-danger is-small">Delete question</button>
+                    <button type="submit" class="button is-danger is-small">@lang('trivial.delete')</button>
                 </form>
             </td>
           </tr>

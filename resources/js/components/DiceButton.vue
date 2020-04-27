@@ -1,13 +1,9 @@
 <template>
-<b-button class="button" @click="rollDice" :disabled=enableDisable>Llença el dau</b-button>
+    <b-button class="button" @click="rollDice" :disabled=enableDisable>{{ trans.get('trivial.rollDice') }}</b-button>
 </template>
-
 
 <script>
     export default {
-        mounted() {
-            // //  console.log('Component mounted.')
-        },
         props: {
             turn: {
                 type: Object
@@ -26,17 +22,14 @@
             },
             rollDice: function () {
                 this.enableDisable = true;
-                // //  console.log('rollDice triggered');
                 var dice = Math.floor(Math.random() * ((6 - 1) + 1) + 1);
-                // //  console.log(this.turnObject.id);
                 axios.post('/api/turns/' + this.turnObject.id + '/roll', {
                         dice: dice,
                     })
                     .then(function (response) {
-                        // //  console.log(response);
                     })
                     .catch(function (error) {
-                        //  console.log(error);
+                        console.log(error);
                     });
             },
             success: function (text) {
@@ -57,26 +50,18 @@
             }
         },
         created() {
-            // //  console.log(this.turn)
-
                 window.Echo.channel('user.' + this.user.id)
                 .listen('EnableDiceButton', e => {
-
-                        this.enableDisable = false;
-                        var text = "Ja pots tirar el dau, " + this.user.name + ".";
-                        this.success(text)
-
+                    this.enableDisable = false;
+                    var text = this.user.name + ', ' + this.trans.get('trivial.rollDiceNow');
+                    this.success(text)
                 });
                 window.Echo.channel('game.' + this.turnObject.game_id)
                 .listen('NotifyNewTurn', e => {
-                    //  console.log(e.turn);
                     this.turnObject = e.turn;
-                    // //  console.log(this.turnObject);
-                    // this.enableDisable = false;
                 });
                 window.Echo.channel('game.' + this.turnObject.game_id)
                 .listen('NotifyWhosTurn', e => {
-                    //  console.log(e.turn);
                     this.turnObject = e.turn;
                 })
         }

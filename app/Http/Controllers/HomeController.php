@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -23,6 +24,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $message = '';
+        return view('home', compact('message'));
+    }
+
+    /**
+     * Manage notification.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function notify(Request $request)
+    {
+        $response = $request->validate(['email' => 'required|email']);
+        // return $response['email'];
+        DB::insert('insert into notify (email) values (?)', [$response['email']]);
+        return redirect()->route('home')->with('message', 'Gràcies. Us avisarem quan obrim un periode de proves');
     }
 }
