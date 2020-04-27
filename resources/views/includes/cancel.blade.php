@@ -1,4 +1,4 @@
 <div class="control">
-        <a href="{{ url()->previous() }}" class="button">Cancel</a>
+        <a href="{{ url()->previous() }}" class="button">@lang('trivial.cancel')</a>
 
 </div>

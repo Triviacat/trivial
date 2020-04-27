@@ -25,7 +25,7 @@
 
 <div class="field is-grouped">
     <div class="control">
-        <button type="submit" class="button is-info">Submit</button>
+        <button type="submit" class="button is-info">{{ $buttonText }}</button>
     </div>
     @include('includes.cancel')
 </div>

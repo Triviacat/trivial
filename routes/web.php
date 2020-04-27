@@ -18,14 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('games');
-});
+// Route::get('/', function () {
+//     return redirect('home');
+// });
 
 // Auth::routes();
 Auth::routes(['register' => false]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::post('/notify', 'HomeController@notify')->name('notify');
 
 Route::get('/admin', 'AdminController@index')->name('admin');
 

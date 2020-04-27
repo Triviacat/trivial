@@ -28,7 +28,7 @@
                 @endif
                 @endif
                 @endif -->
-                <form method="post" :action="'/games/' + game.id" style="display: inline-block;" onsubmit="return confirm('Do you really want to delete?');">
+                <form method="post" :action="'/games/' + game.id" style="display: inline-block;" v-on:submit="return confirm(trans.get('trivial.reallyDetele'));">
                     <!-- @method('DELETE') -->
                     <input type="hidden" name="_method" value="DELETE">
                     <!-- @csrf -->

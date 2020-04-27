@@ -1,47 +1,33 @@
 <template>
-
     <section>
-        <!-- <label class="label">Casella</label> -->
-
-
-                <!-- <b-field>
-                    <b-input v-model="boxName" required validation-message="Atenció al format de la casella!"
-                        pattern="^(([A-F]|[a-f]):([1-9]|1[012])|0)$" maxlength="4"></b-input>
-                </b-field> -->
-                <b-field label="Casella">
-                    <b-select placeholder="Selecciona una casella" v-model="boxName" :disabled=enableDisable4 required>
-                        <option v-for="box in boxOptions" :key="box" :value="box">{{ box }}</option>
-                    </b-select>
-                </b-field>
-
+        <b-field :label="trans.get('trivial.box')">
+            <b-select :placeholder="trans.get('trivial.chooseBox')" v-model="boxName" :disabled=enableDisable4 required>
+                <option v-for="box in boxOptions" :key="box" :value="box">{{ box }}</option>
+            </b-select>
+        </b-field>
         <div class="field">
-        <div class="control">
+            <div class="control">
                 <button class="button is-info" :disabled=enableDisable @click="send">
-                    Mou la peça
+                    {{ trans.get('trivial.moveThePiece') }}
                 </button>
             </div>
-            </div>
-            <div class="field">
-        <!-- <div class="control">
-            <button class="button is-light" :disabled=enableDisable2 @click="tornaHi">
-                Torna a moure la peça
-            </button>
-        </div> -->
+        </div>
+        <div class="field">
         </div>
         <b-field label="Tria un tema" v-show=showTopics>
             <b-select placeholder="Tria un tema" v-model=topic :disabled=enableDisable3 required>
-                <option value="">Tria un tema</option>
+                <option value="">{{ trans.get('trivial.chooseTopic') }}</option>
                 <!-- TODO: This needs to be taken from ddbb -->
-                <option value="1">Geografia</option>
-                <option value="2">Oci</option>
-                <option value="3">Història</option>
-                <option value="4">Llengua</option>
-                <option value="5">Coses de la vida</option>
-                <option value="6">Esports</option>
+                <option value="1">{{ trans.get('trivial.geography') }}</option>
+                <option value="2">{{ trans.get('trivial.leisure') }}</option>
+                <option value="3">{{ trans.get('trivial.history') }}</option>
+                <option value="4">{{ trans.get('trivial.language') }}</option>
+                <option value="5">{{ trans.get('trivial.thingsInLife') }}</option>
+                <option value="6">{{ trans.get('trivial.sports') }}</option>
             </b-select>
 
         </b-field>
-        <b-button @click="send2" v-show=showTopics :disabled=enableDisable3>Envia</b-button>
+        <b-button @click="send2" v-show=showTopics :disabled=enableDisable3>{{ trans.get('trivial.send') }}</b-button>
     </section>
 
 
@@ -50,9 +36,6 @@
 
 <script>
     export default {
-        // mounted() {
-        //     // //  console.log('Component mounted.')
-        // },
         props: {
             turn: {
                 type: Object
@@ -82,7 +65,6 @@
             },
             send() { // send box value
                 if (this.boxName == '0') {
-                    // console.log(this.playersArray)
                     this.playersArray.forEach(player => {
                         // user is at box 0 and has all cheeses
                         // he has to answer 4 of 6 questions of all topics to win
@@ -118,7 +100,6 @@
                 }
             },
             send2() { // when the user has choosen the box 0 but has not all the cheeses
-                // console.log(this.topic)
                 this.enableDisable3 = true;
                 axios.post('/api/turns/' + this.turnObject.id + '/box', {
                         'box': this.boxName,
@@ -135,24 +116,16 @@
                     });
             },
             send3() { // when the user has choosen the box 0 AND has all the cheeses (finish the game)
-                // console.log(this.topic)
                 axios.post('/api/turns/' + this.turnObject.id + '/box', {
                         'box': this.boxName,
                         'finish': true
                     })
-                    // .then((response) => (
-                    // this.enableDisable = true,
-                    // this.enableDisable2 = false,
-                    // this.enableDisable3 = true
-                    // ))
                     .catch(function (error) {
                         console.log(error);
                     });
             },
             toggleButton(user_id) {
                 if (this.turn.user_id == user_id && this.turn.step == 'box') {
-                    // var text = "Ara pots moure la peça";
-                    // this.success(text);
                     this.enableDisable2 = false;
                     return false;
 
@@ -160,22 +133,15 @@
                     return true; //means button disabled
                 }
             },
-            tornaHi() {
-                // //  console.log(this.turnObject.id);
-                // //  console.log(this.boxName);
-                // var text = "En/na " + this.turnuser.name + " ha mogut peça: " + this.boxName;
-                // this.success(text)
+            moveAgain() {
                 axios.get('/api/turns/' + this.turnObject.id + '/box/undo')
                     .then((response) => (
-                        // //  console.log(response),
                         this.enableDisable2 = true,
                         this.enableDisable = false,
                         this.enableDisable4 = false
-                        // this.text = "En/na " + this.turnuser.name + " ha mogut peça a " + this.boxName,
-                        // this.success(this.text)
                     ))
                     .catch(function (error) {
-                        //  console.log(error);
+                        console.log(error);
                     });
             },
 
@@ -186,7 +152,6 @@
                 boxName: null,
                 boxObject: this.box,
                 turnObject: this.turn,
-                // enableDisable: false,
                 enableDisable: this.toggleButton(this.user.id),
                 text: '',
                 enableDisable2: true,
@@ -200,15 +165,12 @@
             }
         },
         mounted() {
-            // console.log(this.box);
             if (this.turnObject.dice != null) {
                 axios.post('/api/options', {
                         box: this.box.box,
                         dice: this.turnObject.dice
                     }).then(response => {
-                        // console.log(response);
                         this.boxOptions = response.data;
-                        // console.log(this.boxOptions);
                     }).catch(e =>{
                         console.log(e);
                     });
@@ -216,11 +178,10 @@
 
             window.Echo.channel('user.' + this.user.id)
                 .listen('EnableBoxButton', e => {
-                    //  console.log(e);
                     this.toggleButton(e.turn.user_id);
                     if (e.turn.user_id == this.user.id && e.turn.step == 'box') {
 
-                        var text = "Ara pots moure la peça";
+                        var text = this.trans.get('trivial.nowMovePice');
                         this.success(text);
                         this.enableDisable = false;
                         this.enableDisable4 = false;
@@ -232,16 +193,13 @@
                         box: e.box,
                         dice: e.turn.dice
                     }).then(response => {
-                        // console.log(response);
                         this.boxOptions = response.data;
-                        // console.log(this.boxOptions);
                     }).catch(e =>{
                         console.log(e);
                     });
                 });
             window.Echo.channel('game.' + this.turnObject.game_id)
                 .listen('NotifyNewTurn', e => {
-                    //  console.log(e);
                     this.turnObject = e.turn;
                     this.enableDisable2 = true;
                     this.boxName = null;
@@ -251,7 +209,6 @@
                 });
             window.Echo.channel('game.' + this.turnObject.game_id)
                 .listen('NotifyWhosTurn', e => {
-                    //  console.log(e.turn);
                     this.turnObject = e.turn;
                     this.enableDisable2 = true;
                     this.boxName = null;
@@ -262,24 +219,18 @@
             window.Echo.channel('game.' + this.turnObject.game_id)
                 .listen('ShowBoxResult', e => {
                     axios.get('/api/users/' + e.turn.user_id + '/name').then(response => {
-                        // console.log(e);
-                        // console.log(response);
-                        // this.boxName = e.turn.box.box;
                         this.turnUserName = response.data;
-                        this.text = "En/na " + this.turnUserName + " ha mogut peça a " + e.turn.box.box;
+                        this.text = this.turnUserName + ' ' + this.trans.get('trivial.movedTo')+ ' ' + e.turn.box.box;
                         this.success(this.text)
                     });
                 });
             window.Echo.channel('game.' + this.turnObject.game_id)
                 .listen('NotifyGameUpdate', e => {
                     axios.get('/api/games/' + this.turnObject.game_id + '/users').then(response => {
-                            //  console.log(response.data);
                             this.playersArray = response.data;
-                            // var text = "En/na " + this.turnuser.name + " ha tirat el dau i l'hi ha sortit un " + response.data[0].dice;
-                            // this.success(text)
                         })
                         .catch(function (error) {
-                            //  console.log(error);
+                            console.log(error);
                         });
                 });
         }

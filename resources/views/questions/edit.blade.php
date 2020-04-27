@@ -4,14 +4,14 @@
 
 @extends('layouts.app')
 
-@section('title', 'Edit question: ' . $question->title)
+@section('title', __('trivial.updateQuestion') . ': ' . $question->title)
 @section('content')
 <form action="/questions/{{ $question->id }}" method="post">
         @method('PATCH')
         @include ('questions.form', [
             'topics' => $topics,
             'sets' => $sets,
-            'buttonText' => 'Update question'
+            'buttonText' => __('trivial.updateQuestion')
         ])
     </form>
 

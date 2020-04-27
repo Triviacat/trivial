@@ -22,6 +22,10 @@ import Vue from 'vue';
 import VueKonva from 'vue-konva';
 import VueResize from 'vue-resize';
 
+import Lang from 'lang.js';
+
+
+
 
 
 
@@ -67,10 +71,22 @@ Vue.component('cheeses', require('./components/Cheeses.vue').default);
 Vue.component('board', require('./components/Board.vue').default);
 // Vue.component('gamelist', require('./components/GameList.vue').default);
 
+const default_locale = window.default_language;
+const fallback_locale = window.fallback_locale;
+const messages = window.messages;
+
+// console.log(window.messages);
+
+
+
+
+Vue.prototype.trans = new Lang( { messages, locale: default_locale, fallback: fallback_locale } );
 
 const app = new Vue({
     el: '#app'
 });
+
+
 
 
 // Bulma NavBar Burger Script

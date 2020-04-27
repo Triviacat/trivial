@@ -3,12 +3,12 @@
 
 @extends('layouts.app')
 
-@section('title', 'Edit permission: ' . $permission->title)
+@section('title', __('trivial.editPermission') . $permission->title)
 @section('content')
 <form action="/permissions/{{ $permission->id }}" method="post">
         @method('PATCH')
         @include ('permissions.form', [
-            'buttonText' => 'Update permission'
+            'buttonText' => __('trivial.updatePermission')
         ])
     </form>
 

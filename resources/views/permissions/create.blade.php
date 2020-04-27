@@ -1,14 +1,13 @@
 
 @extends('layouts.app')
 
-@section('title', 'Create a new permission')
+@section('title', __('trivial.createPermission'))
 
 @section('content')
-<h1 class="is-size-1">Create Permission</h1>
     <form action="/permissions" method="post">
         @include ('permissions.form', [
             'permission' => new App\Permission,
-              'buttonText' => 'Create permission'
+              'buttonText' => __('trivial.createPermission')
           ])    </form>
 
   @include('errors')
