@@ -138,7 +138,7 @@
                         <h2 class="subtitle">
                             Estem treballant en una versió del trivial en català per poder jugar confinats, davant un ordinador, connectats amb les nostres amistats en un video xat de mòbil, per donar-li un major realisme.<br><br>
                             Tot de codi obert i gratuït, naturalment<br><br>
-                            <a href="https://preguntes.trivial.site" >Voleu col·laborar tot afegint preguntes?</a>
+                            <a href="https://preguntes.trivial.site" >Voleu col·laborar tot afegint preguntes? <i class="fa fa-external-link"></i></a>
                         </h2>
                         {{-- <div class="box">
                         <p><a href="https://preguntes.trivial.site" class="button">Voleu col·laborar tot afegint preguntes?</a></p>
