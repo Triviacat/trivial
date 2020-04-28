@@ -28,6 +28,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:description" content="El trivial obert, col·laboratiu i en català." />
+    <meta property="og:title" content="{{ config('app.name', 'Laravel') }}" />
+    <meta property="og:url" content="{{ env('APP_URL') }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="{{ app()->getLocale() }}" />
+    <meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}" />
+    <meta property="og:image" content="{{ asset('assets/images/Trivial.png') }}" />
+
+    <meta name="twitter:card" content="photo" />
+    <meta name="twitter:title" content="{{ config('app.name', 'Laravel') }}" />
+    <meta name="twitter:site" content="@garrigos_robert" />
+    <meta name="twitter:description" content="El trivial obert, col·laboratiu i en català." />
+    <meta name="twitter:site" content="{{ env('APP_URL') }}" />
     <title>TriviaCat</title>
     {{-- <link rel="shortcut icon" href="/assets/images/fav_icon.png" type="image/x-icon"> --}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -123,13 +137,16 @@
                         </h1>
                         <h2 class="subtitle">
                             Estem treballant en una versió del trivial en català per poder jugar confinats, davant un ordinador, connectats amb les nostres amistats en un video xat de mòbil, per donar-li un major realisme.<br><br>
-                            Tot de codi obert i gratuït, naturalment
+                            Tot de codi obert i gratuït, naturalment<br><br>
+                            <a href="https://preguntes.trivial.site" >Voleu col·laborar tot afegint preguntes?</a>
                         </h2>
-                        {{-- <p><a href="https://preguntes.trivial.site" class="button">Voleu col·laborar tot afegint preguntes?</a></p> --}}
+                        {{-- <div class="box">
+                        <p><a href="https://preguntes.trivial.site" class="button">Voleu col·laborar tot afegint preguntes?</a></p>
+                        </div> --}}
                         <div class="box">
                             <form action="/notify" method="post">
                                 @csrf
-                                <p>Deixeu-nos un correu si voleu participar de les proves que obrirem aviat.</p>
+                                <div class="content"><p>Deixeu-nos un correu si voleu participar de periode de proves que obrirem aviat.</p></div>
                             <div class="field is-grouped">
                                 <p class="control is-expanded">
                                     <input class="input" name="email" type="email" placeholder="Enter your email">
