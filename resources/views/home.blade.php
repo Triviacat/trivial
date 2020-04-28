@@ -29,7 +29,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta property="og:description" content="El trivial obert, col·laboratiu i en català." />
+    <meta property="og:description" content="El trivial en líniam, obert, col·laboratiu i en català." />
     <meta property="og:title" content="{{ config('app.name', 'Laravel') }}" />
     <meta property="og:url" content="{{ env('APP_URL') }}" />
     <meta property="og:type" content="website" />
@@ -40,7 +40,7 @@
     <meta name="twitter:card" content="photo" />
     <meta name="twitter:title" content="{{ config('app.name', 'Laravel') }}" />
     <meta name="twitter:site" content="@garrigos_robert" />
-    <meta name="twitter:description" content="El trivial obert, col·laboratiu i en català." />
+    <meta name="twitter:description" content="El trivial en linia, obert, col·laboratiu i en català." />
     <meta name="twitter:site" content="{{ env('APP_URL') }}" />
     <title>TriviaCat</title>
     {{-- <link rel="shortcut icon" href="/assets/images/fav_icon.png" type="image/x-icon"> --}}
