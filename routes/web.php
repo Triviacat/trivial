@@ -23,9 +23,10 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // Auth::routes();
-Auth::routes(['register' => false]);
+Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/play', 'HomeController@play')->name('home');
 Route::post('/notify', 'HomeController@notify')->name('notify');
 
 Route::get('/admin', 'AdminController@index')->name('admin');
@@ -62,7 +63,7 @@ Route::group(['prefix' => 'permissions', 'middleware' => ['role:admin']], functi
 });
 
 // Route::resource('/games', 'GameController')->middleware('auth');
-Route::group(['prefix' => 'games', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'games', 'middleware' => ['verified']], function () {
 
     Route::get('/', 'GameController@index')->name('games.index');
     Route::get('/create', 'GameController@create')->name('games.create');

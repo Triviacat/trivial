@@ -24,8 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $message = '';
-        return view('home', compact('message'));
+        return view('inici');
     }
 
     /**
@@ -40,4 +39,6 @@ class HomeController extends Controller
         DB::insert('insert into notify (email) values (?)', [$response['email']]);
         return redirect()->route('home')->with('message', 'Gràcies. Us avisarem quan obrim el periode de proves');
     }
+
+
 }

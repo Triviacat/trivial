@@ -26,7 +26,7 @@ class ViewServiceProvider extends ServiceProvider
     {
 
         View::composer(
-            ['layouts.appgame', 'layouts.app'], 'App\Http\View\Composers\GameComposer'
+            ['layouts.appgame', 'layouts.app', 'layouts.hero'], 'App\Http\View\Composers\GameComposer'
         );
     }
 }

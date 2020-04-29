@@ -28,7 +28,7 @@
 
                     <div class="navbar-end">
                         @if (Auth::guest())
-                        <a class="navbar-item " href="{{ route('login') }}">@lang('trivial.login')</a>
+                        <a class="navbar-item" href="{{ route('login') }}">@lang('trivial.login')</a>
                         {{-- <a class="navbar-item " href="{{ route('register') }}">Register</a> --}}
                         @else
                         <div class="navbar-item has-dropdown is-hoverable">
