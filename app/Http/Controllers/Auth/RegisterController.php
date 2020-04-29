@@ -29,7 +29,11 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    public function redirectTo()
+    {
+        return '/';
+        return view('inici')->with('message', 'Us hem enviat un correu de verificació amb un enllaç per finalitzar el procés de registre.');
+    }
 
     /**
      * Create a new controller instance.
@@ -49,11 +53,18 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        $validator = Validator::make($data, [
+            'register_name' => ['required', 'string', 'max:255'],
+            'register_email' => ['required', 'string', 'email', 'max:255', 'unique:users,email', 'confirmed'],
+            'register_password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+
+        // $validator->setAttributeNames([
+        //     'register_name' => 'name',
+        //     'register_email' => 'email',
+        //     'register_password' => 'password',
+        // ]);
+        return $validator;
     }
 
     /**
@@ -65,9 +76,9 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $data['register_name'],
+            'email' => $data['register_email'],
+            'password' => Hash::make($data['register_password']),
         ]);
     }
 }

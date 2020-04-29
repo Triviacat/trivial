@@ -85,7 +85,7 @@
                                 </a>
                             </span> --}}
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="https://preguntes.triviacat.site">
+                                <a class="button is-white is-outlined" href="{{ env('TRIVIACAT_PREGUNTES_URL') }}">
                                     <span class="icon">
                                         <i class="fa fa-book"></i>
                                     </span>
@@ -115,7 +115,7 @@
                         <h2 class="subtitle">
                             Estem treballant en una versió del trivial en català per poder jugar confinats, davant un ordinador, connectats amb les nostres amistats en un video xat de mòbil, per donar-li un major realisme.<br><br>
                             Tot de codi obert i gratuït, naturalment<br><br>
-                            <a href="https://preguntes.triviacat.site" >Voleu col·laborar tot afegint preguntes? <i class="fa fa-external-link"></i></a>
+                            <a href="{{ env('TRIVIACAT_PREGUNTES_URL') }}" >Voleu col·laborar tot afegint preguntes? <i class="fa fa-external-link"></i></a>
                         </h2>
                         {{-- <div class="box">
                         <p><a href="https://preguntes.triviacat.site" class="button">Voleu col·laborar tot afegint preguntes?</a></p>
