@@ -49,13 +49,13 @@
                             <div class="navbar-start"></div>
                             <div class="navbar-end">
 
-                                <a class="navbar-item" href="/rules">Instruccions</a>
+                                <a class="navbar-item" href="{{ env('TRIVIACAT_DOCS_URL') }}">Instruccions</a>
                                 <a class="navbar-item" href="/games">Jugar</a>
-                                <a class="navbar-item" href="https://preguntes.trivial.site">Preguntes</a>
+                                <a class="navbar-item" href="{{ env('TRIVIACAT_PREGUNTES_URL') }}">Preguntes</a>
 
                                 <span class="navbar-item">
                                     <a class="button is-white is-outlined"
-                                        href="https://github.com/BulmaTemplates/bulma-templates/blob/master/templates/hero.html">
+                                        href="https://github.com/Triviacat/web">
                                         <span class="icon">
                                             <i class="fab fa-github"></i>
                                         </span>
@@ -123,7 +123,7 @@
                                 <h4>Instruccions</h4>
                                 <p>Seguiu aquestes simples instruccions per jugar al trivial amb les vostres amistats
                                     amb TriviaCat.</p>
-                                <p><a href="/rules">Consulteu les instruccions</a></p>
+                                <p><a href="{{ env('TRIVIACAT_DOCS_URL') }}">Consulteu les instruccions</a></p>
                             </div>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                             <div class="content">
                                 <h4>Col·laborar</h4>
                                 <p>TriviaCat és un projecte obert i col·aboratiu. Podeu aportar les vostres pròpies <a
-                                        href="https://preguntes.trivial.site">preguntes i respostes</a>. També podeu
+                                        href="{{ env('TRIVIACAT_PREGUNTES_URL') }}">preguntes i respostes</a>. També podeu
                                     col·laborar en el desenvolupament i millora del codi que trobareu a <a
                                         href="https://github.com/Triviacat/web">Github</a>.</p>
                             </div>
