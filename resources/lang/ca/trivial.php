@@ -65,6 +65,7 @@ return [
     'permissions' => 'Permisos',
     'players' => 'Jugadors',
     'plays' => 'Juga',
+    'profile' => 'Perfil',
     'question' => 'Pregunta',
     'questions' => 'Preguntes',
     'readNow' => 'ara pots llegir la pregunta',
