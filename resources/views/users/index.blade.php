@@ -25,7 +25,7 @@
             <td>{{ $user->roles }}</td>
             <td>{{ $user->permissions }}</td>
             <td>
-                <a href="/users/{{ $user->id }}/edit" class="button is-success is-small">Edit</a>
+                <a href="{{ route('admin.users.edit', $user->id) }}" class="button is-success is-small">Edit</a>
                 {{-- <form method="post" action="/users/{{ $user->id }}" style="display: inline-block;" onsubmit="return confirm('Do you really want to delete?');">
                     @method('DELETE')
                     @csrf

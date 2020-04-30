@@ -7,7 +7,7 @@
 
 @section('title', 'Edit user: ' . $user->name)
 @section('content')
-<form action="/users/{{ $user->id }}" method="post">
+<form action="{{ route('admin.users.update', $user->id) }}" method="post">
         @method('PATCH')
         @include ('users.form', [
             'roles' => $roles,

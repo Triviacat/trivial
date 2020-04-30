@@ -4,6 +4,10 @@
 
 
 @section('content')
-
+<div class="container">
+    <div class="box">
+        content
+    </div>
+</div>
 
 @endsection

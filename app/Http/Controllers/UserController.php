@@ -59,7 +59,7 @@ class UserController extends Controller
         $user->syncPermissions(request()->permissions ?? array());
         $user->syncRoles(request()->roles ?? array());
         // $users->update($request);
-        return redirect('/users');
+        return redirect()->route('admin.users');
     }
 
     /**
