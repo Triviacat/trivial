@@ -22,7 +22,7 @@
                     <a class="navbar-link" href="#">{{ Auth::user()->name }}</a>
 
                     <div class="navbar-dropdown">
-                        <a class="dropdown-item" href="{{ route('users.show', auth()->user()->id) }}">@lang('trivial.profile')</a>
+                        <a class="dropdown-item" href="{{ route('profile.show', auth()->user()->id) }}">@lang('trivial.profile')</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                             @lang('trivial.logout')

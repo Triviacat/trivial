@@ -75,4 +75,17 @@ class UserController extends Controller
             'description' => ['required', 'min:3'], //validation rules can be members of an array
         ]);
     }
+
+    /**
+     * Show the specified resource.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function profileShow(User $user)
+    {
+        return view('profiles.show', [
+            'user' => $user,
+        ]);
+    }
 }
