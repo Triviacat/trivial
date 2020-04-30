@@ -2,24 +2,24 @@
     <tr>
             <td><a :href="'/games/' + game.id">{{ game.id }}</a></td>
         <td>
-            {{ game.estate }}</td>
+            {{ game.status }}</td>
         <td>{{ game.user.name }}</td>
         <td>{{ playersingame }}</td>
         <td>{{ updated_at()   }}</td>
            <td>
-                 <!-- @if ({{game.estate != 1 && {{game.estate != 4)
+                 <!-- @if ({{game.status != 1 && {{game.status != 4)
                 <a :href="'/games/' + game.id + '/open'" class="button is-primary is-small">Open</a>
                 @endif
-                @if ({{game.estate != 0 && {{game.estate != 4)
+                @if ({{game.status != 0 && {{game.status != 4)
                 <a :href="'/games/' + game.id + '/close'" class="button is-warning is-small">Close</a>
                 @endif
-                @if ({{game.estate != 2 && {{game.estate != 4)
+                @if ({{game.status != 2 && {{game.status != 4)
                 <a :href="'/games/' + game.id + '/start'" class="button is-success is-small">Start</a>
                 @endif
-                @if ({{game.estate != 3 && {{game.estate != 4)
+                @if ({{game.status != 3 && {{game.status != 4)
                 <a :href="'/games/' + game.id + '/stop'" class="button is-danger is-outlined is-small">Stop</a>
                 @endif
-                @if ({{game.estate != 4)
+                @if ({{game.status != 4)
                 @if (!in_array(auth().user().id, {{game.players))
                 <a :href="'/games/' + game.id + '/join'" class="button is-info is-small" v-on:click="updatePlayers">Join</a>
                 @else

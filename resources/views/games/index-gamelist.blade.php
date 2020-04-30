@@ -10,7 +10,7 @@
     <thead>
       <tr>
         <th>Game</th>
-        <th>Estate</th>
+        <th>Status</th>
         <th>Host</th>
         <th>Players</th>
         <th>Created</th>

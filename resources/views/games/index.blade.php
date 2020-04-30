@@ -34,22 +34,19 @@
             <td>{{ $game->updated_at}}</td>
             <td>
                 @if ($game->user_id == auth()->user()->id)
-                @if ($game->estate != 1 && $game->estate != 4)
+                @if ($game->status != 'open' && $game->status != 'over')
                 <a href="/games/{{ $game->id }}/open" class="button is-primary is-small">@lang('trivial.doOpen')</a>
                 @endif
 
-                @if ($game->estate != 0 && $game->estate != 4)
+                @if ($game->status != 'closed' && $game->status != 'over')
                 <a href="/games/{{ $game->id }}/close" class="button is-warning is-small">@lang('trivial.doClose')</a>
                 @endif
 
-                @if ($game->estate != 2 && $game->estate != 4)
+                @if ($game->status != 'started' && $game->status != 'over')
                 <a href="/games/{{ $game->id }}/start" class="button is-success is-small">@lang('trivial.doStart')</a>
                 @endif
 
-                @if ($game->estate != 3 && $game->estate != 4)
-                <a href="/games/{{ $game->id }}/stop"
-                    class="button is-danger is-outlined is-small">@lang('trivial.doStop')</a>
-                @endif
+
 
                 <form method="post" action="/games/{{ $game->id }}" style="display: inline-block;"
                     onsubmit="return confirm('Do you really want to delete?');">

@@ -121,7 +121,7 @@ class GameController extends Controller
      */
     public function start(Game $game)
     {
-        $game->estate = 2;
+        $game->status = 'started';
         # randomize players
         $rplayers = $game->players;
         shuffle($rplayers);
@@ -137,19 +137,19 @@ class GameController extends Controller
 
         return redirect('/games/' . $game->id);
     }
-    /**
-     * Stop a game.
-     *
-     * @param  \App\Game  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function stop(Game $game) // TODO: should this be changed to 'pause'??
-    {
-        $game->estate = 3;
-        $game->update();
-        GameStatusHasChanged::dispatch($game);
-        return redirect('/games');
-    }
+    // /**
+    //  * Stop a game.
+    //  *
+    //  * @param  \App\Game  $game
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function stop(Game $game) // TODO: should this be changed to 'pause'??
+    // {
+    //     $game->status = 3;
+    //     $game->update();
+    //     GameStatusHasChanged::dispatch($game);
+    //     return redirect('/games');
+    // }
     /**
      * Open a game.
      *
@@ -158,7 +158,7 @@ class GameController extends Controller
      */
     public function open(Game $game)
     {
-        $game->estate = 1;
+        $game->status = 'open';
         $game->update();
         GameStatusHasChanged::dispatch($game);
         return redirect('/games');
@@ -171,7 +171,7 @@ class GameController extends Controller
      */
     public function close(Game $game)
     {
-        $game->estate = 0;
+        $game->status = 'closed';
         $game->update();
         GameStatusHasChanged::dispatch($game);
         return redirect('/games');

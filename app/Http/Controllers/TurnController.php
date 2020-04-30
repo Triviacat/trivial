@@ -306,7 +306,7 @@ class TurnController extends Controller
                 if (count($oks) == 4) {
                     // player won
                     $game = Game::find($turn->game_id);
-                    $game->estate = 4; // ended
+                    $game->status = 'over';
                     $game->update();
                     NotifyGameOver::dispatch($game);
                     die;

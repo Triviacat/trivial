@@ -1,6 +1,6 @@
 <template>
     <div>{{ playersingame }}
-    <span v-if="game.estate != 4">
+    <span v-if="game.status != 'over'">
         <span v-if="game.players.find(checkUid) != user.id">
             <a :href="'/games/' + game.id + '/join'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.join') }}</a>
         </span>

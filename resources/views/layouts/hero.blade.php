@@ -33,7 +33,7 @@
 
 <body>
     <div id="app">
-        <section class="hero is-info is-medium">
+        <section class="hero is-primary is-medium">
             <div class="hero-head">
                 <nav class="navbar">
                     <div class="container">
