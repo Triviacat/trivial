@@ -18,6 +18,18 @@ class UserController extends Controller
         return view('users.index', ['users' => $users]);
     }
 
+    /**
+     * Show the specified resource.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        return view('users.show', [
+            'user' => $user,
+        ]);
+    }
 
 
 

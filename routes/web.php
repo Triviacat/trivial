@@ -37,6 +37,7 @@ Route::resource('/questions', 'QuestionController')->middleware('verified','role
 
 Route::group(['prefix' => 'users', 'middleware' => ['verified','role:admin']], function () {
     Route::get('/', 'UserController@index')->name('users')->middleware('auth');
+    Route::get('/{user}', 'UserController@show')->name('users.show')->middleware('auth');
     Route::get('/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
     Route::patch('/{user}', 'UserController@update')->name('users.update')->middleware('auth');
 });
