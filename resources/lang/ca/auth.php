@@ -13,7 +13,20 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'Aquestes credencials no concorden amb els nostres registres.',
+    'throttle' => "Massa intehnts d'entrada. Si-us-plau, torneu-ho a provar en :seconds segons.",
+    'login' => 'Entrada',
+    'register' => 'Registre',
+    'registerButton' => 'Registreu-vos',
+    'email' => 'Email',
+    'emailConfirm' => 'Confirmeu Email',
+    'name' => 'Nom',
+    'password' => 'Contrasenya',
+    'passwordConfirm' => 'Confirmeu contrasenya',
+    'passwordForgot' => 'Heu oblidat la contrasenya?',
+    'passwordReset' => 'Reiniciar contrasenya',
+    'passwordResetButton' => 'Reinicieu la contrasenya',
+    'loginButton' => 'Entreu',
+    'rememberMe' => "Recorda'm",
 
 ];
