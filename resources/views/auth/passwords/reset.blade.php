@@ -6,7 +6,7 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">
-                    Reset Password
+                    {{ __('Reset Password') }}
                 </h1>
             </div>
         </div>
@@ -17,7 +17,7 @@
         <div class="column is-5">
             <div class="card">
                 <header class="card-header">
-                    <p class="card-header-title">Reset Password</p>
+                    <p class="card-header-title">{{ __('Reset Password') }}</p>
                 </header>
 
                 <div class="card-content">
@@ -27,50 +27,62 @@
                         </div>
                     @endif
 
-                    <form class="password-reset-form" method="POST" action="{{ route('password.request') }}">
+                    <form class="password-reset-form" method="POST" action="{{ route('password.update') }}">
 
-                        {{ csrf_field() }}
+                        @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
 
 
                         <div class="field is-horizontal">
                             <div class="field-label">
-                                <label class="label">E-Mail Address</label>
+                                <label class="label">{{ __('E-Mail Address') }}</label>
                             </div>
 
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="email" type="email" name="email"
-                                               value="{{ old('email') }}" required autofocus>
+                                        <input class="input @error('email') is-invalid @enderror" id="email" type="email" name="email"
+                                               value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
                                     </p>
 
-                                    @if ($errors->has('email'))
+                                    {{-- @if ($errors->has('email'))
                                         <p class="help is-danger">
                                             {{ $errors->first('email') }}
                                         </p>
-                                    @endif
+                                    @endif --}}
+
+                                    @error('email')
+                                    <p class="help is-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </p>
+                                @enderror
                                 </div>
                             </div>
                         </div>
 
                         <div class="field is-horizontal">
                             <div class="field-label">
-                                <label class="label">Password</label>
+                                <label class="label">{{ __('Password') }}</label>
                             </div>
 
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="password" type="password" name="password" required>
+                                        <input class="input @error('password') is-invalid @enderror" id="password" type="password" name="password" required autocomplete="new-password">
                                     </p>
 
-                                    @if ($errors->has('password'))
+                                    {{-- @if ($errors->has('password'))
                                         <p class="help is-danger">
                                             {{ $errors->first('password') }}
                                         </p>
-                                    @endif
+                                    @endif --}}
+
+                                    @error('password')
+                                    <p class="help is-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </p>
+                                @enderror
                                 </div>
                             </div>
                         </div>
@@ -78,13 +90,13 @@
 
                         <div class="field is-horizontal">
                             <div class="field-label">
-                                <label class="label">Confirm Password</label>
+                                <label class="label">{{ __('Confirm Password') }}</label>
                             </div>
 
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="password-confirm" type="password" name="password_confirmation" required>
+                                        <input class="input" id="password-confirm" type="password" name="password_confirmation" required autocomplete="new-password">
                                     </p>
                                 </div>
                             </div>
@@ -97,7 +109,7 @@
                             <div class="field-body">
                                 <div class="field is-grouped">
                                     <div class="control">
-                                        <button type="submit" class="button is-primary">Reset Password </button>
+                                        <button type="submit" class="button is-primary">{{ __('Reset Password') }} </button>
                                     </div>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@
         <div class="column is-5">
             <div class="card">
                 <header class="card-header">
-                    <p class="card-header-title">Login</p>
+                    <p class="card-header-title">{{ __('Login') }}</p>
                 </header>
 
                 <div class="card-content">
@@ -25,7 +25,7 @@
 
                         <div class="field is-horizontal">
                             <div class="field-label">
-                                <label class="label">E-Mail Address</label>
+                                <label class="label">{{ __('E-Mail Address') }}</label>
                             </div>
 
                             <div class="field-body">
@@ -35,24 +35,25 @@
                                                value="{{ old('email') }}" required autofocus>
                                     </p>
 
-                                    @if ($errors->has('email'))
-                                        <p class="help is-danger">
-                                            {{ $errors->first('email') }}
-                                        </p>
-                                    @endif
+
+                                    @error('email')
+                                    <p class="help is-danger">
+                                        {{ $errors->first('email') }}
+                                    </p>
+                                @enderror
                                 </div>
                             </div>
                         </div>
 
                         <div class="field is-horizontal">
                             <div class="field-label">
-                                <label class="label">Password</label>
+                                <label class="label">{{ __('Password') }}</label>
                             </div>
 
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="password" type="password" name="password" required>
+                                        <input class="input @error('password') is-invalid @enderror" id="password" type="password" name="password" required autocomplete="current-password">
                                     </p>
 
                                     @if ($errors->has('password'))
@@ -72,7 +73,7 @@
                                     <p class="control">
                                         <label class="checkbox">
                                             <input type="checkbox"
-                                                   name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                                   name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
                                         </label>
                                     </p>
                                 </div>
@@ -88,11 +89,15 @@
                                         <button type="submit" class="button is-primary">Login</button>
                                     </div>
 
+
+
+                                    @if (Route::has('password.request'))
                                     <div class="control">
                                         <a href="{{ route('password.request') }}">
-                                            Forgot Your Password?
+                                            {{ __('Forgot Your Password?') }}
                                         </a>
                                     </div>
+                                @endif
                                 </div>
                             </div>
                         </div>

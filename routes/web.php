@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return redirect('home');
-// });
+Route::get('/home', function () {
+    return redirect()->route('home');
+});
 
 // Auth::routes();
 Auth::routes(['verify' => true]);
@@ -31,11 +31,11 @@ Route::post('/notify', 'HomeController@notify')->name('notify');
 
 Route::get('/admin', 'AdminController@index')->name('admin');
 
-Route::resource('/topics', 'TopicController')->middleware('auth');
-Route::resource('/sets', 'SetController')->middleware('auth');
-Route::resource('/questions', 'QuestionController')->middleware('auth');
+Route::resource('/topics', 'TopicController')->middleware('verified','role:admin');
+Route::resource('/sets', 'SetController')->middleware('verified','role:admin');
+Route::resource('/questions', 'QuestionController')->middleware('verified','role:admin');
 
-Route::group(['prefix' => 'users', 'middleware' => ['role:admin']], function () {
+Route::group(['prefix' => 'users', 'middleware' => ['verified','role:admin']], function () {
     Route::get('/', 'UserController@index')->name('users')->middleware('auth');
     Route::get('/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
     Route::patch('/{user}', 'UserController@update')->name('users.update')->middleware('auth');
@@ -44,7 +44,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['role:admin']], function () 
 // Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
 // Route::patch('/users/{user}', 'UserController@update')->name('users.update')->middleware('auth');
 
-Route::group(['prefix' => 'roles', 'middleware' => ['role:admin']], function () {
+Route::group(['prefix' => 'roles', 'middleware' => ['verified','role:admin']], function () {
     Route::get('/', 'RoleController@index')->name('roles')->middleware('auth');
     Route::get('/create', 'RoleController@create')->name('roles.create')->middleware('auth');
     Route::post('/', 'RoleController@store')->name('roles.store')->middleware('auth');
@@ -53,7 +53,7 @@ Route::group(['prefix' => 'roles', 'middleware' => ['role:admin']], function () 
     Route::delete('/{role}', 'RoleController@destroy')->name('roles.destroy')->middleware('auth');
 });
 
-Route::group(['prefix' => 'permissions', 'middleware' => ['role:admin']], function () {
+Route::group(['prefix' => 'permissions', 'middleware' => ['verified','role:admin']], function () {
     Route::get('/', 'PermissionController@index')->name('permissions')->middleware('auth');
     Route::get('/create', 'PermissionController@create')->name('permissions.create')->middleware('auth');
     Route::post('/', 'PermissionController@store')->name('permissions.store')->middleware('auth');

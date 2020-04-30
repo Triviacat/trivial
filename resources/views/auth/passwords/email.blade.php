@@ -7,7 +7,7 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">
-                    Reset Password
+                    {{ __('Reset Password') }}
                 </h1>
             </div>
         </div>
@@ -29,25 +29,31 @@
 
                     <form class="forgot-password-form" method="POST" action="{{ route('password.email') }}">
 
-                        {{ csrf_field() }}
+                        @csrf
 
                         <div class="field is-horizontal">
                             <div class="field-label">
-                                <label class="label">E-Mail Address</label>
+                                <label class="label">{{ __('E-Mail Address') }}</label>
                             </div>
 
                             <div class="field-body">
                                 <div class="field">
                                     <p class="control">
-                                        <input class="input" id="email" type="email" name="email"
-                                               value="{{ old('email') }}" required autofocus>
+                                        <input class="input @error('email') is-invalid @enderror" id="email" type="email" name="email"
+                                               value="{{ old('email') }}" required autocomplete="email" autofocus>
                                     </p>
 
-                                    @if ($errors->has('email'))
+                                    {{-- @if ($errors->has('email'))
                                         <p class="help is-danger">
                                             {{ $errors->first('email') }}
                                         </p>
-                                    @endif
+                                    @endif --}}
+
+                                    @error('email')
+                                    <p class="help is-danger">
+                                        <strong>{{ $message }}</strong>
+                                    </p>
+                                @enderror
                                 </div>
                             </div>
                         </div>
@@ -58,7 +64,7 @@
                             <div class="field-body">
                                 <div class="field is-grouped">
                                     <div class="control">
-                                        <button type="submit" class="button is-primary">Send Password Reset Link
+                                        <button type="submit" class="button is-primary">{{ __('Send Password Reset Link') }}
                                         </button>
                                     </div>
                                 </div>
