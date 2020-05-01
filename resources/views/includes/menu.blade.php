@@ -5,7 +5,7 @@
         <li><a class="has-text-light" href="/topics">@lang('trivial.topics')</a></li>
         <li><a class="has-text-light" href="/sets">@lang('trivial.sets')</a></li>
         <li><a class="has-text-light" href="/questions">@lang('trivial.questions')</a></li>
-        <li><a class="has-text-light" href="/users">@lang('trivial.users')</a></li>
+        <li><a class="has-text-light" href="{{ route('admin.users') }}">@lang('trivial.users')</a></li>
         <li><a class="has-text-light" href="/roles">@lang('trivial.roles')</a></li>
         <li><a class="has-text-light" href="/permissions">@lang('trivial.permissions')</a></li>
         <hr>

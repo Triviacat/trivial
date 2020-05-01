@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Game;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -18,6 +21,18 @@ class UserController extends Controller
         return view('users.index', ['users' => $users]);
     }
 
+    /**
+     * Show the specified resource.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        return view('users.show', [
+            'user' => $user,
+        ]);
+    }
 
 
 
@@ -47,7 +62,7 @@ class UserController extends Controller
         $user->syncPermissions(request()->permissions ?? array());
         $user->syncRoles(request()->roles ?? array());
         // $users->update($request);
-        return redirect('/users');
+        return redirect()->route('admin.users');
     }
 
     /**
@@ -62,5 +77,79 @@ class UserController extends Controller
             'display_name' => ['required', 'min:3'], //validation rules can be members of an array
             'description' => ['required', 'min:3'], //validation rules can be members of an array
         ]);
+    }
+
+    /**
+     * Show the specified resource.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function profileShow(User $user)
+    {
+        if (Auth::user() == $user) {
+            $gamesIn = UserController::profileGames($user);
+            $user->gamesIn = $gamesIn;
+            return view('profiles.show', [
+                'user' => $user,
+            ]);
+        }
+        else {
+            return abort('403');
+        }
+    }
+
+    /**
+     * Show a form to edit the profile.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function profileEdit(User $user)
+    {
+        return view('profiles.edit', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * Show games per user.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public static function profileGames(User $user)
+    {
+        $games = Game::all();
+        // return $game/s;
+        $gamesIn = array();
+        foreach ($games as $game) {
+            if (($game->user_id == $user->id) ||(in_array($user->id, $game->players))) {
+                $gamesIn[] = $game;
+            }
+        }
+        return $gamesIn;
+    }
+
+    /**
+     * Update profile color.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public static function profileColorUpdate(User $user, Request $request)
+    {
+        if ($user->id == $request->user['id']) {
+            // return ($request->color);
+            $attributes = $request->validate([
+                'color' => ['regex:/^#(?:[0-9a-fA-F]{8})/']
+            ]);
+            $user->color = $attributes['color'];
+            $user->update();
+            // $user->update($attributes);
+            // return ($attributes['color']);
+        }
+
+        // return ($request->user['id']);
     }
 }

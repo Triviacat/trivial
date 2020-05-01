@@ -35,11 +35,20 @@ Route::resource('/topics', 'TopicController')->middleware('verified','role:admin
 Route::resource('/sets', 'SetController')->middleware('verified','role:admin');
 Route::resource('/questions', 'QuestionController')->middleware('verified','role:admin');
 
-Route::group(['prefix' => 'users', 'middleware' => ['verified','role:admin']], function () {
-    Route::get('/', 'UserController@index')->name('users')->middleware('auth');
-    Route::get('/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
-    Route::patch('/{user}', 'UserController@update')->name('users.update')->middleware('auth');
+Route::group(['prefix' => 'admin', 'middleware' => ['verified','role:admin']], function () {
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/{user}', 'UserController@show')->name('admin.users.show');
+        Route::get('/', 'UserController@index')->name('admin.users');
+        Route::get('/{user}/edit', 'UserController@edit')->name('admin.users.edit');
+        Route::patch('/{user}', 'UserController@update')->name('admin.users.update');
+    });
 });
+
+Route::get('/profile/{user}', 'UserController@profileShow')->name('profile.show')->middleware('auth');
+Route::get('/profile/{user}/edit', 'UserController@profileEdit')->name('profile.edit')->middleware('auth');
+Route::post('/profile/{user}/color/update', 'UserController@profileColorUpdate')->name('profile.color.update')->middleware('auth');
+// Route::get('/profile/{user}/games', 'UserController@profileGames')->name('profile.games')->middleware('auth');
+
 // Route::get('/users', 'UserController@index')->name('users')->middleware('auth');
 // Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
 // Route::patch('/users/{user}', 'UserController@update')->name('users.update')->middleware('auth');

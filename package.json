@@ -24,13 +24,15 @@
     },
     "dependencies": {
         "buefy": "^0.8.17",
+        "bulma": "^0.8.2",
         "bulma-helpers": "^0.3.10",
         "konva": "^4.2.2",
         "lang.js": "^1.1.14",
         "laravel-echo": "^1.7.0",
-        "moment": "^2.24.0",
+        "moment": "2.24.0",
         "pusher-js": "^5.1.1",
         "vue": "^2.6.11",
+        "vue-color": "^2.7.1",
         "vue-konva": "^2.1.1",
         "vue-resize": "^0.5.0"
     }

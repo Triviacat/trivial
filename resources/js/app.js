@@ -17,13 +17,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 import Echo from 'laravel-echo';
 import Buefy from 'buefy'
-// import 'buefy/dist/buefy.css'
+
 import Vue from 'vue';
 import VueKonva from 'vue-konva';
 import VueResize from 'vue-resize';
 
 import Lang from 'lang.js';
 
+import { Chrome } from 'vue-color';
 
 
 
@@ -69,7 +70,8 @@ Vue.component('question', require('./components/Question.vue').default);
 Vue.component('box', require('./components/Box.vue').default);
 Vue.component('cheeses', require('./components/Cheeses.vue').default);
 Vue.component('board', require('./components/Board.vue').default);
-// Vue.component('gamelist', require('./components/GameList.vue').default);
+Vue.component('profile', require('./components/Profile.vue').default);
+Vue.component('chrome-picker', Chrome);
 
 const default_locale = window.default_language;
 const fallback_locale = window.fallback_locale;
