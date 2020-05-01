@@ -6,7 +6,7 @@
 @section('content')
 <div class="container">
     <div class="box">
-        <profile></profile>
+        <profile :user={{ $user }}></profile>
     </div>
 </div>
 
