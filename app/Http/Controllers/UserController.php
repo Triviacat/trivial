@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Game;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -86,6 +88,8 @@ class UserController extends Controller
     public function profileShow(User $user)
     {
         if (Auth::user() == $user) {
+            $gamesIn = UserController::profileGames($user);
+            $user->gamesIn = $gamesIn;
             return view('profiles.show', [
                 'user' => $user,
             ]);
@@ -93,5 +97,35 @@ class UserController extends Controller
         else {
             return abort('403');
         }
+    }
+
+    /**
+     * Show a form to edit the profile.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function profileEdit(User $user)
+    {
+
+    }
+
+    /**
+     * Show games per user.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public static function profileGames(User $user)
+    {
+        $games = Game::all();
+        // return $game/s;
+        $gamesIn = array();
+        foreach ($games as $game) {
+            if (($game->user_id == $user->id) ||(in_array($user->id, $game->players))) {
+                $gamesIn[] = $game;
+            }
+        }
+        return $gamesIn;
     }
 }

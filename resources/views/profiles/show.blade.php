@@ -6,7 +6,8 @@
 @section('content')
 <div class="container">
     <div class="box">
-        <profile :user={{ $user }}></profile>
+        {{-- @dump($user) --}}
+        <profile :user="{{ $user }}"></profile>
     </div>
 </div>
 

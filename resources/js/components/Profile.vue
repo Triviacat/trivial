@@ -16,11 +16,18 @@
             </b-tab-item>
 
             <b-tab-item :label="trans.get('trivial.games')">
-                Lorem <br>
-                ipsum <br>
-                dolor <br>
-                sit <br>
-                amet.
+               <table class="table">
+                   <thead>
+                       <tr>
+                           <th>{{ trans.get('trivial.game') }}</th>
+                           <th>{{ trans.get('trivial.status') }}</th>
+                       </tr>
+                   </thead>
+                   <tr v-for="game in this.user.gamesIn" :key="game.id">
+                       <td>{{ game.id }}</td>
+                       <td>{{ game.status }}</td>
+                   </tr>
+               </table>
             </b-tab-item>
         </b-tabs>
     </section>
@@ -31,6 +38,13 @@
         props: {
             user: {
                 type: Object
+            }
+        },
+
+        methods: {
+            updateValue (value) {
+                this.colors = value;
+                // console.log(this.colors)
             }
         },
         data() {
@@ -44,17 +58,11 @@
                 editButton: '/profile/' + this.user.id + '/edit'
             }
         },
-        methods: {
-            updateValue (value) {
-                this.colors = value;
-                // console.log(this.colors)
-            }
-        },
         mounted() {
-            console.log(this.colors)
+            // console.log(this.user)
         },
         created() {
-            console.log(this.colors)
+            // console.log(this.user)
         }
     }
 </script>
