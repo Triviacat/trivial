@@ -6,10 +6,18 @@
                     <div class="column is-half">
                         <div><span class="label">{{ trans.get('trivial.name') }}</span>{{ this.user.name }}</div>
                         <div><span class="label">{{ trans.get('trivial.email') }}</span>{{ this.user.email }}</div>
-                        <div><span class="label">{{ trans.get('trivial.color') }}</span><div :style="background">
+                        <div><span class="label">{{ trans.get('trivial.color') }}</span><div :style="savedColor">
                             &nbsp;</div></div>
-                        <!-- <chrome-picker :value="colors" @input="updateValue"></chrome-picker> -->
-                        <a :href="editButton" class="button is-primary has-margin-top-10">{{ trans.get('trivial.edit') }}</a>
+                            <div class="columns has-margin-top-10">
+                                <div class="column is-half">
+                                    <chrome-picker :value="colors" @input="updateValue"></chrome-picker>
+                                </div>
+                                <div class="column is-half">
+                                    <button class="button is-light" :style="background" @click="sendNewColor" :disabled=enableDisable>Canviar el color</button>
+                                </div>
+                            </div>
+
+                        <!-- <a :href="editButton" class="button is-primary has-margin-top-10">{{ trans.get('trivial.edit') }}</a> -->
                     </div>
 
                 </div>
@@ -44,7 +52,25 @@
         methods: {
             updateValue (value) {
                 this.colors = value;
+                this.enableDisable = false;
+                this.background = 'background-color:' + value.hex8
                 // console.log(this.colors)
+            },
+            sendNewColor () {
+                axios.post('/profile/' + this.user.id + '/color/update', {
+                    'color': this.colors.hex8,
+                    'user': this.user
+                })
+                    .then(function (e) {
+
+                        // console.log(e);
+                        // this.savedColor = 'background-color:' + e.data;
+                    })
+                    .catch(function (error) {
+                        // console.log(error);
+                    });
+                    // console.log(this);
+                this.savedColor = 'background-color:' + this.colors.hex8;
             }
         },
         data() {
@@ -54,8 +80,10 @@
                 colors: {
                     hex: this.user.color
                 },
-                background: 'background-color:' + this.user.color,
-                editButton: '/profile/' + this.user.id + '/edit'
+                savedColor: 'background-color:' + this.user.color,
+                background: '',
+                editButton: '/profile/' + this.user.id + '/edit',
+                enableDisable: true
             }
         },
         mounted() {

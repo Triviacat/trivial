@@ -107,7 +107,9 @@ class UserController extends Controller
      */
     public function profileEdit(User $user)
     {
-
+        return view('profiles.edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -127,5 +129,27 @@ class UserController extends Controller
             }
         }
         return $gamesIn;
+    }
+
+    /**
+     * Update profile color.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public static function profileColorUpdate(User $user, Request $request)
+    {
+        if ($user->id == $request->user['id']) {
+            // return ($request->color);
+            $attributes = $request->validate([
+                'color' => ['regex:/^#(?:[0-9a-fA-F]{8})/']
+            ]);
+            $user->color = $attributes['color'];
+            $user->update();
+            // $user->update($attributes);
+            // return ($attributes['color']);
+        }
+
+        // return ($request->user['id']);
     }
 }
