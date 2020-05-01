@@ -45,6 +45,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['verified','role:admin']], f
 });
 
 Route::get('/profile/{user}', 'UserController@profileShow')->name('profile.show')->middleware('auth');
+Route::get('/profile/{user}/edit', 'UserController@profileEdit')->name('profile.edit')->middleware('auth');
 
 // Route::get('/users', 'UserController@index')->name('users')->middleware('auth');
 // Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');

@@ -3,14 +3,15 @@
         <b-tabs v-model="activeTab">
             <b-tab-item :label="trans.get('trivial.profile')">
                 <div class="columns">
-                    <div class="column">
+                    <div class="column is-half">
                         <div><span class="label">{{ trans.get('trivial.name') }}</span>{{ this.user.name }}</div>
                         <div><span class="label">{{ trans.get('trivial.email') }}</span>{{ this.user.email }}</div>
-                        <div><span class="label">{{ trans.get('trivial.color') }}</span>{{ this.colors.hex }}</div>
-                        <!-- <compact-picker v-model="this.colors" /> -->
-                        <chrome-picker :value="colors" @input="updateValue"></chrome-picker>
-                        <!-- <chrome-picker v-model="colors"></chrome-picker> -->
+                        <div><span class="label">{{ trans.get('trivial.color') }}</span><div :style="background">
+                            &nbsp;</div></div>
+                        <!-- <chrome-picker :value="colors" @input="updateValue"></chrome-picker> -->
+                        <a :href="editButton" class="button is-primary has-margin-top-10">{{ trans.get('trivial.edit') }}</a>
                     </div>
+
                 </div>
             </b-tab-item>
 
@@ -38,7 +39,9 @@
                 showBooks: false,
                 colors: {
                     hex: this.user.color
-                }
+                },
+                background: 'background-color:' + this.user.color,
+                editButton: '/profile/' + this.user.id + '/edit'
             }
         },
         methods: {
