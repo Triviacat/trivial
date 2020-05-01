@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -84,8 +85,13 @@ class UserController extends Controller
      */
     public function profileShow(User $user)
     {
-        return view('profiles.show', [
-            'user' => $user,
-        ]);
+        if (Auth::user() == $user) {
+            return view('profiles.show', [
+                'user' => $user,
+            ]);
+        }
+        else {
+            return abort('403');
+        }
     }
 }
