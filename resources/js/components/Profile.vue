@@ -2,7 +2,13 @@
     <section>
         <b-tabs v-model="activeTab">
             <b-tab-item :label="trans.get('trivial.profile')">
-                Lorem ipsum dolor sit amet.
+                <div class="columns">
+                    <div class="column">
+                        <div><span class="label">{{ trans.get('trivial.name') }}</span>{{ this.user.name }}</div>
+                        <div><span class="label">{{ trans.get('trivial.email') }}</span>{{ this.user.email }}</div>
+                        <div><span class="label">{{ trans.get('trivial.color') }}</span>{{ this.user.color }}</div>
+                    </div>
+                </div>
             </b-tab-item>
 
             <b-tab-item :label="trans.get('trivial.games')">
