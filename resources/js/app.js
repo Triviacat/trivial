@@ -24,6 +24,7 @@ import VueResize from 'vue-resize';
 
 import Lang from 'lang.js';
 
+import { Chrome } from 'vue-color';
 
 
 
@@ -70,7 +71,7 @@ Vue.component('box', require('./components/Box.vue').default);
 Vue.component('cheeses', require('./components/Cheeses.vue').default);
 Vue.component('board', require('./components/Board.vue').default);
 Vue.component('profile', require('./components/Profile.vue').default);
-// Vue.component('gamelist', require('./components/GameList.vue').default);
+Vue.component('chrome-picker', Chrome);
 
 const default_locale = window.default_language;
 const fallback_locale = window.fallback_locale;
