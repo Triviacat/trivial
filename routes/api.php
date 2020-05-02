@@ -6,6 +6,7 @@ use App\Topic;
 use App\Turn;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +44,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::get('users/{id}/name', function ($id) {
         $user = User::find($id);
         return $user->name;
+    });
+    Route::get('users/name/{name}', function ($name) {
+        $users = DB::table('users')
+            ->where('name', 'like', '%' . $name . '%')
+            ->select('id', 'name')
+            ->get();
+        // $users = User::where('name', 'like', '%' . $name . '%')->get();
+        return $users;
     });
     Route::get('turns/{id}', function ($id) {
         $turn = Turn::where('id', $id)->get();

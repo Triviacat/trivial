@@ -16,6 +16,7 @@ class Game extends Model
      */
     protected $casts = [
         'players' => 'array',
+        'invited' => 'array'
     ];
 
     public function user()

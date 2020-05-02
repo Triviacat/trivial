@@ -91,11 +91,11 @@ return [
         'array' => 'The :attribute must have at least :min items.',
     ],
     'not_in' => 'The selected :attribute is invalid.',
-    'not_regex' => 'The :attribute format is invalid.',
+    'not_regex' => 'El format del camp :attribute no és vàlid.',
     'numeric' => 'The :attribute must be a number.',
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
-    'regex' => 'The :attribute format is invalid.',
+    'regex' => 'El format del camp :attribute no és vàlid.',
     'required' => 'The :attribute field is required.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
@@ -115,7 +115,7 @@ return [
     'timezone' => 'The :attribute must be a valid zone.',
     'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
-    'url' => 'The :attribute format is invalid.',
+    'url' => 'El format del camp :attribute no és vàlid.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
     /*
@@ -147,7 +147,8 @@ return [
     */
 
     'attributes' => [
-        'password' => 'contrasenya'
+        'password' => 'contrasenya',
+        'chat' => 'xat'
     ],
 
 ];
