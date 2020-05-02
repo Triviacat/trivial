@@ -32,6 +32,7 @@ class GameController extends Controller
      */
     public function create()
     {
+        return view('games.create');
         $game = new Game;
         $game->user_id = auth()->user()->id;
         $game->players = array(auth()->user()->id);
@@ -56,7 +57,18 @@ class GameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $this->validateRequest();
+        $invited = json_decode($attributes['invited']);
+        // return $invited;
+        $users = array();
+        foreach ($invited as $user) {
+            $users[] = $user->id;
+        }
+        // return $users;
+        $attributes['invited'] = $users;
+        $attributes['players'] = array((int)$attributes['user_id']);
+        Game::create($attributes);
+        return redirect('/games');
     }
 
     /**
@@ -185,6 +197,7 @@ class GameController extends Controller
      */
     public function join(Game $game)
     {
+        // TODO: limit users in game by 6?
         $players = $game->players;
 
         $players[] = auth()->user()->id;
@@ -220,6 +233,21 @@ class GameController extends Controller
         return redirect('/games');
     }
 
+    /**
+     * Validate the request attributes.
+     *
+     * @return array
+     */
+    protected function validateRequest()
+    {
+        return request()->validate([
+            'private' => ['boolean'], //validation rules can be members of an array
+            'chat' => 'nullable|url',
+            'password' => 'nullable|string',
+            'invited' => 'nullable|json',
+            'user_id' => 'required|numeric'
+        ]);
+    }
 
 
 }

@@ -75,6 +75,7 @@ Route::group(['prefix' => 'permissions', 'middleware' => ['verified','role:admin
 Route::group(['prefix' => 'games', 'middleware' => ['verified']], function () {
 
     Route::get('/', 'GameController@index')->name('games.index');
+    Route::post('/', 'GameController@store')->name('games.store');
     Route::get('/create', 'GameController@create')->name('games.create');
     Route::get('/{game}', 'GameController@show')->name('games.show');
     Route::delete('/{game}', 'GameController@destroy')->name('games.destroy');
