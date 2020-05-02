@@ -16,7 +16,7 @@
             <div class="container">
                 <div class="columns">
                     @auth
-                    <div class="column is-one-fifth has-background-dark">
+                    <div class="column is-one-fifth box">
 
                         @include('includes.menu')
 

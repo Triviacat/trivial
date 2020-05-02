@@ -48,10 +48,10 @@
                         <div id="navMenu" class="navbar-menu">
                             <div class="navbar-start"></div>
                             <div class="navbar-end">
-
-                                <a class="navbar-item" href="{{ env('TRIVIACAT_DOCS_URL') }}">Instruccions</a>
                                 <a class="navbar-item" href="/games">Jugar</a>
-                                <a class="navbar-item" href="{{ env('TRIVIACAT_PREGUNTES_URL') }}">Preguntes</a>
+                                <a class="navbar-item" href="{{ env('TRIVIACAT_DOCS_URL') }}">@lang('trivial.instructions')&nbsp;<i class="fas fa-external-link-alt"></i></a>
+
+                                <a class="navbar-item" href="{{ env('TRIVIACAT_PREGUNTES_URL') }}">@lang('trivial.questions')&nbsp;<i class="fas fa-external-link-alt"></i></a>
 
                                 <span class="navbar-item">
                                     <a class="button is-white is-outlined"
