@@ -49,7 +49,7 @@
     export default {
         props: {
             user_id: {
-                type: String
+                type: Number
             }
         },
         methods: {

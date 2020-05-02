@@ -47,10 +47,10 @@
             }
         },
         mounted() {
-            console.log(this.game);
+            // console.log(this.game);
         },
         created() {
-            console.log(this.game);
+            // console.log(this.game);
             window.Echo.channel('game.' + this.game.id)
                 .listen('GameStatusHasChanged', e => {
                     axios.get('/api/games/' + this.game.id).then(response => {
