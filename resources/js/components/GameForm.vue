@@ -85,14 +85,14 @@
         },
         watch: {
             radio: function (val, oldVal) {
-                console.log(val)
+                // console.log(val)
             }
             // chat: function (val, oldVal) {
             //     console.log(this.chat)
             // }
         },
         mounted() {
-            console.log(this.errors)
+            // console.log(this.errors)
         }
     };
 </script>
