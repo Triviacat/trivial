@@ -219,7 +219,9 @@ class GameController extends Controller
 
         PlayerJoinsGame::dispatch($game);
 
-        return redirect('/games');
+        return $game;
+
+        // return redirect('/games');
     }
 
     /**
@@ -240,7 +242,9 @@ class GameController extends Controller
 
         PlayerLeavesGame::dispatch($game);
 
-        return redirect('/games');
+        return $game;
+
+        // return redirect('/games');
     }
 
     /**

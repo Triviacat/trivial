@@ -2,13 +2,16 @@
     <div>{{ playersingame }}
         <span v-if="showJoinButton() == true">
             <span v-if="game.status != 'over'">
-        <span v-if="game.players.find(checkUid) != user.id">
+        <!-- <span v-if="(game.players.find(checkUid) != user.id)"> -->
             <!-- <a :href="'/games/' + game.id + '/join'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.join') }}</a> -->
-            <button class="button is-small is-info" v-on:click="updatePlayers">{{ trans.get('trivial.join') }}</button>
+            <!-- <button class="button is-small is-info" @click="join">{{ trans.get('trivial.join') }}</button>
         </span>
-        <span v-if="((game.players.find(checkUid) == user.id) && (user.id != game.user_id))">
+        <span v-if="((game.players.find(checkUid) == user.id) && (user.id != game.user_id))"> -->
             <!-- <a :href="'/games/' + game.id + '/leave'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.leave') }}</a> -->
-            <button class="button is-small is-info" v-on:click="updatePlayers">{{ trans.get('trivial.leave') }}</button>
+            <!-- <button class="button is-small is-info" @click="leave">{{ trans.get('trivial.leave') }}</button>
+        </span> -->
+        <span v-if="(user.id != game.user_id)">
+        <button class="button is-small is-info" @click="action">{{ actionText }}</button>
         </span>
     </span>
         </span>
@@ -31,6 +34,33 @@
             }
         },
         methods: {
+            action: function() {
+                if ((this.game.players.find(this.checkUid) != this.user.id)) {
+                    this.join()
+
+                }
+                if (((this.game.players.find(this.checkUid) == this.user.id) && (this.user.id != this.game.user_id))) {
+                    this.leave()
+                }
+            },
+            join: function() {
+                axios.get('/games/' + this.game.id + '/join' )
+                .then(response => (
+                    console.log(response.data.players.length),
+                    this.playersingame = response.data.players.length,
+                    this.game.players = response.data.players,
+                    this.actionText = this.trans.get('trivial.leave')
+                    ));
+            },
+            leave: function() {
+                axios.get('/games/' + this.game.id + '/leave' )
+                .then(response => (
+                    console.log(response.data),
+                    this.playersingame = response.data.players.length,
+                    this.game.players = response.data.players,
+                    this.actionText = this.trans.get('trivial.join')
+                    ));
+            },
             updatePlayers: function (event) {
                 axios.get('/api/games/' + this.game.id ).then(response => (this.playersingame = response.data[0].players.length));
             },
@@ -61,7 +91,10 @@
         },
         data() {
             return {
-                playersingame: this.game.players.length
+                playersingame: this.game.players.length,
+                showLeave: true,
+                showJoin: true,
+                actionText: ''
             }
         },
         created() {
@@ -77,6 +110,12 @@
                 this.updatePlayers();
                 this.success(text);
             });
+            if ((this.game.players.find(this.checkUid) != this.user.id)) {
+                    this.actionText = this.trans.get('trivial.join')
+                }
+            if ((this.game.players.find(this.checkUid) == this.user.id) && (this.user.id != this.game.user_id)) {
+                this.actionText = this.trans.get('trivial.leave')
+            }
         }
     };
 </script>
