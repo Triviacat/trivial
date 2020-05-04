@@ -25,15 +25,17 @@
             <td><a href="/games/{{ $game->id }}">{{ $game->id }}</a></td>
             <td>
                 <gamestatus :game="{{ $game }}"></gamestatus>
-                {{-- {{ $game->status()}} --}}
             </td>
             <td>
-                {{ $game->private }}
+                @if ($game->private)
+                    @lang('trivial.privacityTrue')
+                @else
+                    @lang('trivial.privacityFalse')
+                @endif
             </td>
             <td>{{ $game->user->name}}</td>
-            {{-- <td>{{ count($game->players) }}</td> --}}
             <td>
-                <playersingame :game="{{ $game }}" :user="{{ auth()->user() }}"></playersingame>
+                <playersingame :game="{{ $game }}" :user="{{ auth()->user() }}" :users_invited="{{ json_encode($game->usersInvited()) }}"></playersingame>
             </td>
             <td>{{ $game->updated_at}}</td>
             <td>

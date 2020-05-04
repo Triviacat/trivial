@@ -1,13 +1,18 @@
 <template>
     <div>{{ playersingame }}
-    <span v-if="game.status != 'over'">
+        <span v-if="showJoinButton() == true">
+            <span v-if="game.status != 'over'">
         <span v-if="game.players.find(checkUid) != user.id">
-            <a :href="'/games/' + game.id + '/join'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.join') }}</a>
+            <!-- <a :href="'/games/' + game.id + '/join'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.join') }}</a> -->
+            <button class="button is-small is-info" v-on:click="updatePlayers">{{ trans.get('trivial.join') }}</button>
         </span>
         <span v-if="((game.players.find(checkUid) == user.id) && (user.id != game.user_id))">
-            <a :href="'/games/' + game.id + '/leave'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.leave') }}</a>
+            <!-- <a :href="'/games/' + game.id + '/leave'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.leave') }}</a> -->
+            <button class="button is-small is-info" v-on:click="updatePlayers">{{ trans.get('trivial.leave') }}</button>
         </span>
     </span>
+        </span>
+
     </div>
 </template>
 
@@ -20,6 +25,9 @@
             },
             user: {
                 type: Object
+            },
+            users_invited: {
+                type: Array
             }
         },
         methods: {
@@ -38,6 +46,18 @@
                     position: 'is-bottom-left'
                 })
             },
+            showJoinButton: function() {
+                if (this.game.private == false) {
+                    return true;
+                }
+                else {
+                    // console.log(this.game.invited.includes(this.user.id))
+                    if (this.game.invited.includes(this.user.id)) {
+                         return true;
+                    } else {
+                        return false;
+                    }                }
+            }
         },
         data() {
             return {
@@ -45,6 +65,7 @@
             }
         },
         created() {
+            // console.log(this.game);
             window.Echo.channel('game.'+ this.game.id)
             .listen('PlayerLeavesGame', e => {
                 var text = this.user.name + ' ' + this.trans.get('trivial.hasLeft') + ' ' + this.game.id;
