@@ -11,6 +11,7 @@
         <tr>
             <th>@lang('trivial.game')</th>
             <th>@lang('trivial.status')</th>
+            <th>@lang('trivial.privacity')</th>
             <th>@lang('trivial.host')</th>
             <th>@lang('trivial.players')</th>
             <th>@lang('trivial.created')</th>
@@ -25,6 +26,9 @@
             <td>
                 <gamestatus :game="{{ $game }}"></gamestatus>
                 {{-- {{ $game->status()}} --}}
+            </td>
+            <td>
+                {{ $game->private }}
             </td>
             <td>{{ $game->user->name}}</td>
             {{-- <td>{{ count($game->players) }}</td> --}}
@@ -45,7 +49,7 @@
                 @if ($game->status != 'started' && $game->status != 'over')
                 <a href="/games/{{ $game->id }}/start" class="button is-success is-small">@lang('trivial.doStart')</a>
                 @endif
-
+                <a href="/games/{{ $game->id }}/edit" class="button is-light is-small">@lang('trivial.edit')</a>
 
 
                 <form method="post" action="/games/{{ $game->id }}" style="display: inline-block;"

@@ -50,6 +50,14 @@
         props: {
             user_id: {
                 type: Number
+            },
+            game: {
+                type: Object,
+                default: null
+            },
+            users_invited: {
+                type: Array,
+                default: null
             }
         },
         methods: {
@@ -92,7 +100,19 @@
             // }
         },
         mounted() {
-            // console.log(this.errors)
+            if (this.game) {
+                this.radio = this.game.private;
+                this.chat = this.game.chat;
+                this.password = this.game.password;
+            }
+
+
+        },
+        created() {
+
+            // this.users = this.users_invited;
+            // this.invited = JSON.stringify(this.users_invited);
+            // console.log(this.users);
         }
     };
 </script>

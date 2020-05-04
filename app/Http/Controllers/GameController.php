@@ -59,7 +59,7 @@ class GameController extends Controller
     {
         $attributes = $this->validateRequest();
         $invited = json_decode($attributes['invited']);
-        // return $invited;
+        return $invited;
         $users = array();
         foreach ($invited as $user) {
             $users[] = $user->id;
@@ -91,7 +91,7 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        return view('games.edit')->with($game);
+        return view('games.edit', compact('game'));
     }
 
     /**
@@ -103,7 +103,18 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+        $attributes = $this->validateRequest();
+        $invited = json_decode($attributes['invited']);
+        // return $invited;
+        $users = array();
+        foreach ($invited as $user) {
+            $users[] = $user->id;
+        }
+        // return $users;
+        $attributes['invited'] = $users;
+        $attributes['players'] = array((int)$attributes['user_id']);
+        $game->update($attributes);
+        return redirect('/games');
     }
 
     /**

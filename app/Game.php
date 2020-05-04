@@ -70,6 +70,20 @@ class Game extends Model
         return $users;
     }
 
+    public function usersInvited() {
+        $users = array();
+        foreach ($this->invited as $u) {
+            $user = User::find($u);
+
+            $users[] = array(
+                'id' => $user->id,
+                'name' => $user->name,
+            );
+        }
+
+        return $users;
+    }
+
     public function slots()
     {
         return $this->belongsToMany(Slot::class);
