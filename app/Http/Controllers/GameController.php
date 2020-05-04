@@ -21,7 +21,7 @@ class GameController extends Controller
     public function index()
     {
         // $games = Game::all()->sortByDesc('created_at');
-        $games = Game::with('user')->OrderBy('created_at','desc')->get();
+        $games = Game::with('user')->OrderBy('created_at', 'desc')->get();
         return view('games.index', ['games' => $games]);
     }
 
@@ -59,13 +59,19 @@ class GameController extends Controller
     {
         $attributes = $this->validateRequest();
         $invited = json_decode($attributes['invited']);
-        $users = array();
-        foreach ($invited as $user) {
-            $users[] = $user->id;
+        if (is_array($invited)) {
+            $users = array();
+            foreach ($invited as $user) {
+                $users[] = $user->id;
+            }
+            // return $users;
+            $attributes['invited'] = $users;
         }
-        // return $users;
-        $attributes['invited'] = $users;
-        $attributes['players'] = array((int)$attributes['user_id']);
+        else {
+            $attributes['invited'] = array();
+        }
+
+        $attributes['players'] = array((int) $attributes['user_id']);
         Game::create($attributes);
         return redirect('/games');
     }
@@ -111,7 +117,7 @@ class GameController extends Controller
         }
         // return $users;
         $attributes['invited'] = $users;
-        $attributes['players'] = array((int)$attributes['user_id']);
+        $attributes['players'] = array((int) $attributes['user_id']);
         $game->update($attributes);
         return redirect('/games');
     }
@@ -262,6 +268,4 @@ class GameController extends Controller
             'user_id' => 'required|numeric'
         ]);
     }
-
-
 }

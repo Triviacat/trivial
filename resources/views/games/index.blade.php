@@ -40,9 +40,9 @@
             <td>{{ $game->updated_at}}</td>
             <td>
                 @if ($game->user_id == auth()->user()->id)
-                {{-- @if ($game->status != 'open' && $game->status != 'over')
+                @if ($game->status != 'open' && $game->status != 'over')
                 <a href="/games/{{ $game->id }}/open" class="button is-primary is-small">@lang('trivial.doOpen')</a>
-                @endif --}}
+                @endif
 
                 @if ($game->status != 'closed' && $game->status != 'over')
                 <a href="/games/{{ $game->id }}/close" class="button is-warning is-small">@lang('trivial.doClose')</a>

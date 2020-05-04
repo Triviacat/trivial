@@ -72,14 +72,17 @@ class Game extends Model
 
     public function usersInvited() {
         $users = array();
-        foreach ($this->invited as $u) {
-            $user = User::find($u);
+        if (is_array($this->invited)) {
+            foreach ($this->invited as $u) {
+                $user = User::find($u);
 
-            $users[] = array(
-                'id' => $user->id,
-                'name' => $user->name,
-            );
+                $users[] = array(
+                    'id' => $user->id,
+                    'name' => $user->name,
+                );
+            }
         }
+
 
         return $users;
     }
