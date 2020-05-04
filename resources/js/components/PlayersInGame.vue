@@ -10,8 +10,8 @@
             <!-- <a :href="'/games/' + game.id + '/leave'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.leave') }}</a> -->
             <!-- <button class="button is-small is-info" @click="leave">{{ trans.get('trivial.leave') }}</button>
         </span> -->
-        <span v-if="(user.id != game.user_id)">
-        <button class="button is-small is-info" @click="action">{{ actionText }}</button>
+        <span v-show="(user.id != game.user_id)">
+        <button class="button is-small is-info" @click="action" :disabled="isButtonDisabled">{{ actionText }}</button>
         </span>
     </span>
         </span>
@@ -46,7 +46,7 @@
             join: function() {
                 axios.get('/games/' + this.game.id + '/join' )
                 .then(response => (
-                    console.log(response.data.players.length),
+                    // console.log(response.data.players.length),
                     this.playersingame = response.data.players.length,
                     this.game.players = response.data.players,
                     this.actionText = this.trans.get('trivial.leave')
@@ -87,6 +87,17 @@
                     } else {
                         return false;
                     }                }
+            },
+            updateStatus: function (status) {
+                return this.trans.get('trivial.' + status);
+            },
+            isDisabled: function (status) {
+                // console.log(status);
+                if (status == 'closed') {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         },
         data() {
@@ -94,7 +105,8 @@
                 playersingame: this.game.players.length,
                 showLeave: true,
                 showJoin: true,
-                actionText: ''
+                actionText: '',
+                isButtonDisabled: this.isDisabled(this.game.status)
             }
         },
         created() {
@@ -116,14 +128,19 @@
             if ((this.game.players.find(this.checkUid) == this.user.id) && (this.user.id != this.game.user_id)) {
                 this.actionText = this.trans.get('trivial.leave')
             };
-            // window.Echo.channel('game.' + this.game.id)
-            //     .listen('GameStatusHasChanged', e => {
-            //         axios.get('/api/games/' + this.game.id).then(response => {
-            //             this.gamestatus = this.updateStatus(response.data[0].status);
-            //             var text = this.trans.get('trivial.theGame') + ' ' + this.game.id + this.trans.get('trivial.changedStatus') + ': ' + this.updateStatus(response.data[0].status);
-            //             this.success(text)
-            //         });
-            //     })
+            window.Echo.channel('game.' + this.game.id)
+                .listen('GameStatusHasChanged', e => {
+                    // console.log(e);
+                    this.gamestatus = this.updateStatus(e.game.status);
+                    var text = this.trans.get('trivial.theGame') + ' ' + this.game.id + this.trans.get('trivial.changedStatus') + ': ' + this.updateStatus(e.game.status);
+                        this.success(text);
+                        if (e.game.status == 'closed') {
+                            this.isButtonDisabled = true;
+                        }
+                        if (e.game.status == 'open') {
+                            this.isButtonDisabled = false;
+                        }
+                })
         }
     };
 </script>

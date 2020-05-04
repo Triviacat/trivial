@@ -36,7 +36,7 @@
             // console.log(this.game);
             window.Echo.channel('game.' + this.game.id)
                 .listen('GameStatusHasChanged', e => {
-                    console.log(e);
+                    // console.log(e);
                     this.gamestatus = this.updateStatus(e.game.status);
                     var text = this.trans.get('trivial.theGame') + ' ' + this.game.id + this.trans.get('trivial.changedStatus') + ': ' + this.updateStatus(e.game.status);
                         this.success(text)
