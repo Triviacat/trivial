@@ -2,11 +2,14 @@
     <div class="card">
         <header class="card-header">
             <p class="card-header-title has-background-warning">
-                @if (isset($game->turn))
+                @if ($game->status == 'closed')
+                @lang('trivial.gameIsClosed')
+                @elseif ($game->status == 'open' && ! isset($game->turn))
+                @lang('trivial.gameNotStarted')
+                @elseif (isset($game->turn))
                     @lang('trivial.plays'):&nbsp; <whosturn :turn="{{ $game->turn }}" :turnuser="{{ $game->turn->user }}">
                 </whosturn>
-                @else
-                    @lang('trivial.gameNotStarted')
+
                 @endif
             </p>
         </header>

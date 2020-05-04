@@ -81,8 +81,8 @@
                     return true;
                 }
                 else {
-                    // console.log(this.game.invited.includes(this.user.id))
-                    if (this.game.invited.includes(this.user.id)) {
+                    // console.log(this.game.invited);
+                    if (this.game.invited != null && this.game.invited.includes(this.user.id)) {
                          return true;
                     } else {
                         return false;
@@ -115,7 +115,15 @@
                 }
             if ((this.game.players.find(this.checkUid) == this.user.id) && (this.user.id != this.game.user_id)) {
                 this.actionText = this.trans.get('trivial.leave')
-            }
+            };
+            // window.Echo.channel('game.' + this.game.id)
+            //     .listen('GameStatusHasChanged', e => {
+            //         axios.get('/api/games/' + this.game.id).then(response => {
+            //             this.gamestatus = this.updateStatus(response.data[0].status);
+            //             var text = this.trans.get('trivial.theGame') + ' ' + this.game.id + this.trans.get('trivial.changedStatus') + ': ' + this.updateStatus(response.data[0].status);
+            //             this.success(text)
+            //         });
+            //     })
         }
     };
 </script>
