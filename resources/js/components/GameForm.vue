@@ -20,19 +20,21 @@
         <div class="field">
             <span class="label">Usuaris i usuàries que convides</span>
             <user-multiselect v-model="selectedUsers" id="ajax" label="name" track-by="id"
-            placeholder="Escriu per començar a buscar" open-direction="bottom" :options="users" :multiple="true"
-            :searchable="true" :loading="isLoading" :internal-search="false" :clear-on-select="false"
-            :close-on-select="false" :options-limit="300" :limit="6" :max-height="600"
-            :show-no-results="false" :hide-selected="true" @search-change="asyncFind">
-            <template slot="tag" slot-scope="{ option, remove }"><span
-                    class="custom__tag"><span>{{ option.name }}</span><span class="custom__remove"
-                        @click="remove(option)"><i class="far fa-times-circle"></i></span></span></template>
-            <template slot="clear" slot-scope="props">
-                <div class="multiselect__clear" v-if="selectedUsers.length"
-                    @mousedown.prevent.stop="clearAll(props.search)"></div>
-            </template><span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
-        </user-multiselect>
-        <p class="help">Pots convidar un màxim de sis persones</p>
+                placeholder="Escriu per començar a buscar" open-direction="bottom" :options="users" :multiple="true"
+                :searchable="true" :loading="isLoading" :internal-search="false" :clear-on-select="true"
+                :close-on-select="false" :options-limit="300" :limit="6" :max-height="600" :show-no-results="false"
+                :hide-selected="true" @search-change="asyncFind" @blur="notLoading">
+                <template slot="tag" slot-scope="{ option, remove }"><span
+                        class="custom__tag"><span>{{ option.name }}</span><span class="custom__remove"
+                            @click="remove(option)"><i class="far fa-times-circle"></i></span></span></template>
+                <template slot="clear" slot-scope="props">
+                    <div class="multiselect__clear" v-if="selectedUsers.length"
+                        @mousedown.prevent.stop="clearAll(props.search)"></div>
+                </template><span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
+            </user-multiselect>
+            <p class="help">Pots convidar un màxim de sis persones</p>
+
+
         </div>
         <div class="field">
             <button class="button">Enviar</button>
@@ -61,22 +63,38 @@
             }
         },
         methods: {
-            asyncFind(query) {
-                this.isLoading = true
-                axios.get('/api/users/name/' + query)
+            asyncFind: async function(query) {
+                await axios.get('/api/users/name/' + query)
                         .then((response) => (
                             this.users = response.data,
-                            this.invited = JSON.stringify(this.selectedUsers),
                             // console.log(this.selectedUsers),
                             this.isLoading = false
                         ))
-                        .catch(function (error) {
+                        .catch((error) => {
                             // console.log(error);
+                            // this.isLoading = false
                         });
 
             },
+            // asyncFind(query) {
+            //     this.isLoading = true
+            //     awaitaxios.get('/api/users/name/' + query)
+            //             .then((response) => (
+            //                 this.users = response.data,
+            //                 // console.log(this.selectedUsers),
+            //                 this.isLoading = false
+            //             ))
+            //             .catch(function (error) {
+            //                 // console.log(error);
+            //                 // this.isLoading = false
+            //             });
+
+            // },
             clearAll() {
                 this.selectedUsers = []
+            },
+            notLoading() {
+                this.isLoading = false
             }
         },
 
@@ -94,6 +112,10 @@
         watch: {
             radio: function (val, oldVal) {
                 // console.log(val)
+            },
+            selectedUsers: function (val, oldVal) {
+                this.invited = JSON.stringify(this.selectedUsers);
+                this.isLoading = false
             }
             // chat: function (val, oldVal) {
             //     console.log(this.chat)
@@ -109,7 +131,11 @@
 
         },
         created() {
-
+            if (this.users_invited) {
+                this.invited = JSON.stringify(this.users_invited);
+                this.selectedUsers = this.users_invited
+                // console.log(this.invited);
+            }
             // this.users = this.users_invited;
             // this.invited = JSON.stringify(this.users_invited);
             // console.log(this.users);

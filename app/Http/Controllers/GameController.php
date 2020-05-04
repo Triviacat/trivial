@@ -59,7 +59,6 @@ class GameController extends Controller
     {
         $attributes = $this->validateRequest();
         $invited = json_decode($attributes['invited']);
-        return $invited;
         $users = array();
         foreach ($invited as $user) {
             $users[] = $user->id;
