@@ -5,11 +5,11 @@
 
 @section('title', 'Edit game: ' . $game->title)
 @section('content')
+{{-- @dump(json_encode($game->usersInvited())) --}}
 <form action="/games/{{ $game->id }}" method="post">
+    @csrf
         @method('PATCH')
-        @include ('games.form', [
-            'buttonText' => 'Update game'
-        ])
+        <game-form :game={{ $game }} :user_id="{{ auth()->user()->id }}" :users_invited="{{ json_encode($game->usersInvited()) }}"></game-form>
     </form>
 
   @include('errors')

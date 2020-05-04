@@ -15,8 +15,8 @@ class UpdateFieldsAtGamesTable extends Migration
     {
         Schema::table('games', function (Blueprint $table) {
             $table->boolean('private')->default(true);
-            $table->string('chat', 255);
-            $table->string('password', 255);
+            $table->string('chat', 255)->nullable();
+            $table->string('password', 255)->nullabel();
             $table->text('invited')->nullable(); // array()
         });
     }

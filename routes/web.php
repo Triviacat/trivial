@@ -79,6 +79,8 @@ Route::group(['prefix' => 'games', 'middleware' => ['verified']], function () {
     Route::get('/create', 'GameController@create')->name('games.create');
     Route::get('/{game}', 'GameController@show')->name('games.show');
     Route::delete('/{game}', 'GameController@destroy')->name('games.destroy');
+    Route::patch('/{game}', 'GameController@update')->name('games.destroy');
+    Route::get('/{game}/edit', 'GameController@edit')->name('games.edit');
     Route::get('/{game}/start', 'GameController@start')->name('games.start');
     Route::get('/{game}/stop', 'GameController@stop')->name('games.stop');
     Route::get('/{game}/open', 'GameController@open')->name('games.open');
