@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['verified','role:admin']], f
 Route::get('/profile/{user}', 'UserController@profileShow')->name('profile.show')->middleware('auth');
 Route::get('/profile/{user}/edit', 'UserController@profileEdit')->name('profile.edit')->middleware('auth');
 Route::post('/profile/{user}/color/update', 'UserController@profileColorUpdate')->name('profile.color.update')->middleware('auth');
+Route::post('/profile/{user}/name/update', 'UserController@profileNameUpdate')->name('profile.name.update')->middleware('auth');
 // Route::get('/profile/{user}/games', 'UserController@profileGames')->name('profile.games')->middleware('auth');
 
 // Route::get('/users', 'UserController@index')->name('users')->middleware('auth');

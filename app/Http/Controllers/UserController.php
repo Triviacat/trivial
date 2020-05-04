@@ -152,4 +152,27 @@ class UserController extends Controller
 
         // return ($request->user['id']);
     }
+
+    /**
+     * Update profile name.
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public static function profileNameUpdate(User $user, Request $request)
+    {
+        if ($user->id == $request->user['id']) {
+            // return ($request->color);
+            $attributes = $request->validate([
+                'name' => ['string']
+            ]);
+            $user->name = $attributes['name'];
+            // return $user;
+            $user->update();
+            // $user->update($attributes);
+            // return ($attributes['color']);
+        }
+
+        // return ($request->user['id']);
+    }
 }

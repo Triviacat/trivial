@@ -4,38 +4,45 @@
             <b-tab-item :label="trans.get('trivial.profile')">
                 <div class="columns">
                     <div class="column is-half">
-                        <div><span class="label">{{ trans.get('trivial.name') }}</span>{{ this.user.name }}</div>
-                        <div><span class="label">{{ trans.get('trivial.email') }}</span>{{ this.user.email }}</div>
-                        <div><span class="label">{{ trans.get('trivial.color') }}</span><div :style="savedColor">
-                            &nbsp;</div></div>
-                            <div class="columns has-margin-top-10">
-                                <div class="column is-half">
-                                    <chrome-picker :value="colors" @input="updateValue"></chrome-picker>
-                                </div>
-                                <div class="column is-half">
-                                    <button class="button is-light" :style="background" @click="sendNewColor" :disabled=enableDisable>Canviar el color</button>
-                                </div>
-                            </div>
+                        <div class="content">
 
-                        <!-- <a :href="editButton" class="button is-primary has-margin-top-10">{{ trans.get('trivial.edit') }}</a> -->
+                            <b-field :label="trans.get('trivial.name')" :label-position="labelPosition">
+                                <b-input v-model="name"></b-input>
+                                <p class="control">
+                                    <b-button class="button is-primary" @click="changeName">Canviar el nom</b-button>
+                                </p>
+                            </b-field>
+                            <!-- <b-field label="Name">
+                                <b-input v-model="name"></b-input>
+                            </b-field> -->
+                            <!-- <div><span class="label">{{ trans.get('trivial.name') }}</span>{{ this.name }}</div> -->
+                            <div><span class="label">{{ trans.get('trivial.email') }}</span>{{ this.user.email }}</div>
+                            <div><span class="label">{{ trans.get('trivial.color') }}</span></div>
+                            <div :style="savedColor">&nbsp;</div>
+                        </div>
+
+
+                        <div class="content">
+                            <chrome-picker :value="colors" @input="updateColor"></chrome-picker>
+                        </div>
+                        <button class="button is-light" :style="background" @click="sendNewColor"
+                            :disabled=enableDisable>Canviar el color</button>
                     </div>
-
                 </div>
             </b-tab-item>
-
             <b-tab-item :label="trans.get('trivial.games')">
-               <table class="table">
-                   <thead>
-                       <tr>
-                           <th>{{ trans.get('trivial.game') }}</th>
-                           <th>{{ trans.get('trivial.status') }}</th>
-                       </tr>
-                   </thead>
-                   <tr v-for="game in this.user.gamesIn" :key="game.id">
-                       <td>{{ game.id }}</td>
-                       <td>{{ game.status }}</td>
-                   </tr>
-               </table>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>{{ trans.get('trivial.game') }}</th>
+                            <th>{{ trans.get('trivial.status') }}</th>
+                        </tr>
+                    </thead>
+                    <tr v-for="game in this.user.gamesIn" :key="game.id">
+                        <td>{{ game.id }}</td>
+                        <td>{{ game.status }}</td>
+                    </tr>
+                </table>
             </b-tab-item>
         </b-tabs>
     </section>
@@ -50,28 +57,44 @@
         },
 
         methods: {
-            updateValue (value) {
+            updateColor(value) {
                 this.colors = value;
                 this.enableDisable = false;
                 this.background = 'background-color:' + value.hex8
                 // console.log(this.colors)
             },
-            sendNewColor () {
+            sendNewColor() {
                 axios.post('/profile/' + this.user.id + '/color/update', {
-                    'color': this.colors.hex8,
-                    'user': this.user
-                })
-                    .then(function (e) {
-
-                        // console.log(e);
-                        // this.savedColor = 'background-color:' + e.data;
+                        'color': this.colors.hex8,
+                        'user': this.user
                     })
                     .catch(function (error) {
                         // console.log(error);
                     });
-                    // console.log(this);
+                // console.log(this);
                 this.savedColor = 'background-color:' + this.colors.hex8;
-            }
+                this.success('Color canviat correctament');
+            },
+            changeName() {
+                // console.log(this.name);
+                axios.post('/profile/' + this.user.id + '/name/update', {
+                        'name': this.name,
+                        'user': this.user
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                this.success('Nom canviat correctament');
+            },
+            success: function(text) {
+                this.$buefy.snackbar.open({
+                    message: text,
+                    duration: 5000,
+                    type: 'is-success',
+                    queue: false,
+                    position: 'is-bottom-left'
+                })
+            },
         },
         data() {
             return {
@@ -83,7 +106,9 @@
                 savedColor: 'background-color:' + this.user.color,
                 background: '',
                 editButton: '/profile/' + this.user.id + '/edit',
-                enableDisable: true
+                enableDisable: true,
+                name: this.user.name,
+                labelPosition: 'on-border'
             }
         },
         mounted() {
