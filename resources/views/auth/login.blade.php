@@ -47,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="field is-horizontal">
+                    {{-- <div class="field is-horizontal">
                         <div class="field-label"></div>
                         <div class="field-body">
                             <div class="field">
@@ -59,7 +59,7 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="field is-horizontal">
                         <div class="field-label"></div>
                         <div class="field-body">
@@ -172,6 +172,24 @@
                                         name="register_password_confirmation" required>
                                 </p>
                                 @error('register_password')
+                                <p class="help is-danger">
+                                    {{ $message }}
+                                </p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <label class="label">@lang('trivial.betaToken')</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <p class="control">
+                                    <input class="input @error('beta_token') is-danger @enderror" id="beta-token" type="text"
+                                        name="beta_token" required>
+                                </p>
+                                @error('beta_token')
                                 <p class="help is-danger">
                                     {{ $message }}
                                 </p>

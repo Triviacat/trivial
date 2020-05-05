@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -57,13 +58,19 @@ class RegisterController extends Controller
             'register_name' => ['required', 'string', 'max:255'],
             'register_email' => ['required', 'string', 'email', 'max:255', 'unique:users,email', 'confirmed'],
             'register_password' => ['required', 'string', 'min:8', 'confirmed'],
+            'beta_token' => ['required', 'string', 'min:10']
         ]);
 
-        // $validator->setAttributeNames([
-        //     'register_name' => 'name',
-        //     'register_email' => 'email',
-        //     'register_password' => 'password',
-        // ]);
+        $validator->after(function ($validator) use ($data) {
+            $token = DB::table('notify')
+                ->where('email', $data['register_email'])
+                ->where('token', $data['beta_token'])
+                ->get();
+            if (!isset($token[0])) {
+                $validator->errors()->add('beta_token', 'Aquest codi no és vàlid');
+            }
+        });
+
         return $validator;
     }
 

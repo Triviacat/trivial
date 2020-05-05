@@ -37,7 +37,7 @@ class HomeController extends Controller
         $response = $request->validate(['email' => 'required|email']);
         // return $response['email'];
         DB::insert('insert into notify (email) values (?)', [$response['email']]);
-        return redirect()->route('home')->with('message', 'Gràcies. Us avisarem quan obrim el periode de proves');
+        return redirect()->route('home')->with('message', 'Gràcies. Us enviarem un correu amb un codi per poder accedir al període de proves.');
     }
 
 

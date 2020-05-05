@@ -15,6 +15,7 @@ return [
     'answer' => 'Resposta',
     'answerKo' => 'Oh nooooo!!!',
     'answerOk' => 'Resposta correcta!',
+    'betaToken' => 'Codi accés Beta',
     'box' => 'Casella',
     'cancel' => 'Cancel·lar',
     'changedStatus' => 'ha canviat el seu estat',

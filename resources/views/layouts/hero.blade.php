@@ -104,6 +104,11 @@
                 <span class="tag is-primary">Novetat!</span> Ja podeu provar la versió Beta del joc en línia.
             </p>
         </div>
+        @if (session('message'))
+    <div class="notification  is-warning has-text-centered">
+        {{ session('message') }}
+    </div>
+@endif
 
 
 

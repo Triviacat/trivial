@@ -27,27 +27,30 @@
     <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
 
     <style>
-        html,body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-}
-.hero.is-info {
-  background: linear-gradient(
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.5)
-    ), url('/assets/images/Trivial.png') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-.hero .nav, .hero.is-success .nav {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.hero .subtitle {
-  padding: 3rem 0;
-  line-height: 1.5;
-}
+        html,
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        }
+
+        .hero.is-info {
+            background: linear-gradient(rgba(0, 0, 0, 0.5),
+                    rgba(0, 0, 0, 0.5)), url('/assets/images/Trivial.png') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .hero .nav,
+        .hero.is-success .nav {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .hero .subtitle {
+            padding: 3rem 0;
+            line-height: 1.5;
+        }
     </style>
 </head>
 
@@ -104,26 +107,31 @@
                     </div>
                 </div>
             </nav>
-            </div>
+        </div>
 
-            <div class="hero-body">
-                <div class="container has-text-centered">
-                    <div class="column is-6 is-offset-3">
-                        <h1 class="title">
-                            Properament
-                        </h1>
-                        <h2 class="subtitle">
-                            Estem treballant en una versió del trivial en català per poder jugar confinats, davant un ordinador, connectats amb les nostres amistats en un video xat de mòbil, per donar-li un major realisme.<br><br>
-                            Tot de codi obert i gratuït, naturalment<br><br>
-                            <a href="{{ env('TRIVIACAT_PREGUNTES_URL') }}" >Voleu col·laborar tot afegint preguntes? <i class="fa fa-external-link"></i></a>
-                        </h2>
-                        {{-- <div class="box">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-6 is-offset-3">
+                    <h1 class="title">
+                        Properament
+                    </h1>
+                    <h2 class="subtitle">
+                        Estem treballant en una versió del trivial en català per poder jugar confinats, davant un
+                        ordinador, connectats amb les nostres amistats en un video xat de mòbil, per donar-li un major
+                        realisme.<br><br>
+                        Tot de codi obert i gratuït, naturalment<br><br>
+                        <a href="{{ env('TRIVIACAT_PREGUNTES_URL') }}">Voleu col·laborar tot afegint preguntes? <i
+                                class="fa fa-external-link"></i></a>
+                    </h2>
+                    {{-- <div class="box">
                         <p><a href="https://preguntes.triviacat.site" class="button">Voleu col·laborar tot afegint preguntes?</a></p>
                         </div> --}}
-                        <div class="box">
-                            <form action="/notify" method="post">
-                                @csrf
-                                <div class="content"><p>Deixeu-nos un correu si voleu participar de periode de proves que obrirem aviat.</p></div>
+                    <div class="box">
+                        <form action="/notify" method="post">
+                            @csrf
+                            <div class="content">
+                                <p>Deixeu-nos un correu si voleu participar de periode de proves que obrirem aviat.</p>
+                            </div>
                             <div class="field is-grouped">
                                 <p class="control is-expanded">
                                     <input class="input" name="email" type="email" placeholder="Enter your email">
@@ -136,28 +144,29 @@
                                 </p>
                             </div>
                         </form>
-                        </div>
-                        @if (session('message'))
-    <div class="notification  is-warning">
-        {{ session('message') }}
-    </div>
-@endif
                     </div>
+                    @if (session('message'))
+                    <div class="notification  is-warning">
+                        {{ session('message') }}
+                    </div>
+                    @endif
                 </div>
             </div>
+        </div>
 
     </section>
     <script>
-    // The following code is based off a toggle menu by @Bradcomp
-// source: https://gist.github.com/Bradcomp/a9ef2ef322a8e8017443b626208999c1
-(function() {
-    var burger = document.querySelector('.burger');
-    var menu = document.querySelector('#'+burger.dataset.target);
-    burger.addEventListener('click', function() {
-        burger.classList.toggle('is-active');
-        menu.classList.toggle('is-active');
-    });
-})();</script>
+        // The following code is based off a toggle menu by @Bradcomp
+        // source: https://gist.github.com/Bradcomp/a9ef2ef322a8e8017443b626208999c1
+        (function () {
+            var burger = document.querySelector('.burger');
+            var menu = document.querySelector('#' + burger.dataset.target);
+            burger.addEventListener('click', function () {
+                burger.classList.toggle('is-active');
+                menu.classList.toggle('is-active');
+            });
+        })();
+    </script>
 </body>
 
 </html>
