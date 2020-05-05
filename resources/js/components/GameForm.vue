@@ -17,7 +17,7 @@
         <b-field label="Contrasenya Xat" message="Missatge d'ajuda">
             <b-input v-model="password" name="password"></b-input>
         </b-field>
-        <div class="field">
+        <div class="field" v-show="showInvited">
             <span class="label">Usuaris i usuàries que convides</span>
             <user-multiselect v-model="selectedUsers" id="ajax" label="name" track-by="id"
                 placeholder="Escriu per començar a buscar" open-direction="bottom" :options="users" :multiple="true"
@@ -106,12 +106,23 @@
                 selectedUsers: [],
                 users: [],
                 isLoading: false,
-                invited: ''
+                invited: '',
+                showInvited: 1,
             }
         },
         watch: {
             radio: function (val, oldVal) {
-                // console.log(val)
+                // console.log(val),
+                switch(val) {
+                    case '0':
+                        this.showInvited = false
+                        break;
+
+                    case '1':
+                        this.showInvited = true
+                        break;
+                }
+
             },
             selectedUsers: function (val, oldVal) {
                 this.invited = JSON.stringify(this.selectedUsers);
