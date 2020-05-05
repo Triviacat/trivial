@@ -24,7 +24,7 @@
         <tr>
             <td><a href="/games/{{ $game->id }}">{{ $game->id }}</a></td>
             <td>
-                <gamestatus :game="{{ $game }}"></gamestatus>
+                <game-status :game="{{ $game }}"></game-status>
             </td>
             <td>
                 @if ($game->private)
@@ -35,18 +35,20 @@
             </td>
             <td>{{ $game->user->name}}</td>
             <td>
-                <playersingame :game="{{ $game }}" :user="{{ auth()->user() }}" :users_invited="{{ json_encode($game->usersInvited()) }}"></playersingame>
+                <players-in-game :game="{{ $game }}" :user="{{ auth()->user() }}" :users_invited="{{ json_encode($game->usersInvited()) }}"></players-in-game>
             </td>
             <td>{{ $game->updated_at}}</td>
             <td>
                 @if ($game->user_id == auth()->user()->id)
-                @if ($game->status != 'open' && $game->status != 'over')
+                {{-- @if ($game->status != 'open' && $game->status != 'over')
                 <a href="/games/{{ $game->id }}/open" class="button is-primary is-small">@lang('trivial.doOpen')</a>
-                @endif
-
-                @if ($game->status != 'closed' && $game->status != 'over')
+                @endif --}}
+                {{-- @dump($game) --}}
+                <open-game-button :game="{{ $game }}"></open-game-button>
+                <close-game-button :game="{{ $game }}"></close-game-button>
+                {{-- @if ($game->status != 'closed' && $game->status != 'over')
                 <a href="/games/{{ $game->id }}/close" class="button is-warning is-small">@lang('trivial.doClose')</a>
-                @endif
+                @endif --}}
 
                 @if ($game->status != 'started' && $game->status != 'over' && $game->status != 'closed')
                 <a href="/games/{{ $game->id }}/start" class="button is-success is-small">@lang('trivial.doStart')</a>

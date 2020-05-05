@@ -2,14 +2,6 @@
     <div>{{ playersingame }}
         <span v-if="showJoinButton() == true">
             <span v-if="game.status != 'over'">
-        <!-- <span v-if="(game.players.find(checkUid) != user.id)"> -->
-            <!-- <a :href="'/games/' + game.id + '/join'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.join') }}</a> -->
-            <!-- <button class="button is-small is-info" @click="join">{{ trans.get('trivial.join') }}</button>
-        </span>
-        <span v-if="((game.players.find(checkUid) == user.id) && (user.id != game.user_id))"> -->
-            <!-- <a :href="'/games/' + game.id + '/leave'" class="button is-info is-small" v-on:click="updatePlayers">{{ trans.get('trivial.leave') }}</a> -->
-            <!-- <button class="button is-small is-info" @click="leave">{{ trans.get('trivial.leave') }}</button>
-        </span> -->
         <span v-show="(user.id != game.user_id)">
         <button class="button is-small is-info" @click="action" :disabled="isButtonDisabled">{{ actionText }}</button>
         </span>
@@ -132,8 +124,8 @@
                 .listen('GameStatusHasChanged', e => {
                     // console.log(e);
                     this.gamestatus = this.updateStatus(e.game.status);
-                    var text = this.trans.get('trivial.theGame') + ' ' + this.game.id + this.trans.get('trivial.changedStatus') + ': ' + this.updateStatus(e.game.status);
-                        this.success(text);
+                    // var text = this.trans.get('trivial.theGame') + ' ' + this.game.id + this.trans.get('trivial.changedStatus') + ': ' + this.updateStatus(e.game.status);
+                    //     this.success(text);
                         if (e.game.status == 'closed') {
                             this.isButtonDisabled = true;
                         }

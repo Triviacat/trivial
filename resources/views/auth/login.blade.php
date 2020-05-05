@@ -18,7 +18,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('email') is-danger @enderror" id="email" type="email"
+                                    <input class="input @error('email') is-danger @enderror" id="email_login" type="email"
                                         name="email" value="{{ old('email') }}" required>
                                 </p>
                                 @error('email')
@@ -36,7 +36,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('password') is-danger @enderror" id="password"
+                                    <input class="input @error('password') is-danger @enderror" id="password_login"
                                         type="password" name="password" required autocomplete="current-password">
                                 </p>
                                 @error('password'))
@@ -114,7 +114,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('register_email') is-danger @enderror" id="email" type="email" name="register_email"
+                                    <input class="input @error('register_email') is-danger @enderror" id="email_register" type="email" name="register_email"
                                         value="{{ old('register_email') }}" required>
                                 </p>
                                 @error('register_email')
@@ -132,7 +132,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('register_email') is-danger @enderror" id="email" type="email" name="register_email_confirmation"
+                                    <input class="input @error('register_email') is-danger @enderror" id="email_confirmation" type="email" name="register_email_confirmation"
                                         required>
                                 </p>
                                 @error('register_email')
@@ -150,7 +150,7 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('register_password') is-danger @enderror" id="password" type="password" name="register_password"
+                                    <input class="input @error('register_password') is-danger @enderror" id="password_register" type="password" name="register_password"
                                         required>
                                 </p>
                                 @error('register_password')

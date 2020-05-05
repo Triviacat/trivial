@@ -65,8 +65,8 @@ window.Echo.channel('game').listen('PlayerJoinsGame', e => {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('playersingame', require('./components/PlayersInGame.vue').default);
-Vue.component('gamestatus', require('./components/GameStatus.vue').default);
+Vue.component('players-in-game', require('./components/PlayersInGame.vue').default);
+Vue.component('game-status', require('./components/GameStatus.vue').default);
 Vue.component('whosturn', require('./components/WhosTurn.vue').default);
 Vue.component('dicebutton', require('./components/DiceButton.vue').default);
 Vue.component('dice', require('./components/Dice.vue').default);
@@ -76,6 +76,8 @@ Vue.component('cheeses', require('./components/Cheeses.vue').default);
 Vue.component('board', require('./components/Board.vue').default);
 Vue.component('profile', require('./components/Profile.vue').default);
 Vue.component('game-form', require('./components/GameForm.vue').default);
+Vue.component('open-game-button', require('./components/OpenGameButton.vue').default);
+Vue.component('close-game-button', require('./components/CloseGameButton.vue').default);
 Vue.component('chrome-picker', Chrome);
 Vue.component('user-multiselect', Multiselect);
 

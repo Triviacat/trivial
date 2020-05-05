@@ -189,7 +189,8 @@ class GameController extends Controller
         $game->status = 'open';
         $game->update();
         GameStatusHasChanged::dispatch($game);
-        return redirect('/games');
+        return $game;
+        // return redirect('/games');
     }
     /**
      * Close a game.
@@ -202,7 +203,8 @@ class GameController extends Controller
         $game->status = 'closed';
         $game->update();
         GameStatusHasChanged::dispatch($game);
-        return redirect('/games');
+        return $game;
+        // return redirect('/games');
     }
 
     /**
