@@ -28,7 +28,13 @@
                     position: 'is-bottom-left'
                 })
             },
-            closeGame: function () {
+            closeGame: function() {
+                this.$buefy.dialog.confirm({
+                    message: 'Segur que vols tancar el joc? No el podràs tornar a obrir!',
+                    onConfirm: () => this.doCloseGame()
+                })
+            },
+            doCloseGame: function () {
                 // console.log('send');
                 axios.get('/games/' + this.game.id + '/close' )
                 .then(response => (
