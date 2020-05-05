@@ -39,11 +39,11 @@
             },
             showButton: function (status) {
                 // console.log(this.game);
-                if (status == 'closed') {
-                    return false;
+                if (status == 'open' || status == 'started') {
+                    return true;
                 }
                 else {
-                    return true;
+                    return false;
                 }
             }
         },

@@ -15,7 +15,7 @@ class UpdateEstateFromGamesTable extends Migration
     public function up()
     {
         Schema::table('games', function (Blueprint $table) {
-            $table->string('status', 10)->default('closed');
+            $table->string('status', 10)->default('new');
         });
 
         $games = DB::table('games')->select('id', 'estate')->get();

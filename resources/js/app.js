@@ -78,6 +78,7 @@ Vue.component('profile', require('./components/Profile.vue').default);
 Vue.component('game-form', require('./components/GameForm.vue').default);
 Vue.component('open-game-button', require('./components/OpenGameButton.vue').default);
 Vue.component('close-game-button', require('./components/CloseGameButton.vue').default);
+Vue.component('start-game-button', require('./components/StartGameButton.vue').default);
 Vue.component('chrome-picker', Chrome);
 Vue.component('user-multiselect', Multiselect);
 

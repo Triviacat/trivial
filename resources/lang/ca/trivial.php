@@ -63,6 +63,7 @@ return [
     'movedTo' => 'ha mogut la peça a',
     'moveThePiece' => 'Mou la peça',
     'name' => 'Nom',
+    'new' => 'Nou',
     'nowMovePiece' => 'Ara pots moure la peça',
     'open' => 'Obert',
     'over' => 'Acabat',

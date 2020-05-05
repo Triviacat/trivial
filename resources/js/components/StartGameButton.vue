@@ -1,9 +1,9 @@
 <template>
     <b-button
-        type="is-success is-light"
+        type="is-success"
             size="is-small"
-            @click="openGame"
-            v-show="isButtonShown">{{ trans.get('trivial.doOpen') }}
+            @click="startGame"
+            v-show="isButtonShown">{{ trans.get('trivial.doStart') }}
             </b-button>
 </template>
 
@@ -20,7 +20,7 @@
             //     return this.trans.get('trivial.' + status);
             // },
             success: function (text) {
-                this.$buefy.snackbar.open({
+                this.$buefy.snackbar.close({
                     message: text,
                     duration: 5000,
                     type: 'is-success',
@@ -28,9 +28,9 @@
                     position: 'is-bottom-left'
                 })
             },
-            openGame: function () {
+            startGame: function () {
                 // console.log('send');
-                axios.get('/games/' + this.game.id + '/open' )
+                axios.get('/games/' + this.game.id + '/start' )
                 .then(response => (
                     // console.log(response),
                     // this.game.status = response.data.status,
@@ -39,7 +39,7 @@
             },
             showButton: function (status) {
                 // console.log(this.game);
-                if (status == 'new') {
+                if (status == 'open') {
                     return true;
                 }
                 else {
@@ -63,6 +63,7 @@
                     // console.log(e);
                     this.isButtonShown = this.showButton(e.game.status);
                 })
+
         }
     };
 </script>

@@ -49,10 +49,10 @@
                 {{-- @if ($game->status != 'closed' && $game->status != 'over')
                 <a href="/games/{{ $game->id }}/close" class="button is-warning is-small">@lang('trivial.doClose')</a>
                 @endif --}}
-
-                @if ($game->status != 'started' && $game->status != 'over' && $game->status != 'closed')
+                <start-game-button :game="{{ $game }}"></start-game-button>
+                {{-- @if ($game->status != 'started' && $game->status != 'over' && $game->status != 'closed')
                 <a href="/games/{{ $game->id }}/start" class="button is-success is-small">@lang('trivial.doStart')</a>
-                @endif
+                @endif --}}
                 @if ($game->status != 'over' && $game->status != 'closed')
                 <a href="/games/{{ $game->id }}/edit" class="button is-light is-small">@lang('trivial.edit')</a>
                 @endif
