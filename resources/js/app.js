@@ -29,7 +29,7 @@ import { Chrome } from 'vue-color';
 import Multiselect from 'vue-multiselect';
 
 import Bulma from '@vizuaalog/bulmajs';
-
+import VueRouter from 'vue-router'
 
 
 
@@ -58,6 +58,7 @@ window.Echo.channel('game').listen('PlayerJoinsGame', e => {
  Vue.use(Buefy)
  Vue.use(VueKonva)
  Vue.use(VueResize)
+ Vue.use(VueRouter)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -80,6 +81,7 @@ Vue.component('open-game-button', require('./components/OpenGameButton.vue').def
 Vue.component('close-game-button', require('./components/CloseGameButton.vue').default);
 Vue.component('start-game-button', require('./components/StartGameButton.vue').default);
 Vue.component('edit-game-button', require('./components/EditGameButton.vue').default);
+Vue.component('game-access-button', require('./components/GameAccessButton.vue').default);
 Vue.component('chrome-picker', Chrome);
 Vue.component('user-multiselect', Multiselect);
 

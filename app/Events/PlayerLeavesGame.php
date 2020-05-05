@@ -24,7 +24,7 @@ class PlayerLeavesGame implements ShouldBroadcast
     public function __construct($game)
     {
         $this->game = $game;
-        $this->dontBroadcastToCurrentUser();
+        // $this->dontBroadcastToCurrentUser();
     }
 
     /**

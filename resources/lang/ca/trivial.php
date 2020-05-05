@@ -33,6 +33,7 @@ return [
     'delete' => 'Esborrar',
     'dice' => 'Dau',
     'displayName' => 'Nom a mostrar',
+    'doAccess' => 'Accedir',
     'doClose' => 'Tancar',
     'doDelete' => 'Esborra',
     'doEdit' => 'Editar',

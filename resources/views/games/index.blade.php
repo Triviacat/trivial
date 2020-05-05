@@ -22,7 +22,10 @@
         @foreach ($games as $game)
         {{-- <game-details> --}}
         <tr>
-            <td><a href="/games/{{ $game->id }}">{{ $game->id }}</a></td>
+            <td>
+                <game-access-button :game="{{ $game }}" :user="{{ auth()->user() }}"></game-access-button>
+                {{-- <a href="/games/{{ $game->id }}">{{ $game->id }}</a> --}}
+            </td>
             <td>
                 <game-status :game="{{ $game }}"></game-status>
             </td>

@@ -47,7 +47,7 @@
             leave: function() {
                 axios.get('/games/' + this.game.id + '/leave' )
                 .then(response => (
-                    console.log(response.data),
+                    // console.log(response.data),
                     this.playersingame = response.data.players.length,
                     this.game.players = response.data.players,
                     this.actionText = this.trans.get('trivial.join')
