@@ -69,6 +69,9 @@
                 })
             },
             showJoinButton: function() {
+                // TODO: change button visibility (thru a broadcast event) when editing a game.
+                // it copuld have changed its privacity status or its invited users.
+                // right now you have to relaod list of games page in order to take this into account
                 if (this.game.private == false) {
                     return true;
                 }
