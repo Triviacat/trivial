@@ -85,10 +85,10 @@
             },
             isDisabled: function (status) {
                 // console.log(status);
-                if (status == 'closed') {
-                    return true;
-                } else {
+                if (status == 'open' || status == 'started') {
                     return false;
+                } else {
+                    return true;
                 }
             }
         },
