@@ -53,9 +53,10 @@
                 {{-- @if ($game->status != 'started' && $game->status != 'over' && $game->status != 'closed')
                 <a href="/games/{{ $game->id }}/start" class="button is-success is-small">@lang('trivial.doStart')</a>
                 @endif --}}
-                @if ($game->status != 'over' && $game->status != 'closed')
+                <edit-game-button :game="{{ $game }}"></edit-game-button>
+                {{-- @if ($game->status != 'over' && $game->status != 'closed')
                 <a href="/games/{{ $game->id }}/edit" class="button is-light is-small">@lang('trivial.edit')</a>
-                @endif
+                @endif --}}
 
                 <form method="post" action="/games/{{ $game->id }}" style="display: inline-block;"
                     onsubmit="return confirm('Do you really want to delete?');">
