@@ -18,13 +18,13 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('email') is-danger @enderror" id="email_login" type="email"
-                                        name="email" value="{{ old('email') }}" required>
+                                    <input class="input @error('email') is-danger @enderror" id="email_login"
+                                        type="email" name="email" value="{{ old('email') }}" required>
                                 </p>
                                 @error('email')
-                                <p class="help is-danger">
-                                    {{ $message }}
-                                </p>
+                                    <p class="help is-danger">
+                                        {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                         </div>
@@ -40,26 +40,13 @@
                                         type="password" name="password" required autocomplete="current-password">
                                 </p>
                                 @error('password'))
-                                <p class="help is-danger">
-                                    {{ $message }}
-                                </p>
+                                    <p class="help is-danger">
+                                        {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="field is-horizontal">
-                        <div class="field-label"></div>
-                        <div class="field-body">
-                            <div class="field">
-                                <p class="control">
-                                    <label class="checkbox">
-                                        <input type="checkbox" name="remember"
-                                            {{ old('remember') ? 'checked' : '' }}>@lang('auth.rememberMe')
-                                    </label>
-                                </p>
-                            </div>
-                        </div>
-                    </div> --}}
                     <div class="field is-horizontal">
                         <div class="field-label"></div>
                         <div class="field-body">
@@ -67,12 +54,12 @@
                                 <div class="control">
                                     <button type="submit" class="button is-primary">@lang('auth.loginButton')</button>
                                 </div>
-                                @if (Route::has('password.request'))
-                                <div class="control">
-                                    <a href="{{ route('password.request') }}">
-                                        @lang('auth.passwordForgot')
-                                    </a>
-                                </div>
+                                @if(Route::has('password.request'))
+                                    <div class="control">
+                                        <a href="{{ route('password.request') }}">
+                                            @lang('auth.passwordForgot')
+                                        </a>
+                                    </div>
                                 @endif
                             </div>
                         </div>
@@ -100,9 +87,9 @@
                                         value="{{ old('register_name') }}" required>
                                 </p>
                                 @error('register_name')
-                                <p class="help is-danger">
-                                    {{ $message }}
-                                </p>
+                                    <p class="help is-danger">
+                                        {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                         </div>
@@ -114,13 +101,14 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('register_email') is-danger @enderror" id="email_register" type="email" name="register_email"
+                                    <input class="input @error('register_email') is-danger @enderror"
+                                        id="email_register" type="email" name="register_email"
                                         value="{{ old('register_email') }}" required>
                                 </p>
                                 @error('register_email')
-                                <p class="help is-danger">
-                                    {{ $message }}
-                                </p>
+                                    <p class="help is-danger">
+                                        {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                         </div>
@@ -132,13 +120,14 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('register_email') is-danger @enderror" id="email_confirmation" type="email" name="register_email_confirmation"
+                                    <input class="input @error('register_email') is-danger @enderror"
+                                        id="email_confirmation" type="email" name="register_email_confirmation"
                                         required>
                                 </p>
                                 @error('register_email')
-                                <p class="help is-danger">
-                                    {{ $message }}
-                                </p>
+                                    <p class="help is-danger">
+                                        {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                         </div>
@@ -150,13 +139,13 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('register_password') is-danger @enderror" id="password_register" type="password" name="register_password"
-                                        required>
+                                    <input class="input @error('register_password') is-danger @enderror"
+                                        id="password_register" type="password" name="register_password" required>
                                 </p>
                                 @error('register_password')
-                                <p class="help is-danger">
-                                    {{ $message }}
-                                </p>
+                                    <p class="help is-danger">
+                                        {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                         </div>
@@ -168,13 +157,14 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('register_password') is-danger @enderror" id="password-confirm" type="password"
-                                        name="register_password_confirmation" required>
+                                    <input class="input @error('register_password') is-danger @enderror"
+                                        id="password-confirm" type="password" name="register_password_confirmation"
+                                        required>
                                 </p>
                                 @error('register_password')
-                                <p class="help is-danger">
-                                    {{ $message }}
-                                </p>
+                                    <p class="help is-danger">
+                                        {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                         </div>
@@ -186,13 +176,13 @@
                         <div class="field-body">
                             <div class="field">
                                 <p class="control">
-                                    <input class="input @error('beta_token') is-danger @enderror" id="beta-token" type="text"
-                                        name="beta_token" required>
+                                    <input class="input @error('beta_token') is-danger @enderror" id="beta-token"
+                                        type="text" name="beta_token" required>
                                 </p>
                                 @error('beta_token')
-                                <p class="help is-danger">
-                                    {{ $message }}
-                                </p>
+                                    <p class="help is-danger">
+                                        {{ $message }}
+                                    </p>
                                 @enderror
                             </div>
                         </div>
@@ -202,7 +192,8 @@
                         <div class="field-body">
                             <div class="field is-grouped">
                                 <div class="control">
-                                    <button type="submit" class="button is-primary">@lang('auth.registerButton')</button>
+                                    <button type="submit"
+                                        class="button is-primary">@lang('auth.registerButton')</button>
                                 </div>
                             </div>
                         </div>
