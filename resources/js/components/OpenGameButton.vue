@@ -1,6 +1,6 @@
 <template>
     <b-button
-        type="is-success"
+        type="is-success is-light"
             size="is-small"
             @click="openGame"
             v-show="isButtonShown">{{ trans.get('trivial.doOpen') }}

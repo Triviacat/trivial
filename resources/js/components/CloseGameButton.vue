@@ -1,6 +1,6 @@
 <template>
     <b-button
-        type="is-warning"
+        type="is-danger is-light"
             size="is-small"
             @click="closeGame"
             v-show="isButtonShown">{{ trans.get('trivial.doClose') }}
