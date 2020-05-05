@@ -20,10 +20,8 @@
     <meta name="twitter:description" content="El trivial en línia, obert, col·laboratiu i en català." />
     <meta name="twitter:site" content="{{ env('APP_URL') }}" />
     <title>TriviaCat</title>
-    {{-- <link rel="shortcut icon" href="/assets/images/fav_icon.png" type="image/x-icon"> --}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-    <!-- Bulma Version 0.8.x-->
     <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
 
     <style>
@@ -71,22 +69,6 @@
                     </div>
                     <div id="navbarMenu" class="navbar-menu">
                         <div class="navbar-end">
-                            {{-- <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="#">
-                                    <span class="icon">
-                                        <i class="fa fa-home"></i>
-                                    </span>
-                                    <span>Home</span>
-                                </a>
-                            </span> --}}
-                            {{-- <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="#">
-                                    <span class="icon">
-                                        <i class="fa fa-superpowers"></i>
-                                    </span>
-                                    <span>Examples</span>
-                                </a>
-                            </span> --}}
                             <span class="navbar-item">
                                 <a class="button is-white is-outlined" href="{{ env('TRIVIACAT_PREGUNTES_URL') }}">
                                     <span class="icon">
