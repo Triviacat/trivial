@@ -9,9 +9,16 @@
 
 <div class="columns">
 
-    <div class="column is-three-fifths">
+    <div class="column is-half">
         <div class="content">
             @include('includes.topics')
+        </div>
+        <div class="box">
+            <div class="columns">
+                <div class="column"><span class="label">Chat</span><span>{{ $game->chat }}</span></div>
+                <div class="column"><span class="label">Password</span><span>{{ $game->password }}</span></div>
+            </div>
+
         </div>
         @if (isset($game->turn))
             <board :turn="{{ $game->turn }}" :game="{{ $game }}" :players="{{ json_encode($game->users()) }}"></board>
