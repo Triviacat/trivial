@@ -62,28 +62,6 @@
                                         <span title="Hello from the other side">Codi font</span>
                                     </a>
                                 </span>
-                                {{-- @if (Auth::guest())
-                                        <a class="navbar-item " href="{{ route('login') }}">@lang('trivial.login')</a>
-                                @else
-                                <div class="navbar-item has-dropdown is-hoverable">
-                                    <a class="navbar-link" href="#">{{ Auth::user()->name }}</a>
-
-                                    <div class="navbar-dropdown">
-                                        <a class="dropdown-item" href="{{ route('admin') }}">@lang('trivial.admin')</a>
-                                        <a class="navbar-item" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                            @lang('trivial.logout')
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                            style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </div>
-                                </div>
-                                @endif --}}
-
-
                             </div>
                         </div>
                 </nav>
@@ -101,7 +79,7 @@
         </section>
         <div class="box cta">
             <p class="has-text-centered">
-                <span class="tag is-primary">Novetat!</span> Ja podeu provar la versió Beta del joc en línia.
+                <span class="tag is-primary">Novetat!</span> Ja podeu <a href="/beta">provar la versió Beta</a> del joc en línia.
             </p>
         </div>
         @if (session('message'))

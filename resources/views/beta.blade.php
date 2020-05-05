@@ -113,10 +113,10 @@
             <div class="container has-text-centered">
                 <div class="column is-6 is-offset-3">
                     <h1 class="title">
-                        Properament
+                        La versió de proves ja és a punt
                     </h1>
                     <h2 class="subtitle">
-                        Estem treballant en una versió del trivial en català per poder jugar confinats, davant un
+                        Ja tenimn a punt la versió de prova del trivial en català per poder jugar confinats, davant un
                         ordinador, connectats amb les nostres amistats en un video xat de mòbil, per donar-li un major
                         realisme.<br><br>
                         Tot de codi obert i gratuït, naturalment<br><br>
@@ -130,7 +130,7 @@
                         <form action="/notify" method="post">
                             @csrf
                             <div class="content">
-                                <p>Deixeu-nos un correu si voleu participar de periode de proves que obrirem aviat.</p>
+                                <p>Deixeu-nos un correu, si voleu participar del període de proves.</p>
                             </div>
                             <div class="field is-grouped">
                                 <p class="control is-expanded">
