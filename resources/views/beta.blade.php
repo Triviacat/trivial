@@ -98,7 +98,7 @@
                         La versió de proves ja és a punt!
                     </h1>
                     <h2 class="subtitle">
-                        Ja tenim a punt la versió de prova del trivial en català per poder jugar confinats, davant un
+                        Ja tenim a punt la versió de prova del trivial en català per poder jugar confinats (o no), davant un
                         ordinador, connectats amb les nostres amistats en un video xat de mòbil, per donar-li un major
                         realisme.<br><br>
                         Tot de codi obert i gratuït, naturalment<br><br>
