@@ -17,4 +17,5 @@
         <li><a href="{{ env('TRIVIACAT_DOCS_URL') }}">@lang('trivial.instructions')&nbsp;<i class="fas fa-external-link-alt"></i></a></li>
         <li><a href="{{ env('TRIVIACAT_PREGUNTES_URL') }}">@lang('trivial.questions')&nbsp;<i class="fas fa-external-link-alt"></i></a></li>
     </ul>
+    <div class="box message is-warning">Estem en període de proves. Si teniu algún problema o suggeriment ens els podeu deixar a la <a href="https://github.com/Triviacat/trivial/issues">llista d'incidències de github&nbsp;<i class="fas fa-external-link-alt"></i></a>.</div>
 </aside>
