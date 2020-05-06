@@ -18,6 +18,7 @@
                 <a class="navbar-item " href="{{ route('login') }}">@lang('trivial.login')</a>
                 {{-- <a class="navbar-item " href="{{ route('register') }}">Register</a> --}}
                 @else
+                <a class="navbar-item " href="{{ route('games.index') }}">@lang('trivial.games')</a>
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link" href="#">{{ Auth::user()->name }}</a>
 
