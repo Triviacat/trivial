@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\QuestionsImport;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
