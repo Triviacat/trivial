@@ -36,11 +36,16 @@ Route::resource('/sets', 'SetController')->middleware('verified','role:admin');
 Route::resource('/questions', 'QuestionController')->middleware('verified','role:admin');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['verified','role:admin']], function () {
+
+    Route::get('/import', 'ImportController@import')->name('admin.import');
+
+
     Route::group(['prefix' => 'users'], function () {
         Route::get('/{user}', 'UserController@show')->name('admin.users.show');
         Route::get('/', 'UserController@index')->name('admin.users');
         Route::get('/{user}/edit', 'UserController@edit')->name('admin.users.edit');
         Route::patch('/{user}', 'UserController@update')->name('admin.users.update');
+
     });
 });
 

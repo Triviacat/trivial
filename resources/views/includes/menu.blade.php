@@ -8,6 +8,7 @@
         <li><a class="" href="{{ route('admin.users') }}">@lang('trivial.users')</a></li>
         <li><a class="" href="/roles">@lang('trivial.roles')</a></li>
         <li><a class="" href="/permissions">@lang('trivial.permissions')</a></li>
+        <li><a class="" href="{{ route('admin.import') }}">@lang('trivial.import')</a></li>
         <hr>
     </ul>
     @endif
