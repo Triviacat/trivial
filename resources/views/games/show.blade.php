@@ -31,7 +31,8 @@
         @include('includes.dice')
         @if (isset($game->turn))
             <div class="content">
-                <question :turn="{{ $game->turn }}" :user="{{ auth()->user() }}"></question>
+                <question-modal :turn="{{ $game->turn }}" :user="{{ auth()->user() }}"></question-modal>
+                {{-- <question :turn="{{ $game->turn }}" :user="{{ auth()->user() }}"></question> --}}
             </div>
         @endif
     </div>

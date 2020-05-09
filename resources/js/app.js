@@ -72,6 +72,7 @@ Vue.component('whosturn', require('./components/WhosTurn.vue').default);
 Vue.component('dicebutton', require('./components/DiceButton.vue').default);
 Vue.component('dice', require('./components/Dice.vue').default);
 Vue.component('question', require('./components/Question.vue').default);
+Vue.component('question-modal', require('./components/QuestionModal.vue').default);
 Vue.component('box', require('./components/Box.vue').default);
 Vue.component('cheeses', require('./components/Cheeses.vue').default);
 Vue.component('board', require('./components/Board.vue').default);

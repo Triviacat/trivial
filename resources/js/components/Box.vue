@@ -218,6 +218,7 @@
                 });
             window.Echo.channel('game.' + this.turnObject.game_id)
                 .listen('ShowBoxResult', e => {
+                    // console.log(e.turn);
                     axios.get('/api/users/' + e.turn.user_id + '/name').then(response => {
                         this.turnUserName = response.data;
                         this.text = this.turnUserName + ' ' + this.trans.get('trivial.movedTo')+ ' ' + e.turn.box.box;
