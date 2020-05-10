@@ -3,9 +3,9 @@
         <div class="card-header">
             <span class="card-header-title">{{ trans.get('trivial.cheeses') }}</span>
         </div>
-        <div class="card-content tags">
+        <div class="card-content">
             <div class="columns">
-                <div v-for="player in playersArray" :key="player.user.id" class="column">
+                <div v-for="player in playersArray" :key="player.user.id" class="column has-text-centered">
                     <label class="label" :style="'background-color:' + player.user.color + ';border-radius:4px;padding:5px;'">{{ player.user.name}}</label>
                     <div v-if="player.box.box" class="has-text-centered"><span class="has-text-weight-bold">{{ player.box.box }}</span></div>
                     <div id="v-for-object" class="tags">
