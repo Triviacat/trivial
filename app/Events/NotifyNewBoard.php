@@ -12,7 +12,7 @@ class NotifyNewBoard implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $turn;
+    public $id;
     public $slots;
 
     /**
@@ -20,9 +20,9 @@ class NotifyNewBoard implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($turn, $slots)
+    public function __construct($id, $slots)
     {
-        $this->turn = $turn;
+        $this->id = $id;
         $this->slots = $slots;
     }
 
@@ -33,6 +33,6 @@ class NotifyNewBoard implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('game.' . $this->turn->game_id);
+        return new Channel('game.' . $this->id);
     }
 }

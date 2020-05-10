@@ -33,6 +33,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
         $game = Game::where('id', $id)->get();
         return $game;
     });
+    Route::get('games/{id}/slots', 'TurnController@slots');
     Route::get('games/{id}/users', function ($id) {
         $game = Game::find($id);
         return $game->users();
@@ -61,7 +62,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::get('turns/{turn}/box/undo', 'TurnController@boxUndo');
     Route::post('turns/{turn}/box', 'TurnController@box');
     Route::post('turns/{turn}/question', 'TurnController@question');
-    Route::get('turns/{turn}/slots', 'TurnController@slots');
+    Route::get('turns/{turn}/slots', 'TurnController@slots'); //deprecated
     Route::get('turns/{turn}/slot', 'TurnController@slot'); // just for testing. // TODO: deactivate it
 
     Route::get('questions/{id}', function ($id) {

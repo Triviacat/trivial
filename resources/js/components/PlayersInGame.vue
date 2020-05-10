@@ -38,7 +38,7 @@
             join: function() {
                 axios.get('/games/' + this.game.id + '/join' )
                 .then(response => (
-                    // console.log(response.data.players.length),
+                    // console.log(response),
                     this.playersingame = response.data.players.length,
                     this.game.players = response.data.players,
                     this.actionText = this.trans.get('trivial.leave')

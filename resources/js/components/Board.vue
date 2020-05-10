@@ -71,7 +71,7 @@
             }
         },
         mounted() {
-            axios.get('/api/turns/' + this.turn.id + '/slots')
+            axios.get('/api/games/' + this.turn.game_id + '/slots')
                 .then(e => {
                     e.data.forEach(slot => {
                         slot.x = slot.x * this.scale;

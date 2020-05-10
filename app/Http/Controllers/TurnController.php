@@ -118,7 +118,7 @@ class TurnController extends Controller
             # save board position
             TurnController::slot($turn);
             # dispatch board's slots
-            TurnController::slots($turn);
+            TurnController::slots($turn->game_id);
             # and start a new turn
             $turn_uid = $turn->user_id;
             $game_id = $turn->game_id;
@@ -136,7 +136,7 @@ class TurnController extends Controller
             $game->update();
 
             # stores and dispatch board's slot
-            TurnController::slots($turn);
+            TurnController::slots($turn->game_id);
             # enable dice button to turn's user
             EnableDiceButton::dispatch($turn);
             # dispatch new turn to vue
@@ -151,7 +151,7 @@ class TurnController extends Controller
             # save board position
             TurnController::slot($turn);
             # dispatch board's slots
-            TurnController::slots($turn);
+            TurnController::slots($turn->game_id);
 
             # dispatch result
             ShowBoxResult::dispatch($turn);
@@ -185,7 +185,7 @@ class TurnController extends Controller
                     # save board position
                     TurnController::slot($turn);
                     # dispatch board's slots
-                    TurnController::slots($turn);
+                    TurnController::slots($turn->game_id);
                 }
                 else {
                     // player arrived here because an box undo action and $answers is actually set
@@ -203,7 +203,7 @@ class TurnController extends Controller
                 # save board position
                 TurnController::slot($turn);
                 # dispatch board's slots
-                TurnController::slots($turn);
+                TurnController::slots($turn->game_id);
                 # show question to reader
                 TurnController::sendFinalQuestion($turn, $topic_id);
                 return $turn;
@@ -216,12 +216,11 @@ class TurnController extends Controller
                 # save board position
             TurnController::slot($turn);
             # dispatch board's slots
-            TurnController::slots($turn);
+            TurnController::slots($turn->game_id);
 
                 # dispatch result
                 ShowBoxResult::dispatch($turn);
                 // # stores and dispatch board's slot
-                // TurnController::slots($turn);
                 # notify new game data
                 $game = Game::find($turn->game_id);
                 NotifyGameUpdate::dispatch($game);
@@ -609,20 +608,19 @@ class TurnController extends Controller
      * on the board
      *
      *
-     * @param App\Turn $turn
+     * @param int $id of game
      **/
-    public static function slots(Turn $turn)
+    public static function slots($id)
     {
-
         $slots = DB::table('game_slot')
             ->join('slots', 'game_slot.slot_id', '=', 'slots.id')
             ->join('users', 'game_slot.user_id', '=', 'users.id')
-            ->where('game_id', '=', $turn->game_id)
+            ->where('game_id', '=', $id)
             ->select('slots.x', 'slots.y', 'users.color')
             ->get();
 
         # dispatch board positions
-        NotifyNewBoard::dispatch($turn, $slots);
+        NotifyNewBoard::dispatch($id, $slots);
 
         return $slots;
     }
@@ -685,13 +683,33 @@ class TurnController extends Controller
      **/
     public static function initialSlot($user_id, $game_id)
     {
-        $turn = new Turn;
-        $turn->game_id = $game_id;
-        $turn->user_id = $user_id;
-        $turn->box_id = 1;
+        // $turn = new Turn;
+        // $turn->game_id = $game_id;
+        // $turn->user_id = $user_id;
+        // $turn->box_id = 1;
 
-        TurnController::slot($turn);
-        // TurnController::slots($turn);
+        // TurnController::slot($turn);
+
+        $used_slots = DB::table('game_slot')
+            ->where('game_id', $game_id)
+            ->get();
+        $ids = array();
+        // return $used_slots;
+        foreach ($used_slots as $slot) {
+            $ids[] = $slot->slot_id;
+        }
+        // return $ids;
+        $all_slots = array(1,2,3,4,5,6);
+        $free_slots = array_diff($all_slots, $ids);
+        $slot = array_shift($free_slots);
+
+        DB::table('game_slot')->insert([
+            'game_id' => $game_id,
+            'slot_id' => $slot,
+            'user_id' => $user_id,
+        ]);
+        TurnController::slots($game_id);
+
     }
 
 }

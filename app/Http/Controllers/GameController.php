@@ -44,7 +44,6 @@ class GameController extends Controller
         // $turn->user_id = $game->user_id;
         // $turn->box_id = 1;
         TurnController::initialSlot($game->user_id, $game->id);
-        // TurnController::slots($turn);
 
         return redirect('/games');
     }
@@ -248,6 +247,11 @@ class GameController extends Controller
 
         $game->update();
 
+        DB::table('game_slot')
+        ->where('game_id', $game->id)
+        ->where('user_id', auth()->user()->id)
+        ->delete();
+        TurnController::slots($game->id);
         PlayerLeavesGame::dispatch($game);
 
         return $game;
