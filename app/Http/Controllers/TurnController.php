@@ -106,7 +106,7 @@ class TurnController extends Controller
         # convert box_name (what we receive here) to box_id
         $box = Box::where('box', '=', $attributes['box'])->get();
 
-        # save dice result top turn ddbb
+        # save dice result to turn ddbb
         $turn->box_id = $box[0]->id;
         // return $box[0]->type;
 
@@ -213,10 +213,15 @@ class TurnController extends Controller
                 $turn->step = "question";
                 $turn->update();
 
+                # save board position
+            TurnController::slot($turn);
+            # dispatch board's slots
+            TurnController::slots($turn);
+
                 # dispatch result
                 ShowBoxResult::dispatch($turn);
-                # stores and dispatch board's slot
-                TurnController::slots($turn);
+                // # stores and dispatch board's slot
+                // TurnController::slots($turn);
                 # notify new game data
                 $game = Game::find($turn->game_id);
                 NotifyGameUpdate::dispatch($game);

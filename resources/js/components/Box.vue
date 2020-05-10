@@ -69,7 +69,7 @@
                         // user is at box 0 and has all cheeses
                         // he has to answer 4 of 6 questions of all topics to win
                         if (player.user.id == this.user.id && player.cheeses.length == 6) {
-                            console.log(player.cheeses.length),
+                            // console.log(player.cheeses.length),
                             this.enableDisable = true,
                             this.enableDisable4 = true,
                             this.enableDisable2 = true,
@@ -78,7 +78,7 @@
                         // user is at box 0 but doesn't have all cheeses
                         // he has to choose the topic of the question to answer
                         else if (player.user.id == this.user.id) {
-                            console.log(player.cheeses.length)
+                            // console.log(player.cheeses.length)
                             this.enableDisable = true,
                             this.enableDisable4 = true,
                             this.enableDisable2 = false
@@ -106,6 +106,7 @@
                         'topic': this.topic
                     })
                     .then((response) => (
+
                         this.enableDisable = true,
                         this.enableDisable4 = true,
                         this.enableDisable2 = false,
@@ -133,7 +134,7 @@
                     return true; //means button disabled
                 }
             },
-            moveAgain() {
+            moveAgain() { // not used anymore
                 axios.get('/api/turns/' + this.turnObject.id + '/box/undo')
                     .then((response) => (
                         this.enableDisable2 = true,
@@ -181,7 +182,7 @@
                     this.toggleButton(e.turn.user_id);
                     if (e.turn.user_id == this.user.id && e.turn.step == 'box') {
 
-                        var text = this.trans.get('trivial.nowMovePice');
+                        var text = this.trans.get('trivial.nowMovePiece');
                         this.success(text);
                         this.enableDisable = false;
                         this.enableDisable4 = false;

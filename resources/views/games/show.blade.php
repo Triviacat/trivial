@@ -21,12 +21,13 @@
 
         </div>
         @if (isset($game->turn))
-        @include('includes.topics')
+
             <board :turn="{{ $game->turn }}" :game="{{ $game }}" :players="{{ json_encode($game->users()) }}"></board>
         @endif
     </div>
     <div class="column">
         <div class="box message is-warning">Estem en període de proves. Si teniu algún problema o suggeriment ens els podeu deixar a la <a href="https://github.com/Triviacat/trivial/issues">llista d'incidències de github&nbsp;<i class="fas fa-external-link-alt"></i></a>.</div>
+        @include('includes.topics')
         @include('includes.cheeses')
         @include('includes.dice')
         @if (isset($game->turn))
