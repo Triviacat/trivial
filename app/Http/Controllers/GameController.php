@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\GameStatusHasChanged;
+use App\Events\NotifyGameUpdate;
 use App\Events\PlayerJoinsGame;
 use App\Events\PlayerLeavesGame;
 use App\Game;
@@ -253,6 +254,7 @@ class GameController extends Controller
         ->delete();
         TurnController::slots($game->id);
         PlayerLeavesGame::dispatch($game);
+        NotifyGameUpdate::dispatch($game);
 
         return $game;
 

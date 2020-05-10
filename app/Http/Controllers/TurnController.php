@@ -709,6 +709,8 @@ class TurnController extends Controller
             'user_id' => $user_id,
         ]);
         TurnController::slots($game_id);
+        $game = Game::find($game_id);
+        NotifyGameUpdate::dispatch($game);
 
     }
 
