@@ -9,7 +9,7 @@
 
 <div class="columns">
 
-    <div class="column is-half">
+    <div class="column is-7">
         {{-- <div class="content">
 
         </div> --}}
