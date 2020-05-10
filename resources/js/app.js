@@ -80,6 +80,7 @@ Vue.component('profile', require('./components/Profile.vue').default);
 Vue.component('game-form', require('./components/GameForm.vue').default);
 Vue.component('open-game-button', require('./components/OpenGameButton.vue').default);
 Vue.component('close-game-button', require('./components/CloseGameButton.vue').default);
+// Vue.component('delete-game-button', require('./components/DeleteGameButton.vue').default);
 Vue.component('start-game-button', require('./components/StartGameButton.vue').default);
 Vue.component('edit-game-button', require('./components/EditGameButton.vue').default);
 Vue.component('game-access-button', require('./components/GameAccessButton.vue').default);
@@ -104,7 +105,6 @@ const app = new Vue({
 
 
 
-// Bulma NavBar Burger Script
 document.addEventListener('DOMContentLoaded', function () {
     // Get all "navbar-burger" elements
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
@@ -128,7 +128,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+
+
 });
+
 
 
 // require('./bulma-extensions');

@@ -3,7 +3,7 @@
         type="is-success"
             size="is-small"
             @click="startGame"
-            v-show="isButtonShown">{{ trans.get('trivial.doStart') }}
+            v-show="isButtonShown"><i class="fas fa-play"></i>
             </b-button>
 </template>
 

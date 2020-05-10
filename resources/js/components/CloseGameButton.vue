@@ -4,7 +4,7 @@
             size="is-small"
             @click="closeGame"
             v-show="isButtonShown"
-            >{{ trans.get('trivial.doClose') }}
+            ><i class="fas fa-lock"></i>
 
             </b-button>
 </template>

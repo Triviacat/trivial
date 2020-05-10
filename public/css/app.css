@@ -30300,3 +30300,8 @@ footer li:before {
   margin-left: 5px;
 }
 
+.dialog .modal-card .modal-card-body.is-titleless {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+

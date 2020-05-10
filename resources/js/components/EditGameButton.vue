@@ -1,5 +1,5 @@
 <template>
-    <a :href="url" class="button is-light is-small" v-show="isButtonShown">{{ trans.get('trivial.edit') }}</a>
+    <a :href="url" class="button is-light is-small" v-show="isButtonShown"><i class="fas fa-edit"></i></a>
 </template>
 
 
