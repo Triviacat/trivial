@@ -95,6 +95,7 @@ return [
     'started' => 'Iniciat',
     'status' => 'Estat',
     'stopped' => 'Aturat',
+    'sureToClose' => 'Segur que voleu tancar el joc? No el podreu tornar a obrir!',
     'text' => 'Text',
     'textDescription' => 'Entreu un text adjunt a la pregunta (opcional)',
     'theGame' => 'El joc',

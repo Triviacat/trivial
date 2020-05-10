@@ -3,7 +3,9 @@
         type="is-danger is-light"
             size="is-small"
             @click="closeGame"
-            v-show="isButtonShown">{{ trans.get('trivial.doClose') }}
+            v-show="isButtonShown"
+            >{{ trans.get('trivial.doClose') }}
+
             </b-button>
 </template>
 
@@ -30,7 +32,9 @@
             },
             closeGame: function() {
                 this.$buefy.dialog.confirm({
-                    message: 'Segur que vols tancar el joc? No el podràs tornar a obrir!',
+                    message: this.trans.get('trivial.sureToClose'),
+                    cancelText: this.trans.get('trivial.cancel'),
+                    confirmText: this.trans.get('trivial.doClose'),
                     onConfirm: () => this.doCloseGame()
                 })
             },
