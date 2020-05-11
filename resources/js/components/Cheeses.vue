@@ -19,46 +19,45 @@
     </div>
 </template>
 
-
 <script>
 
-    export default {
-        props: {
-            game: {
-                type: Object
-            },
-            players: {
-                type: Array
-            },
-        },
-        methods: {
-            success: function (text) {
-                this.$buefy.snackbar.open({
-                    message: text,
-                    duration: 5000,
-                    type: 'is-success',
-                    queue: false,
-                    position: 'is-bottom-left'
-                })
-            }
-        },
-        data() {
-            return {
-                gameObject: this.game,
-                cheesesObject: this.cheeses,
-                playersArray: this.players,
-            }
-        },
-        created() {
-            window.Echo.channel('game.' + this.gameObject.id)
-                .listen('NotifyGameUpdate', e => {
-                    axios.get('/api/games/' + this.gameObject.id + '/users').then(response => {
-                        this.playersArray = response.data;
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-                })
-        }
-    };
+export default {
+  props: {
+    game: {
+      type: Object
+    },
+    players: {
+      type: Array
+    }
+  },
+  methods: {
+    success: function (text) {
+      this.$buefy.snackbar.open({
+        message: text,
+        duration: 5000,
+        type: 'is-success',
+        queue: false,
+        position: 'is-bottom-left'
+      })
+    }
+  },
+  data () {
+    return {
+      gameObject: this.game,
+      cheesesObject: this.cheeses,
+      playersArray: this.players
+    }
+  },
+  created () {
+    window.Echo.channel('game.' + this.gameObject.id)
+      .listen('NotifyGameUpdate', e => {
+        window.axios.get('/api/games/' + this.gameObject.id + '/users').then(response => {
+          this.playersArray = response.data
+        })
+          .catch(function (error) {
+            console.log(error)
+          })
+      })
+  }
+}
 </script>

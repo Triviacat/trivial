@@ -66,8 +66,7 @@ class GameController extends Controller
             }
             // return $users;
             $attributes['invited'] = $users;
-        }
-        else {
+        } else {
             $attributes['invited'] = array();
         }
 
@@ -249,9 +248,9 @@ class GameController extends Controller
         $game->update();
 
         DB::table('game_slot')
-        ->where('game_id', $game->id)
-        ->where('user_id', auth()->user()->id)
-        ->delete();
+            ->where('game_id', $game->id)
+            ->where('user_id', auth()->user()->id)
+            ->delete();
         TurnController::slots($game->id);
         PlayerLeavesGame::dispatch($game);
         NotifyGameUpdate::dispatch($game);

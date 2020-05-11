@@ -41,111 +41,90 @@
     </section>
 </template>
 
-
 <script>
-    export default {
-        props: {
-            user_id: {
-                type: Number
-            },
-            game: {
-                type: Object,
-                default: null
-            },
-            users_invited: {
-                type: Array,
-                default: null
-            }
-        },
-        methods: {
-            asyncFind: async function(query) {
-                await axios.get('/api/users/name/' + query)
-                        .then((response) => (
-                            this.users = response.data,
-                            // console.log(this.selectedUsers),
-                            this.isLoading = false
-                        ))
-                        .catch((error) => {
-                            // console.log(error);
-                            // this.isLoading = false
-                        });
+export default {
+  props: {
+    user_id: {
+      type: Number
+    },
+    game: {
+      type: Object,
+      default: null
+    },
+    users_invited: {
+      type: Array,
+      default: null
+    }
+  },
+  methods: {
+    asyncFind: async function (query) {
+      await window.axios.get('/api/users/name/' + query)
+        .then(function (response) {
+          this.users = response.data
+          this.isLoading = false
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    clearAll () {
+      this.selectedUsers = []
+    },
+    notLoading () {
+      this.isLoading = false
+    }
+  },
 
-            },
-            // asyncFind(query) {
-            //     this.isLoading = true
-            //     awaitaxios.get('/api/users/name/' + query)
-            //             .then((response) => (
-            //                 this.users = response.data,
-            //                 // console.log(this.selectedUsers),
-            //                 this.isLoading = false
-            //             ))
-            //             .catch(function (error) {
-            //                 // console.log(error);
-            //                 // this.isLoading = false
-            //             });
+  data () {
+    return {
+      radio: '1',
+      chat: '',
+      password: '',
+      selectedUsers: [],
+      users: [],
+      isLoading: false,
+      invited: '',
+      showInvited: 1
+    }
+  },
+  watch: {
+    radio: function (val, oldVal) {
+      // console.log(val),
+      switch (val) {
+        case '0':
+          this.showInvited = false
+          break
 
-            // },
-            clearAll() {
-                this.selectedUsers = []
-            },
-            notLoading() {
-                this.isLoading = false
-            }
-        },
-
-        data() {
-            return {
-                radio: '1',
-                chat: '',
-                password: '',
-                selectedUsers: [],
-                users: [],
-                isLoading: false,
-                invited: '',
-                showInvited: 1,
-            }
-        },
-        watch: {
-            radio: function (val, oldVal) {
-                // console.log(val),
-                switch(val) {
-                    case '0':
-                        this.showInvited = false
-                        break;
-
-                    case '1':
-                        this.showInvited = true
-                        break;
-                }
-
-            },
-            selectedUsers: function (val, oldVal) {
-                this.invited = JSON.stringify(this.selectedUsers);
-                this.isLoading = false
-            }
-            // chat: function (val, oldVal) {
-            //     console.log(this.chat)
-            // }
-        },
-        mounted() {
-            if (this.game) {
-                this.radio = this.game.private;
-                this.chat = this.game.chat;
-                this.password = this.game.password;
-            }
-
-
-        },
-        created() {
-            if (this.users_invited) {
-                this.invited = JSON.stringify(this.users_invited);
-                this.selectedUsers = this.users_invited
-                // console.log(this.invited);
-            }
-            // this.users = this.users_invited;
-            // this.invited = JSON.stringify(this.users_invited);
-            // console.log(this.users);
-        }
-    };
+        case '1':
+          this.showInvited = true
+          break
+      }
+    },
+    selectedUsers: function (val, oldVal) {
+      this.invited = JSON.stringify(this.selectedUsers)
+      this.isLoading = false
+    }
+    // chat: function (val, oldVal) {
+    //     console.log(this.chat)
+    // }
+  },
+  mounted () {
+    if (this.game) {
+      this.radio = this.game.private
+      this.chat = this.game.chat
+      this.password = this.game.password
+    }
+  },
+  created () {
+    if (this.users_invited) {
+      this.invited = JSON.stringify(this.users_invited)
+      this.selectedUsers = this.users_invited
+      // console.log(this.invited);
+    }
+    // this.users = this.users_invited;
+    // this.invited = JSON.stringify(this.users_invited);
+    // console.log(this.users);
+  }
+}
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

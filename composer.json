@@ -13,6 +13,7 @@
         "caouecs/laravel-lang": "~6.0",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
+        "friendsofphp/php-cs-fixer": "^2.16",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "kg-bot/laravel-localization-to-vue": "^1.6",

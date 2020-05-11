@@ -14,8 +14,8 @@ tooling:
       service: appserver
       description: "Run PHP Unit tests: lando phpunit"
       cmd: /app/vendor/bin/phpunit
-    phpcs:
+    php-cs-fixer:
       service: appserver
-      desription: "Analyze code against the WordPress coding standards with PHP_CodeSniffer"
+      desription: "Analyze code against the WordPress coding standards with PHP-cs-fixer"
       cmd:
-      - "vendor/bin/phpcs"
+      - "vendor/bin/php-cs-fixer"
