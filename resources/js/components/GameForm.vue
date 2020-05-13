@@ -59,7 +59,7 @@ export default {
   methods: {
     asyncFind: async function (query) {
       await window.axios.get('/api/users/name/' + query)
-        .then(function (response) {
+        .then(response => {
           this.users = response.data
           this.isLoading = false
         })

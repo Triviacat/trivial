@@ -1,21 +1,21 @@
 <template>
     <section>
         <b-field :label="trans.get('trivial.box')">
-            <b-select :placeholder="trans.get('trivial.chooseBox')" v-model="boxName" :disabled=enableDisable4 required>
+            <b-select :placeholder="trans.get('trivial.chooseBox')" v-model="boxName" :disabled="enableDisable4" required>
                 <option v-for="box in boxOptions" :key="box" :value="box">{{ box }}</option>
             </b-select>
         </b-field>
         <div class="field">
             <div class="control">
-                <button class="button is-info" :disabled=enableDisable @click="send">
+                <button class="button is-info" :disabled="enableDisable" @click="send">
                     {{ trans.get('trivial.moveThePiece') }}
                 </button>
             </div>
         </div>
         <div class="field">
         </div>
-        <b-field label="Tria un tema" v-show=showTopics>
-            <b-select placeholder="Tria un tema" v-model=topic :disabled=enableDisable3 required>
+        <b-field label="Tria un tema" v-show="showTopics">
+            <b-select placeholder="Tria un tema" v-model=topic :disabled="enableDisable3" required>
                 <option value="">{{ trans.get('trivial.chooseTopic') }}</option>
                 <!-- TODO: This needs to be taken from ddbb -->
                 <option value="1">{{ trans.get('trivial.geography') }}</option>
@@ -27,7 +27,7 @@
             </b-select>
 
         </b-field>
-        <b-button @click="send2" v-show=showTopics :disabled=enableDisable3>{{ trans.get('trivial.send') }}</b-button>
+        <b-button @click="send2" v-show="showTopics" :disabled="enableDisable3">{{ trans.get('trivial.send') }}</b-button>
     </section>
 
 </template>
@@ -86,7 +86,7 @@ export default {
         window.axios.post('/api/turns/' + this.turnObject.id + '/box', {
           box: this.boxName
         })
-          .then(function (response) {
+          .then(response => {
             this.enableDisable = true
             this.enableDisable4 = true
             this.enableDisable2 = false
@@ -102,7 +102,7 @@ export default {
         box: this.boxName,
         topic: this.topic
       })
-        .then(function (response) {
+        .then(response => {
           this.enableDisable = true
           this.enableDisable4 = true
           this.enableDisable2 = false
@@ -131,7 +131,7 @@ export default {
     },
     moveAgain () { // not used anymore
       window.axios.get('/api/turns/' + this.turnObject.id + '/box/undo')
-        .then(function (response) {
+        .then(response => {
           this.enableDisable2 = true
           this.enableDisable = false
           this.enableDisable4 = false

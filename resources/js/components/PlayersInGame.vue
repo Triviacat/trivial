@@ -35,7 +35,7 @@ export default {
     },
     join: function () {
       window.axios.get('/games/' + this.game.id + '/join')
-        .then(function (response) {
+        .then(response => {
           this.playersingame = response.data.players.length
           this.game.players = response.data.players
           this.actionText = this.trans.get('trivial.leave')
@@ -43,7 +43,7 @@ export default {
     },
     leave: function () {
       window.axios.get('/games/' + this.game.id + '/leave')
-        .then(function (response) {
+        .then(response => {
           // console.log(response.data),
           this.playersingame = response.data.players.length
           this.game.players = response.data.players

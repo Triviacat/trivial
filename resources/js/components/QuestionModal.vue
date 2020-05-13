@@ -1,3 +1,5 @@
+/* eslint-disable semi */
+/* eslint-disable semi */
 <template>
     <b-modal
         :active.sync="isComponentModalActive"
@@ -50,7 +52,7 @@ export default {
     needToLoadQuestion: function () {
       if ((this.turn.step === 'question' || this.turn.step === 'final') && this.user.id === this.turn.reader_id) {
         window.axios.get('/api/questions/' + this.turn.question_id)
-          .then(function (response) {
+          .then(response => {
             this.question = response.data.title
             this.topic = response.data.topic.title
             this.answer = response.data.answer
