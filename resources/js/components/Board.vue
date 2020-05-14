@@ -1,15 +1,15 @@
 <template>
     <div id="outerBoard" ref="outerBoard">
-        <resize-observer @notify="handleResize"></resize-observer>
+        <resize-observer @notify="handleResize" />
         <div id="board" role="img">
             <div id="innerBoard">
-                <v-stage ref="stage" :config="configKonva">
+                <v-stage ref="stage" v-bind:config="configKonva">
                     <v-layer ref="layer">
                         <v-circle
                             v-for="item in list"
                             :key="item.id"
                             :config="{
-                                x : item.x,
+                                x: item.x,
                                 y: item.y,
                                 radius: item.radius,
                                 fill: item.color,

@@ -17,7 +17,9 @@ import Buefy from 'buefy'
 
 import Vue from 'vue'
 import VueKonva from 'vue-konva'
-import VueResize from 'vue-resize'
+// import VueResize from 'vue-resize'
+
+// import { ResizeObserver } from 'vue-resize'
 
 import Lang from 'lang.js'
 
@@ -27,6 +29,10 @@ import Multiselect from 'vue-multiselect'
 
 import Bulma from '@vizuaalog/bulmajs'
 import VueRouter from 'vue-router'
+
+const VueResize = require('vue-resize')
+
+Vue.component('resize-observer', ResizeObserver)
 
 window.axios = require('axios')
 
