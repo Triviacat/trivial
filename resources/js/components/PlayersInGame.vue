@@ -105,12 +105,14 @@ export default {
     // console.log(this.game);
     window.Echo.channel('game.' + this.game.id)
       .listen('PlayerLeavesGame', e => {
-        var text = this.user.name + ' ' + this.trans.get('trivial.hasLeft') + ' ' + this.game.id
+        // console.log(e)
+        var text = e.user.name + ' ' + this.trans.get('trivial.hasLeft') + ' ' + this.game.id
         this.updatePlayers()
         this.success(text)
       })
       .listen('PlayerJoinsGame', e => {
-        var text = this.user.name + ' ' + this.trans.get('trivial.hasJoined') + ' ' + this.game.id
+        // console.log(e)
+        var text = e.user.name + ' ' + this.trans.get('trivial.hasJoined') + ' ' + this.game.id
         this.updatePlayers()
         this.success(text)
       })

@@ -9,6 +9,7 @@ use App\Events\PlayerLeavesGame;
 use App\Game;
 use App\Topic;
 use App\Turn;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -36,10 +37,10 @@ class GameController extends Controller
         return view('games.create');
         $game = new Game;
         $game->user_id = auth()->user()->id;
-        $game->players = array(auth()->user()->id);
+        $game->players = [auth()->user()->id];
         $game->save();
 
-        # add board slot
+        // add board slot
         // $turn = new Turn;
         // $turn->game_id = $game->id;
         // $turn->user_id = $game->user_id;
@@ -60,17 +61,17 @@ class GameController extends Controller
         $attributes = $this->validateRequest();
         $invited = json_decode($attributes['invited']);
         if (is_array($invited)) {
-            $users = array();
+            $users = [];
             foreach ($invited as $user) {
                 $users[] = $user->id;
             }
             // return $users;
             $attributes['invited'] = $users;
         } else {
-            $attributes['invited'] = array();
+            $attributes['invited'] = [];
         }
 
-        $attributes['players'] = array((int) $attributes['user_id']);
+        $attributes['players'] = [(int) $attributes['user_id']];
         Game::create($attributes);
         return redirect('/games');
     }
@@ -110,13 +111,13 @@ class GameController extends Controller
         $attributes = $this->validateRequest();
         $invited = json_decode($attributes['invited']);
         // return $invited;
-        $users = array();
+        $users = [];
         foreach ($invited as $user) {
             $users[] = $user->id;
         }
         // return $users;
         $attributes['invited'] = $users;
-        $attributes['players'] = array((int) $attributes['user_id']);
+        $attributes['players'] = [(int) $attributes['user_id']];
         $game->update($attributes);
         return redirect('/games');
     }
@@ -129,9 +130,9 @@ class GameController extends Controller
      */
     public function destroy($id)
     {
-        # delete the game
+        // delete the game
         Game::findOrFail($id)->delete();
-        # and its associated turns
+        // and its associated turns
         Turn::where('game_id', $id)->delete();
         // cheeses are being deleted by cascade
         DB::table('game_slot')
@@ -149,21 +150,21 @@ class GameController extends Controller
     public function start(Game $game)
     {
         $game->status = 'started';
-        # randomize players
+        // randomize players
         $rplayers = $game->players;
         shuffle($rplayers);
         $game->players = $rplayers;
         $game->update();
 
-        # notify change of game status
+        // notify change of game status
         GameStatusHasChanged::dispatch($game);
 
-        # start a new turn // TODO: it should only add a new turn if only starting but not if resuming
+        // start a new turn // TODO: it should only add a new turn if only starting but not if resuming
         TurnController::new($game);
-
 
         return redirect('/games/' . $game->id);
     }
+
     // /**
     //  * Stop a game.
     //  *
@@ -177,6 +178,7 @@ class GameController extends Controller
     //     GameStatusHasChanged::dispatch($game);
     //     return redirect('/games');
     // }
+
     /**
      * Open a game.
      *
@@ -191,6 +193,7 @@ class GameController extends Controller
         return $game;
         // return redirect('/games');
     }
+
     /**
      * Close a game.
      *
@@ -221,10 +224,13 @@ class GameController extends Controller
         $game->players = $players;
         $game->update();
 
-        # add board slot
+        //user joining
+        $user = User::find(auth()->user()->id);
+
+        // add board slot
         TurnController::initialSlot(auth()->user()->id, $game->id);
 
-        PlayerJoinsGame::dispatch($game);
+        PlayerJoinsGame::dispatch($game, $user);
 
         return $game;
 
@@ -241,18 +247,21 @@ class GameController extends Controller
     {
         $players = $game->players;
 
-        $players = array_diff($players, array(auth()->user()->id));
+        $players = array_diff($players, [auth()->user()->id]);
         // return $players;
         $game->players = $players;
 
         $game->update();
+
+        //user leaving
+        $user = User::find(auth()->user()->id);
 
         DB::table('game_slot')
             ->where('game_id', $game->id)
             ->where('user_id', auth()->user()->id)
             ->delete();
         TurnController::slots($game->id);
-        PlayerLeavesGame::dispatch($game);
+        PlayerLeavesGame::dispatch($game, $user);
         NotifyGameUpdate::dispatch($game);
 
         return $game;

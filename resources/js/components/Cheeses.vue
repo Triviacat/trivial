@@ -58,6 +58,16 @@ export default {
             console.log(error)
           })
       })
+      .listen('PlayerLeavesGame', e => {
+        // console.log(e)
+        var text = e.user.name + ' ' + this.trans.get('trivial.hasLeft') + ' ' + this.game.id
+        this.success(text)
+      })
+      .listen('PlayerJoinsGame', e => {
+        // console.log(e)
+        var text = e.user.name + ' ' + this.trans.get('trivial.hasJoined') + ' ' + this.game.id
+        this.success(text)
+      })
   }
 }
 </script>
