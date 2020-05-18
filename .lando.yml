@@ -1,8 +1,5 @@
 name: trivial
 recipe: laravel
-proxy:
-  appserver:
-    - trivial.lndo.site
 config:
   webroot: public
 services:
@@ -19,6 +16,5 @@ tooling:
       cmd: /app/vendor/bin/phpunit
     php-cs-fixer:
       service: appserver
-      desription: "Analyze code against the WordPress coding standards with PHP-cs-fixer"
       cmd:
       - "vendor/bin/php-cs-fixer"

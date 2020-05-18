@@ -17,7 +17,7 @@ class CreateGamesTable extends Migration
             $table->id();
             $table->tinyInteger('estate')->default(1); //0 => closed, 1 => open, 2 => started, 3 => stopped, 4 => ended
             $table->foreignId('user_id');
-            $table->foreignId('turn_id');
+            $table->foreignId('turn_id')->nullable();
             $table->text('players')->nullable(); // array()
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class UpdateNidFieldToQuestionsTable extends Migration
     public function up()
     {
         Schema::table('questions', function (Blueprint $table) {
-            $table->unsignedInteger('nid')->unique();
+            $table->unsignedInteger('nid')->unique()->nullable();
         });
     }
 

@@ -1,0 +1,72 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\User;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class GamerTest extends TestCase
+{
+    use WithFaker, RefreshDatabase;
+
+    /**
+     * A basic feature test example.
+     *
+     * @return void
+     */
+    public function test_gamer_has_access_to_games()
+    {
+        $user = factory(User::class)->create();
+        $response = $this->actingAs($user)
+            ->get('/games');
+        // $response->dumpHeaders();
+
+        $response->assertStatus(200);
+    }
+
+    public function test_gamer_can_access_game_creation_form()
+    {
+        $user = factory(User::class)->create();
+        $response = $this->actingAs($user)
+            ->get('/games/create');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_gamer_can_create_a_private_game()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $user3 = factory(User::class)->create();
+
+        $invited = [
+            (object) ['id' => $user2->id, 'name' => $user2->name],
+            (object) ['id' => $user3->id, 'name' => $user3->name],
+        ];
+        $chat = $this->faker->url;
+        $password = $this->faker->word(25);
+
+        $attributes = [
+            'private' => true,
+            'chat' => $chat,
+            'password' => $password,
+            'invited' => json_encode($invited),
+            'user_id' => $user->id,
+        ];
+
+        $response = $this->actingAs($user)
+            ->post('/games', $attributes);
+
+        // $this->dumpHeaders();
+        $this->assertDatabaseHas('games', [
+            'private' => true,
+            'chat' => $chat,
+            'password' => $password,
+            'invited' => json_encode([$user2->id, $user3->id]),
+            'user_id' => $user->id,
+        ]);
+    }
+}
