@@ -1,5 +1,8 @@
 name: trivial
 recipe: laravel
+proxy:
+  appserver:
+    - trivial.lndo.site
 config:
   webroot: public
 services:

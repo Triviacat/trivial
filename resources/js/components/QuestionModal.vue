@@ -10,7 +10,7 @@
         <div class="card">
         <header class="card-header">
             <p class="card-header-title">
-                {{ trans.get('trivial.topic') }}: {{ topic }}
+                {{ trans.get('trivial.topic') }}: {{ trans.get('trivial.' + topic) }}
             </p>
         </header>
         <div class="card-content">

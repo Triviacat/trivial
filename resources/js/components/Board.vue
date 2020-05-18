@@ -42,9 +42,13 @@ export default {
       width,
       height
     }) {
-      this.scale = width / 797
-      this.configKonva.width = 797 * this.scale
-      this.configKonva.height = 797 * this.scale
+      this.getWindowWidth()
+    //   const cslots = this.slots
+    //   for (let index = 0; index < this.list.length; index++) {
+    //     this.list[index].x = cslots[index].x * this.scale
+    //     this.list[index].y = cslots[index].y * this.scale
+    //   }
+    //   console.log(cslots)
     },
     getWindowWidth () {
       this.configKonva.width = this.$refs.outerBoard.clientWidth
@@ -67,6 +71,14 @@ export default {
         color: 'red',
         stroke: 'black',
         strokeWidth: 1
+      }],
+      slots: [{
+        x: 0,
+        y: 0,
+        radius: 0,
+        color: 'red',
+        stroke: 'black',
+        strokeWidth: 1
       }]
     }
   },
@@ -80,6 +92,7 @@ export default {
           slot.stroke = 'black'
           slot.strokeWidth = 1
         })
+        this.slots = e.data
         this.list = e.data
       })
     this.getWindowWidth()

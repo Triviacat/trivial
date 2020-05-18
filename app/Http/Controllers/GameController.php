@@ -159,25 +159,11 @@ class GameController extends Controller
         // notify change of game status
         GameStatusHasChanged::dispatch($game);
 
-        // start a new turn // TODO: it should only add a new turn if only starting but not if resuming
+        // start a new turn
         TurnController::new($game);
 
         return redirect('/games/' . $game->id);
     }
-
-    // /**
-    //  * Stop a game.
-    //  *
-    //  * @param  \App\Game  $game
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function stop(Game $game) // TODO: should this be changed to 'pause'??
-    // {
-    //     $game->status = 3;
-    //     $game->update();
-    //     GameStatusHasChanged::dispatch($game);
-    //     return redirect('/games');
-    // }
 
     /**
      * Open a game.
@@ -217,7 +203,7 @@ class GameController extends Controller
      */
     public function join(Game $game)
     {
-        // TODO: limit users in game by 6?
+        // TODO: limit users in game by 6? Is it limited now? Where?
         $players = $game->players;
 
         $players[] = auth()->user()->id;
