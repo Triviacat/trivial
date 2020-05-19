@@ -166,7 +166,7 @@ class GameController extends Controller
             // start a new turn
             TurnController::new($game);
 
-            return redirect('/games/' . $game->id);
+        // return redirect($game->path());
         } else {
             abort(403);
         }

@@ -19,6 +19,11 @@ class Game extends Model
         'invited' => 'array'
     ];
 
+    public function path()
+    {
+        return "/games/{$this->id}";
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -28,7 +33,6 @@ class Game extends Model
     {
         return $this->belongsTo(Turn::class);
     }
-
 
     public function cheeses()
     {
@@ -42,7 +46,7 @@ class Game extends Model
 
     public function users()
     {
-        $users = array();
+        $users = [];
         foreach ($this->players as $player) {
             $user = User::find($player);
             $cheeses = DB::table('cheeses')
@@ -60,29 +64,29 @@ class Game extends Model
             if (!isset($box)) { // at the beginnig if the game, not everybody has an assigned box.
                 $box['box'] = '0';
             }
-            $users[] = array(
+            $users[] = [
                 'user' => $user,
                 'cheeses' => $cheeses,
                 'box' => $box,
-            );
+            ];
         }
 
         return $users;
     }
 
-    public function usersInvited() {
-        $users = array();
+    public function usersInvited()
+    {
+        $users = [];
         if (is_array($this->invited)) {
             foreach ($this->invited as $u) {
                 $user = User::find($u);
 
-                $users[] = array(
+                $users[] = [
                     'id' => $user->id,
                     'name' => $user->name,
-                );
+                ];
             }
         }
-
 
         return $users;
     }

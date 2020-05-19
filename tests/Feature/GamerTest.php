@@ -96,7 +96,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)
-            ->get('games/' . $game->id . '/open');
+            ->get($game->path() . '/open');
 
         $response->assertStatus(200);
     }
@@ -115,7 +115,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user2)
-            ->get('games/' . $game->id . '/open');
+            ->get($game->path() . '/open');
 
         $response->assertStatus(403);
     }
@@ -132,7 +132,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)
-            ->get('games/' . $game->id . '/close');
+            ->get($game->path() . '/close');
 
         $response->assertStatus(200);
     }
@@ -151,7 +151,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user2)
-            ->get('games/' . $game->id . '/close');
+            ->get($game->path() . '/close');
 
         $response->assertStatus(403);
     }
@@ -167,7 +167,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)
-            ->get('games/' . $game->id . '/edit');
+            ->get($game->path() . '/edit');
         $response->assertStatus(200);
     }
 
@@ -183,7 +183,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user2)
-            ->get('games/' . $game->id . '/edit');
+            ->get($game->path() . '/edit');
 
         $response->assertStatus(403);
     }
@@ -203,7 +203,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)
-            ->get('games/' . $game->id . '/start');
+            ->get($game->path() . '/start');
 
         $response->assertStatus(302);
     }
