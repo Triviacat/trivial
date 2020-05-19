@@ -23,7 +23,7 @@ class CreateTurnsTable extends Migration
             // $table->boolean('answer')->nullable();
             // $table->text('answers')->nullable(); // array()
             $table->string('step', 8)->default('dice'); // steps: dice, box, question, cheese, final, done
-            $table->foreignId('reader_id');
+            $table->foreignId('reader_id')->nullable();
             $table->timestamps();
 
             // $table->foreign('user_id')->references('id')->on('users');

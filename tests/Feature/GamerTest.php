@@ -19,7 +19,7 @@ class GamerTest extends TestCase
     {
         $user = factory(User::class)->create();
         $response = $this->actingAs($user)
-            ->get('/games');
+            ->get('games');
         // $response->dumpHeaders();
 
         $response->assertStatus(200);
@@ -32,7 +32,7 @@ class GamerTest extends TestCase
     {
         $user = factory(User::class)->create();
         $response = $this->actingAs($user)
-            ->get('/games/create');
+            ->get('games/create');
 
         $response->assertStatus(200);
     }
@@ -63,7 +63,7 @@ class GamerTest extends TestCase
         ];
 
         $this->actingAs($user)
-            ->post('/games', $attributes);
+            ->post('games', $attributes);
 
         // $this->dumpHeaders();
         $this->assertDatabaseHas('games', [
@@ -92,7 +92,7 @@ class GamerTest extends TestCase
         ];
 
         $this->actingAs($user)
-            ->post('/games', $attributes);
+            ->post('games', $attributes);
 
         // $this->dumpHeaders();
         $this->assertDatabaseHas('games', $attributes);
@@ -111,7 +111,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)
-            ->get('/games/' . $game->id . '/open');
+            ->get('games/' . $game->id . '/open');
 
         $response->assertStatus(200);
     }
@@ -130,7 +130,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user2)
-            ->get('/games/' . $game->id . '/open');
+            ->get('games/' . $game->id . '/open');
 
         $response->assertStatus(403);
     }
@@ -147,7 +147,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)
-            ->get('/games/' . $game->id . '/close');
+            ->get('games/' . $game->id . '/close');
 
         $response->assertStatus(200);
     }
@@ -166,7 +166,7 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user2)
-            ->get('/games/' . $game->id . '/close');
+            ->get('games/' . $game->id . '/close');
 
         $response->assertStatus(403);
     }
@@ -182,14 +182,14 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)
-            ->get('/games/' . $game->id . '/edit');
+            ->get('games/' . $game->id . '/edit');
         $response->assertStatus(200);
     }
 
     /**
     * @test
     */
-    public function gamer_cannot_edit_a_game()
+    public function gamer_cannot_edit_another_game()
     {
         $user = factory(User::class)->create();
         $user2 = factory(User::class)->create();
@@ -198,7 +198,48 @@ class GamerTest extends TestCase
         ]);
 
         $response = $this->actingAs($user2)
-            ->get('/games/' . $game->id . '/edit');
+            ->get('games/' . $game->id . '/edit');
+
+        $response->assertStatus(403);
+    }
+
+    /**
+    * @test
+    */
+    public function host_can_start_a_game()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+            'status' => 'open',
+            'players' => [$user->id]
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get('games/' . $game->id . '/start');
+
+        $response->assertStatus(302);
+    }
+
+    /**
+    * @test
+    */
+    public function gamer_cannot_start_another_game()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+            'status' => 'open',
+            'players' => [$user->id]
+        ]);
+
+        $response = $this->actingAs($user2)
+            ->get('/games/' . $game->id . '/start');
 
         $response->assertStatus(403);
     }

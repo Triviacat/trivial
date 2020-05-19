@@ -11,5 +11,6 @@ $factory->define(Game::class, function (Faker $faker) {
         'chat' => $faker->url,
         'password' => $faker->word(25),
         'invited' => json_encode([]),
+        'players' => [],
     ];
 });

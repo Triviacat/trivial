@@ -152,20 +152,24 @@ class GameController extends Controller
      */
     public function start(Game $game)
     {
-        $game->status = 'started';
-        // randomize players
-        $rplayers = $game->players;
-        shuffle($rplayers);
-        $game->players = $rplayers;
-        $game->update();
+        if (auth()->user()->id == $game->user_id && $game->status == 'open') {
+            $game->status = 'started';
+            // randomize players
+            $rplayers = $game->players;
+            shuffle($rplayers);
+            $game->players = $rplayers;
+            $game->update();
 
-        // notify change of game status
-        GameStatusHasChanged::dispatch($game);
+            // notify change of game status
+            GameStatusHasChanged::dispatch($game);
 
-        // start a new turn
-        TurnController::new($game);
+            // start a new turn
+            TurnController::new($game);
 
-        return redirect('/games/' . $game->id);
+            return redirect('/games/' . $game->id);
+        } else {
+            abort(403);
+        }
     }
 
     /**

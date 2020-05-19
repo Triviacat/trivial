@@ -81,7 +81,7 @@ Route::group(['prefix' => 'games', 'middleware' => ['verified']], function () {
     Route::patch('/{game}', 'GameController@update')->name('games.update');
     Route::get('/{game}/edit', 'GameController@edit')->name('games.edit');
     Route::get('/{game}/start', 'GameController@start')->name('games.start');
-    Route::get('/{game}/stop', 'GameController@stop')->name('games.stop');
+    // Route::get('/{game}/stop', 'GameController@stop')->name('games.stop'); //deprecated
     Route::get('/{game}/open', 'GameController@open')->name('games.open');
     Route::get('/{game}/close', 'GameController@close')->name('games.close');
     Route::get('/{game}/join', 'GameController@join')->name('games.join');
