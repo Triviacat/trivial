@@ -7,11 +7,9 @@ use Tests\TestCase;
 class GuestTest extends TestCase
 {
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @test
      */
-    public function test_guest_needs_login()
+    public function guest_needs_login()
     {
         $response = $this->get('/games');
         // $response->dumpHeaders();

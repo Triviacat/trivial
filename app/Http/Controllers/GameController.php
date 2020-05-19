@@ -40,11 +40,6 @@ class GameController extends Controller
         $game->players = [auth()->user()->id];
         $game->save();
 
-        // add board slot
-        // $turn = new Turn;
-        // $turn->game_id = $game->id;
-        // $turn->user_id = $game->user_id;
-        // $turn->box_id = 1;
         TurnController::initialSlot($game->user_id, $game->id);
 
         return redirect('/games');

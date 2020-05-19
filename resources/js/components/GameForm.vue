@@ -103,7 +103,7 @@ export default {
     selectedUsers: function (val, oldVal) {
       this.invited = JSON.stringify(this.selectedUsers)
       this.isLoading = false
-    //   console.log(this.selectedUsers)
+      console.log(this.selectedUsers)
     }
     // chat: function (val, oldVal) {
     //     console.log(this.chat)

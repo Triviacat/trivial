@@ -12,11 +12,9 @@ class GamerTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /**
-     * A basic feature test example.
-     *
-     * @return void
+     * @test
      */
-    public function test_gamer_has_access_to_games()
+    public function gamer_has_access_to_games()
     {
         $user = factory(User::class)->create();
         $response = $this->actingAs($user)
@@ -26,7 +24,10 @@ class GamerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_gamer_can_access_game_creation_form()
+    /**
+     * @test
+     */
+    public function gamer_can_access_game_creation_form()
     {
         $user = factory(User::class)->create();
         $response = $this->actingAs($user)
@@ -35,7 +36,10 @@ class GamerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_gamer_can_create_a_private_game()
+    /**
+     * @test
+     */
+    public function gamer_can_create_a_private_game()
     {
         $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
@@ -57,7 +61,7 @@ class GamerTest extends TestCase
             'user_id' => $user->id,
         ];
 
-        $response = $this->actingAs($user)
+        $this->actingAs($user)
             ->post('/games', $attributes);
 
         // $this->dumpHeaders();
@@ -68,5 +72,28 @@ class GamerTest extends TestCase
             'invited' => json_encode([$user2->id, $user3->id]),
             'user_id' => $user->id,
         ]);
+    }
+
+    /**
+     * @test
+     */
+    public function gamer_can_create_a_public_game()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+
+        $attributes = [
+            'private' => false,
+            'chat' => null,
+            'password' => null,
+            'invited' => json_encode([]),
+            'user_id' => $user->id,
+        ];
+
+        $this->actingAs($user)
+            ->post('/games', $attributes);
+
+        // $this->dumpHeaders();
+        $this->assertDatabaseHas('games', $attributes);
     }
 }
