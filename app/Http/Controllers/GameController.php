@@ -91,7 +91,11 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        return view('games.edit', compact('game'));
+        if (auth()->user()->id == $game->user_id) {
+            return view('games.edit', compact('game'));
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -103,18 +107,22 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        $attributes = $this->validateRequest();
-        $invited = json_decode($attributes['invited']);
-        // return $invited;
-        $users = [];
-        foreach ($invited as $user) {
-            $users[] = $user->id;
+        if (auth()->user()->id == $game->user_id) {
+            $attributes = $this->validateRequest();
+            $invited = json_decode($attributes['invited']);
+            // return $invited;
+            $users = [];
+            foreach ($invited as $user) {
+                $users[] = $user->id;
+            }
+            // return $users;
+            $attributes['invited'] = $users;
+            $attributes['players'] = [(int) $attributes['user_id']];
+            $game->update($attributes);
+            return redirect('/games');
+        } else {
+            abort(403);
         }
-        // return $users;
-        $attributes['invited'] = $users;
-        $attributes['players'] = [(int) $attributes['user_id']];
-        $game->update($attributes);
-        return redirect('/games');
     }
 
     /**

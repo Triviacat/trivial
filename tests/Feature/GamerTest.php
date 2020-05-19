@@ -170,4 +170,36 @@ class GamerTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    /**
+    * @test
+    */
+    public function host_can_edit_a_game()
+    {
+        $user = factory(User::class)->create();
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get('/games/' . $game->id . '/edit');
+        $response->assertStatus(200);
+    }
+
+    /**
+    * @test
+    */
+    public function gamer_cannot_edit_a_game()
+    {
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user2)
+            ->get('/games/' . $game->id . '/edit');
+
+        $response->assertStatus(403);
+    }
 }
