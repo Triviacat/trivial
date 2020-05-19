@@ -51,28 +51,17 @@ class GamerTest extends TestCase
             (object) ['id' => $user2->id, 'name' => $user2->name],
             (object) ['id' => $user3->id, 'name' => $user3->name],
         ];
-        $chat = $this->faker->url;
-        $password = $this->faker->word(25);
 
-        $attributes = [
-            'private' => true,
-            'chat' => $chat,
-            'password' => $password,
+        $attributes = factory(Game::class)->raw([
             'invited' => json_encode($invited),
             'user_id' => $user->id,
-        ];
+        ]);
 
         $this->actingAs($user)
             ->post('games', $attributes);
 
-        // $this->dumpHeaders();
-        $this->assertDatabaseHas('games', [
-            'private' => true,
-            'chat' => $chat,
-            'password' => $password,
-            'invited' => json_encode([$user2->id, $user3->id]),
-            'user_id' => $user->id,
-        ]);
+        $attributes['invited'] = json_encode([$user2->id, $user3->id]);
+        $this->assertDatabaseHas('games', $attributes);
     }
 
     /**
@@ -83,18 +72,14 @@ class GamerTest extends TestCase
         // $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
 
-        $attributes = [
+        $attributes = factory(Game::class)->raw([
             'private' => false,
-            'chat' => null,
-            'password' => null,
-            'invited' => json_encode([]),
             'user_id' => $user->id,
-        ];
+        ]);
 
         $this->actingAs($user)
             ->post('games', $attributes);
 
-        // $this->dumpHeaders();
         $this->assertDatabaseHas('games', $attributes);
     }
 
