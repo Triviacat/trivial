@@ -168,11 +168,15 @@ class GameController extends Controller
      */
     public function open(Game $game)
     {
-        $game->status = 'open';
-        $game->update();
-        GameStatusHasChanged::dispatch($game);
-        return $game;
-        // return redirect('/games');
+        if (auth()->user()->id == $game->user_id) {
+            $game->status = 'open';
+            $game->update();
+            GameStatusHasChanged::dispatch($game);
+            // TODO: does this need to be returned??
+            return $game;
+        } else {
+            abort(403);
+        }
     }
 
     /**
@@ -183,11 +187,15 @@ class GameController extends Controller
      */
     public function close(Game $game)
     {
-        $game->status = 'closed';
-        $game->update();
-        GameStatusHasChanged::dispatch($game);
-        return $game;
-        // return redirect('/games');
+        if (auth()->user()->id == $game->user_id) {
+            $game->status = 'closed';
+            $game->update();
+            GameStatusHasChanged::dispatch($game);
+            // TODO: does this need to be returned??
+            return $game;
+        } else {
+            abort(403);
+        }
     }
 
     /**

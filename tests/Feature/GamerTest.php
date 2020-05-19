@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Game;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -41,7 +42,7 @@ class GamerTest extends TestCase
      */
     public function gamer_can_create_a_private_game()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $user2 = factory(User::class)->create();
         $user3 = factory(User::class)->create();
@@ -79,7 +80,7 @@ class GamerTest extends TestCase
      */
     public function gamer_can_create_a_public_game()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
 
         $attributes = [
@@ -95,5 +96,78 @@ class GamerTest extends TestCase
 
         // $this->dumpHeaders();
         $this->assertDatabaseHas('games', $attributes);
+    }
+
+    /**
+    * @test
+    */
+    public function host_can_open_a_game()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get('/games/' . $game->id . '/open');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+    * @test
+    */
+    public function gamer_cannot_open_another_game()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user2)
+            ->get('/games/' . $game->id . '/open');
+
+        $response->assertStatus(403);
+    }
+
+    /**
+    * @test
+    */
+    public function host_can_close_a_game()
+    {
+        $user = factory(User::class)->create();
+
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get('/games/' . $game->id . '/close');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+    * @test
+    */
+    public function gamer_cannot_close_another_game()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user2)
+            ->get('/games/' . $game->id . '/close');
+
+        $response->assertStatus(403);
     }
 }

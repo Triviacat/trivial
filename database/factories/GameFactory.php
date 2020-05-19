@@ -7,6 +7,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Game::class, function (Faker $faker) {
     return [
-        //
+        'private' => true,
+        'chat' => $faker->url,
+        'password' => $faker->word(25),
+        'invited' => json_encode([]),
     ];
 });
