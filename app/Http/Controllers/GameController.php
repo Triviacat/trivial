@@ -249,26 +249,28 @@ class GameController extends Controller
      */
     public function leave(Game $game)
     {
-        $players = $game->players;
+        if ($game->user_id != auth()->user()->id) {
+            $players = $game->players;
+            $players = array_diff($players, [auth()->user()->id]);
 
-        $players = array_diff($players, [auth()->user()->id]);
-        // return $players;
-        $game->players = $players;
+            $game->players = $players;
+            $game->update();
 
-        $game->update();
+            //user leaving
+            $user = User::find(auth()->user()->id);
 
-        //user leaving
-        $user = User::find(auth()->user()->id);
+            DB::table('game_slot')
+                ->where('game_id', $game->id)
+                ->where('user_id', auth()->user()->id)
+                ->delete();
+            TurnController::slots($game->id);
+            PlayerLeavesGame::dispatch($game, $user);
+            NotifyGameUpdate::dispatch($game);
 
-        DB::table('game_slot')
-            ->where('game_id', $game->id)
-            ->where('user_id', auth()->user()->id)
-            ->delete();
-        TurnController::slots($game->id);
-        PlayerLeavesGame::dispatch($game, $user);
-        NotifyGameUpdate::dispatch($game);
-
-        return $game;
+            return $game;
+        } else {
+            abort(403);
+        }
 
         // return redirect('/games');
     }
@@ -301,7 +303,8 @@ class GameController extends Controller
     {
         // var_dump($game->invited);
         // User has joined already
-        if (in_array($user->id, $game->players)) {
+        if (in_array($user->id, $game->players)
+            || $game->status == 'new' || $game->status == 'over') {
             return false;
         // Game is public
         } elseif ($game->private == false) {

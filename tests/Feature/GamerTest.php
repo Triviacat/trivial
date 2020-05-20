@@ -232,6 +232,23 @@ class GamerTest extends TestCase
     }
 
     /** @test */
+    public function gamer_cannot_join_an_over_or_new_game()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $game = factory(Game::class)->create([
+            'private' => false,
+            'user_id' => $user->id,
+            'status' => 'over',
+            'players' => [$user->id]
+        ]);
+        $response = $this->actingAs($user2)
+            ->get('/games/' . $game->id . '/join');
+        $response->assertStatus(403);
+    }
+
+    /** @test */
     public function gamer_can_join_a_public_game()
     {
         // $this->withoutExceptionHandling();
@@ -277,5 +294,17 @@ class GamerTest extends TestCase
         $response = $this->actingAs($user2)
             ->get('/games/' . $game->id . '/join');
         $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function host_cannot_leave_his_own_game()
+    {
+        $user = factory(User::class)->create();
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+        ]);
+        $response = $this->actingAs($user)
+            ->get('/games/' . $game->id . '/leave');
+        $response->assertStatus(403);
     }
 }
