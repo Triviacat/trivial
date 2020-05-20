@@ -219,21 +219,24 @@ class GameController extends Controller
     public function join(Game $game)
     {
         // TODO: limit users in game by 6? Is it limited now? Where?
-        $players = $game->players;
+        if (GameController::can_join(auth()->user(), $game)) {
+            $players = $game->players;
+            $players[] = auth()->user()->id;
+            $game->players = $players;
+            $game->update();
 
-        $players[] = auth()->user()->id;
-        $game->players = $players;
-        $game->update();
+            //user joining
+            $user = User::find(auth()->user()->id);
 
-        //user joining
-        $user = User::find(auth()->user()->id);
+            // add board slot
+            TurnController::initialSlot(auth()->user()->id, $game->id);
 
-        // add board slot
-        TurnController::initialSlot(auth()->user()->id, $game->id);
+            PlayerJoinsGame::dispatch($game, $user);
 
-        PlayerJoinsGame::dispatch($game, $user);
-
-        return $game;
+            return $game;
+        } else {
+            return abort(403);
+        }
 
         // return redirect('/games');
     }
@@ -278,11 +281,36 @@ class GameController extends Controller
     protected function validateRequest()
     {
         return request()->validate([
-            'private' => ['boolean'], //validation rules can be members of an array
+            'private' => 'boolean', //validation rules can be members of an array
             'chat' => 'nullable|url',
             'password' => 'nullable|string',
             'invited' => 'nullable|json',
             'user_id' => 'required|numeric'
         ]);
+    }
+
+    /**
+     * Flag whether a user can join a game
+     *
+     *
+     * @param Object $user
+     * @param Object $game
+     * @return Boolean
+     **/
+    public static function can_join($user, $game)
+    {
+        // var_dump($game->invited);
+        // User has joined already
+        if (in_array($user->id, $game->players)) {
+            return false;
+        // Game is public
+        } elseif ($game->private == false) {
+            return true;
+        // Game is private but user is invited
+        } elseif ($game->private == true && in_array($user->id, $game->invited)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

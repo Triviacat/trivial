@@ -2,10 +2,11 @@
     <div>{{ playersingame }}
         <span v-if="showJoinButton() == true">
             <span v-if="game.status != 'over'">
-        <span v-show="(user.id != game.user_id)">
-        <button class="button is-small is-info" @click="action" :disabled="isButtonDisabled">{{ actionText }}</button>
-        </span>
-    </span>
+                <span v-show="(user.id != game.user_id)">
+                    <button class="button is-small is-info" @click="action"
+                        :disabled="isButtonDisabled">{{ actionText }}</button>
+                </span>
+            </span>
         </span>
 
     </div>
@@ -69,7 +70,8 @@ export default {
       // TODO: change button visibility (thru a broadcast event) when editing a game.
       // it copuld have changed its privacity status or its invited users.
       // right now you have to relaod list of games page in order to take this into account
-      if (this.game.private === false) {
+      console.log(this.game)
+      if (this.game.private === 0) {
         return true
       } else {
         // console.log(this.game.invited);

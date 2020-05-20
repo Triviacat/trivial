@@ -55,6 +55,7 @@ class GamerTest extends TestCase
         $attributes = factory(Game::class)->raw([
             'invited' => json_encode($invited),
             'user_id' => $user->id,
+            'players' => json_encode([$user->id])
         ]);
 
         $this->actingAs($user)
@@ -73,8 +74,10 @@ class GamerTest extends TestCase
         $user = factory(User::class)->create();
 
         $attributes = factory(Game::class)->raw([
-            'private' => false,
+            'invited' => json_encode([]),
+            'private' => '0',
             'user_id' => $user->id,
+            'players' => json_encode([$user->id])
         ]);
 
         $this->actingAs($user)
@@ -83,9 +86,7 @@ class GamerTest extends TestCase
         $this->assertDatabaseHas('games', $attributes);
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function host_can_open_a_game()
     {
         // $this->withoutExceptionHandling();
@@ -101,9 +102,7 @@ class GamerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function gamer_cannot_open_another_game()
     {
         // $this->withoutExceptionHandling();
@@ -120,9 +119,7 @@ class GamerTest extends TestCase
         $response->assertStatus(403);
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function host_can_close_a_game()
     {
         $user = factory(User::class)->create();
@@ -137,9 +134,7 @@ class GamerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function gamer_cannot_close_another_game()
     {
         // $this->withoutExceptionHandling();
@@ -156,9 +151,7 @@ class GamerTest extends TestCase
         $response->assertStatus(403);
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function host_can_edit_a_game()
     {
         $user = factory(User::class)->create();
@@ -171,9 +164,7 @@ class GamerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function gamer_cannot_edit_another_game()
     {
         $user = factory(User::class)->create();
@@ -188,9 +179,7 @@ class GamerTest extends TestCase
         $response->assertStatus(403);
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function host_can_start_a_game()
     {
         $this->withoutExceptionHandling();
@@ -205,12 +194,10 @@ class GamerTest extends TestCase
         $response = $this->actingAs($user)
             ->get($game->path() . '/start');
 
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     public function gamer_cannot_start_another_game()
     {
         // $this->withoutExceptionHandling();
@@ -227,5 +214,68 @@ class GamerTest extends TestCase
             ->get('/games/' . $game->id . '/start');
 
         $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function gamer_cannot_join_a_game_again()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+            'status' => 'open',
+            'players' => [$user->id]
+        ]);
+        $response = $this->actingAs($user)
+            ->get('/games/' . $game->id . '/join');
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function gamer_can_join_a_public_game()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $game = factory(Game::class)->create([
+            'private' => false,
+            'user_id' => $user->id,
+            'status' => 'open',
+        ]);
+        $response = $this->actingAs($user)
+            ->get('/games/' . $game->id . '/join');
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function gamer_cannot_join_a_private_game()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+            'status' => 'open',
+            'invited' => []
+        ]);
+        $response = $this->actingAs($user2)
+            ->get('/games/' . $game->id . '/join');
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function invited_gamer_can_join_a_private_game()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+        $invited = [$user2->id];
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+            'status' => 'open',
+            'invited' => $invited
+        ]);
+        $response = $this->actingAs($user2)
+            ->get('/games/' . $game->id . '/join');
+        $response->assertStatus(200);
     }
 }
