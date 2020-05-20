@@ -182,7 +182,7 @@ class GamerTest extends TestCase
     /** @test */
     public function host_can_start_a_game()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
 
         $game = factory(Game::class)->create([
@@ -195,6 +195,46 @@ class GamerTest extends TestCase
             ->get($game->path() . '/start');
 
         $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function host_can_start_only_an_open_game()
+    {
+        // $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+            'status' => 'new',
+            'players' => [$user->id]
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get($game->path() . '/start');
+
+        $response->assertStatus(403);
+
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+            'status' => 'over',
+            'players' => [$user->id]
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get($game->path() . '/start');
+
+        $response->assertStatus(403);
+
+        $game = factory(Game::class)->create([
+            'user_id' => $user->id,
+            'status' => 'started',
+            'players' => [$user->id]
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get($game->path() . '/start');
+
+        $response->assertStatus(403);
     }
 
     /** @test */
