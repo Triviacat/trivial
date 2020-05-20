@@ -12,9 +12,7 @@ class GamerTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    /**
-     * @test
-     */
+    /** @test */
     public function gamer_has_access_to_games()
     {
         $user = factory(User::class)->create();
@@ -25,9 +23,7 @@ class GamerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function gamer_can_access_game_creation_form()
     {
         $user = factory(User::class)->create();
@@ -37,9 +33,7 @@ class GamerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function gamer_can_create_a_private_game()
     {
         // $this->withoutExceptionHandling();
@@ -65,9 +59,7 @@ class GamerTest extends TestCase
         $this->assertDatabaseHas('games', $attributes);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function gamer_can_create_a_public_game()
     {
         // $this->withoutExceptionHandling();
